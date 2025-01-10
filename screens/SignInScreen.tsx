@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { signIn } from '@/src/store/slices/authSlice';
-import { AppDispatch, RootState } from '@/src/store/store';
-import { RootStackParamList } from '@/src/types/types'; // Adjust the path as necessary
+import { signIn } from '@/store/slices/authSlice';
+import { AppDispatch, RootState } from '@/store/store';
+import { RootStackParamList } from '@/types/types'; // Adjust the path as necessary
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type SignInScreenNavigationProp = StackNavigationProp<

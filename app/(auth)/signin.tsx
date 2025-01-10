@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { signIn } from '@/src/store/slices/authSlice';
-import { AppDispatch, RootState } from '@/src/store/store';
+import { signIn } from '@/store/slices/authSlice';
+import { AppDispatch, RootState } from '@/store/store';
 import { useRouter } from 'expo-router';
 
 export default function SignInScreen() {

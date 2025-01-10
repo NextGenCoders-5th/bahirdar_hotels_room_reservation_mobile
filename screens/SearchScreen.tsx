@@ -8,8 +8,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchHotels } from '@/src/store/slices/hotelsSlice';
-import { AppDispatch, RootState } from '@/src/store/store';
+import { fetchHotels } from '@/store/slices/hotelsSlice';
+import { AppDispatch, RootState } from '@/store/store';
 
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
