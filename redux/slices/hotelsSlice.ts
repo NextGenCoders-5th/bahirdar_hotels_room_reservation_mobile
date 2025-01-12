@@ -1,11 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-interface Hotel {
-  id: string;
-  name: string;
-  rating: number;
-  price: number;
-}
+import { Hotel } from '@/types/hotel';
 
 interface HotelsState {
   hotels: Hotel[];
@@ -20,13 +14,11 @@ const initialState: HotelsState = {
 };
 
 export const fetchHotels = createAsyncThunk('hotels/fetchHotels', async () => {
-  // Implement actual API call here
-  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulating API delay
-  return [
-    { id: '1', name: 'Hotel A', rating: 4.5, price: 100 },
-    { id: '2', name: 'Hotel B', rating: 4.2, price: 80 },
-    { id: '3', name: 'Hotel C', rating: 4.8, price: 120 },
-  ];
+  const response = await fetch('http://localhost:3000/hotels');
+  if (!response.ok) {
+    throw new Error('Failed to fetch hotels');
+  }
+  return response.json() as Promise<Hotel[]>;
 });
 
 const hotelsSlice = createSlice({
