@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function BookingsScreen() {
+export default function FavoritesScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>My Bookings</Text>
-      <Text>Your bookings will appear here.</Text>
+      <Text style={styles.title}>My Favorites</Text>
+      <Text>Your favorites will appear here.</Text>
     </View>
   );
 }
