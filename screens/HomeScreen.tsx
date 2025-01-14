@@ -1,44 +1,16 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchHotels } from '@/store/slices/hotelsSlice';
-import { AppDispatch, RootState } from '@/store/store';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import HotelsList from '../components/HotelsList';
+import colors from '@/config/colors';
 
-const HomeScreen = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { hotels, isLoading, error } = useSelector(
-    (state: RootState) => state.hotels
-  );
-
-  useEffect(() => {
-    dispatch(fetchHotels());
-  }, [dispatch]);
-
-  if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (error) {
-    return <Text>Error: {error}</Text>;
-  }
-
+export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Featured Hotels</Text>
-      <FlatList
-        data={hotels}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.hotelItem}>
-            <Text>{item.name}</Text>
-            <Text>Rating: {item.rating}</Text>
-            <Text>Price: ${item.price}/night</Text>
-          </View>
-        )}
-      />
+      <HotelsList />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -47,13 +19,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 20,
-  },
-  hotelItem: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    color: colors.black,
   },
 });
-
-export default HomeScreen;
