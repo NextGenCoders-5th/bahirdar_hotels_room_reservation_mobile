@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import Swiper from 'react-native-swiper';
 import colors from '@/config/colors';
 import hotels from '@/data/hotels';
 
@@ -38,7 +39,25 @@ const HotelDetailsScreen: React.FC = () => {
   return (
     <ScrollView style={styles.card}>
       <View style={styles.imageContainer}>
-        <Image source={imgUrl} style={styles.image} />
+        <Swiper
+          showsButtons
+          showsPagination
+          // autoplay
+          autoplayTimeout={5}
+          loop
+          dotStyle={styles.dot}
+          activeDotStyle={styles.activeDot}
+          style={styles.swiper}
+        >
+          {hotelImages.map((imageUrl, index) => (
+            <Image
+              key={index}
+              source={imageUrl}
+              style={styles.image}
+              resizeMode='cover'
+            />
+          ))}
+        </Swiper>
         <TouchableOpacity onPress={toggleFavorite} style={styles.heartIcon}>
           <Ionicons
             name={isFavorite ? 'heart' : 'heart-outline'}
@@ -115,6 +134,22 @@ const HotelDetailsScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  swiper: {
+    height: 200,
+    width: '100%',
+  },
+  dot: {
+    backgroundColor: colors.grey,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+  },
+  activeDot: {
+    backgroundColor: colors.primaryDark,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+  },
   card: {
     backgroundColor: colors.white,
     borderRadius: 10,
