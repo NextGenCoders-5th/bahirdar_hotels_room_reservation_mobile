@@ -3,10 +3,10 @@ const hotels = [
     _id: '1',
     name: 'Azwa Hotel',
     hotelStar: 4,
-    imageCover: '@/assets/images/hotels/hotel-1.jpg',
+    imageCover: require('@/assets/images/hotels/hotel-1.jpg'),
     hotelImages: [
-      '@/assets/images/hotels/hotel-2.jpg',
-      '@/assets/images/hotels/hotel-3.jpg',
+      require('@/assets/images/hotels/hotel-2.jpg'),
+      require('@/assets/images/hotels/hotel-3.jpg'),
     ],
     address: {
       city: 'Bahir Dar',
@@ -28,10 +28,10 @@ const hotels = [
     _id: '2',
     name: 'Palm Palace Hotel',
     hotelStar: 3,
-    imageCover: '@/assets/images/hotels/hotel-4.jpg',
+    imageCover: require('@/assets/images/hotels/hotel-4.jpg'),
     hotelImages: [
-      '@/assets/images/hotels/hotel-5.jpg',
-      '@/assets/images/hotels/hotel-6.jpg',
+      require('@/assets/images/hotels/hotel-5.jpg'),
+      require('@/assets/images/hotels/hotel-6.jpg'),
     ],
     address: {
       city: 'Bahir Dar',
@@ -58,10 +58,10 @@ const hotels = [
     _id: '3',
     name: 'Unison Hotel',
     hotelStar: 3,
-    imageCover: '@/assets/images/hotels/hotel-7.jpg',
+    imageCover: require('@/assets/images/hotels/hotel-7.jpg'),
     hotelImages: [
-      '@/assets/images/hotels/hotel-8.jpg',
-      '@/assets/images/hotels/hotel-9.jpg',
+      require('@/assets/images/hotels/hotel-8.jpg'),
+      require('@/assets/images/hotels/hotel-9.jpg'),
     ],
     address: {
       city: 'Bahir Dar',
@@ -88,10 +88,10 @@ const hotels = [
     _id: '4',
     name: 'Dib Anbessa Hotel',
     hotelStar: 3,
-    imageCover: '@/assets/images/hotels/hotel-10.jpg',
+    imageCover: require('@/assets/images/hotels/hotel-10.jpg'),
     hotelImages: [
-      '@/assets/images/hotels/hotel-3.jpg',
-      '@/assets/images/hotels/hotel-6.jpg',
+      require('@/assets/images/hotels/hotel-3.jpg'),
+      require('@/assets/images/hotels/hotel-6.jpg'),
     ],
     address: {
       city: 'Bahir Dar',
