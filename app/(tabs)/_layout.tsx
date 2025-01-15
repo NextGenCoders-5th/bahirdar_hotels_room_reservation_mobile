@@ -1,33 +1,57 @@
 import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import colors from '@/config/colors';
+import TabBarIcon from '@/components/TabBarIcon';
 
 export default function TabsLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.primaryDark,
+        tabBarInactiveTintColor: colors.grey,
+        tabBarStyle: {
+          backgroundColor: colors.primaryLight,
+          borderTopWidth: 0,
+          height: 70,
+          paddingTop: 10,
+        },
+
+        tabBarLabelStyle: {
+          marginTop: 5,
+          fontSize: 14,
+          fontWeight: 'bold',
+          color: colors.grey,
+        },
+      }}
+    >
       <Tabs.Screen
         name='index'
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name='home' size={size} color={color} />
+
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name='home' focused={focused} />
           ),
         }}
       />
-      <Tabs.Screen
-        name='search'
-        options={{
-          title: 'Search',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name='search' size={size} color={color} />
-          ),
-        }}
-      />
+
       <Tabs.Screen
         name='favorites'
         options={{
           title: 'Favorites',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name='heart' size={size} color={color} />
+
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name='heart' focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name='bookings'
+        options={{
+          title: 'Bookings',
+
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name='calendar' focused={focused} />
           ),
         }}
       />
@@ -35,8 +59,9 @@ export default function TabsLayout() {
         name='profile'
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name='person' size={size} color={color} />
+
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name='person' focused={focused} />
           ),
         }}
       />
