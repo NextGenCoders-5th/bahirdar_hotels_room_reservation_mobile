@@ -8,7 +8,10 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput placeholder='Search hotels' style={styles.input}></TextInput>
+        <TextInput
+          placeholder='Search hotels here...'
+          style={styles.input}
+        ></TextInput>
         <Ionicons
           style={styles.icon}
           name='search'
@@ -39,11 +42,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     height: 50,
-    backgroundColor: colors.greyLight,
     borderColor: colors.primary,
     borderWidth: 1,
     borderRadius: 15,
-    marginVertical: 10,
     marginBottom: 20,
   },
   icon: {

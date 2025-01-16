@@ -83,7 +83,7 @@ const HotelDetailsScreen: React.FC = () => {
       </View>
 
       <View style={styles.infoContainer}>
-        <View style={[styles.hotelNameContainer, { marginBottom: 10 }]}>
+        <View style={[styles.hotelNameContainer, { marginVertical: 10 }]}>
           <AppText style={{ fontSize: 22 }}>{name}</AppText>
           <View style={styles.starContainer}>
             {Array.from({ length: hotelStar }).map((_, index) => (
@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 8,
     paddingRight: 10,
+    height: 40,
   },
   price: {
     fontSize: 16,

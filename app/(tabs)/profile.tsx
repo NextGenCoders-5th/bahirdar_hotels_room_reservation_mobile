@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOut } from '@/store/slices/authSlice';
-import { AppDispatch, RootState } from '@/store/store';
+import { signOut } from '@/redux/slices/authSlice';
+import { AppDispatch, RootState } from '@/redux/store';
 import { useRouter } from 'expo-router';
 
 export default function ProfileScreen() {

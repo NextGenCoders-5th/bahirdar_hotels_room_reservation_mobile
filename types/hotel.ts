@@ -10,7 +10,7 @@ export interface Hotel {
   summary: string;
   description: string;
   facilities: string[];
-  manager: string; // We'll use string instead of Types.ObjectId for JSON server
+  manager: string;
   minPricePerNight: number;
   numOfRooms: number;
   numOfRatings: number;

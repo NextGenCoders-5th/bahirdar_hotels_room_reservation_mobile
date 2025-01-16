@@ -8,8 +8,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchHotels } from '@/store/slices/hotelsSlice';
-import { AppDispatch, RootState } from '@/store/store';
+import { fetchHotels } from '@/redux/slices/hotelsSlice';
+import { AppDispatch, RootState } from '@/redux/store';
 
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,12 +53,12 @@ const SearchScreen = () => {
       <Button title='Search' onPress={handleSearch} />
       <FlatList
         data={filteredHotels}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
           <View style={styles.hotelItem}>
             <Text>{item.name}</Text>
-            <Text>Rating: {item.rating}</Text>
-            <Text>Price: ${item.price}/night</Text>
+            <Text>Rating: {item.avgRating}</Text>
+            <Text>Price: ${item.minPricePerNight}/night</Text>
           </View>
         )}
       />

@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Address } from '@/types/address';
 import colors from '@/config/colors';
+import { router } from 'expo-router';
 
 export type HotelCardProps = {
   imageUrl: string;
@@ -27,15 +28,21 @@ const HotelCard: React.FC<HotelCardProps> = ({
     setIsFavorite(!isFavorite);
   };
 
+  const handlePress = () => {
+    router.push('/hotel-details');
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.imageContainer}>
-        <Image source={imgUrl} style={styles.image} />
+        <TouchableOpacity onPress={handlePress}>
+          <Image source={imgUrl} style={styles.image} />
+        </TouchableOpacity>
         <TouchableOpacity onPress={toggleFavorite} style={styles.heartIcon}>
           <Ionicons
             name={isFavorite ? 'heart' : 'heart-outline'}
             size={24}
-            color={isFavorite ? 'red' : colors.grey}
+            color={isFavorite ? colors.primaryDark : colors.grey}
           />
         </TouchableOpacity>
       </View>
