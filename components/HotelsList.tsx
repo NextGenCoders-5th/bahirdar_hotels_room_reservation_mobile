@@ -27,19 +27,16 @@ const HotelsList: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={hotels}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item: hotel }) => (
-          <HotelCard
-            imageUrl={hotel.imageCover}
-            name={hotel.name}
-            address={hotel.address}
-            pricePerNight={hotel.minPricePerNight}
-            rating={hotel.avgRating}
-          />
-        )}
-      />
+      {hotels.map((hotel) => (
+        <HotelCard
+          key={hotel._id}
+          imageUrl={hotel.imageCover}
+          name={hotel.name}
+          address={hotel.address}
+          pricePerNight={hotel.minPricePerNight}
+          rating={hotel.avgRating}
+        />
+      ))}
     </View>
   );
 };

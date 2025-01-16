@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native';
 import HotelsList from '../components/HotelsList';
 import colors from '@/config/colors';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,16 +20,18 @@ export default function HomeScreen() {
           color={colors.grey}
         />
       </View>
-      <AppText
-        style={{
-          fontSize: 24,
-          // marginBottom: 10,
-          color: colors.black,
-        }}
-      >
-        Featured Hotels
-      </AppText>
-      <HotelsList />
+      <ScrollView>
+        <AppText
+          style={{
+            fontSize: 24,
+            // marginBottom: 10,
+            color: colors.black,
+          }}
+        >
+          Featured Hotels
+        </AppText>
+        <HotelsList />
+      </ScrollView>
     </View>
   );
 }
