@@ -42,7 +42,7 @@ const TabBarIcon: React.FC<TabBarIconProps> = ({ name, focused }) => {
     >
       <Ionicons
         name={name}
-        size={24}
+        size={28}
         color={focused ? colors.primaryDark : colors.grey}
       />
     </Animated.View>

@@ -10,18 +10,18 @@ export default function TabsLayout() {
         tabBarActiveTintColor: colors.primaryDark,
         tabBarInactiveTintColor: colors.grey,
         tabBarStyle: {
-          backgroundColor: colors.primaryLight,
           borderTopWidth: 0,
-          height: 70,
-          paddingTop: 10,
+          height: 60,
+          marginVertical: 5,
         },
 
         tabBarLabelStyle: {
           marginTop: 5,
           fontSize: 14,
           fontWeight: 'bold',
-          color: colors.grey,
+          // color: colors.grey,
         },
+        tabBarLabelPosition: 'below-icon',
       }}
     >
       <Tabs.Screen
