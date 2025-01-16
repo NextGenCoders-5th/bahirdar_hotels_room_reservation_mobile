@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
 import colors from '@/config/colors';
 import hotels from '@/data/hotels';
+import AppText from '@/components/AppText';
 
 const HotelDetailsScreen: React.FC = () => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -28,7 +29,7 @@ const HotelDetailsScreen: React.FC = () => {
     numOfRatings,
     hotelImages,
     numOfRooms,
-  } = hotels[3];
+  } = hotels[2];
 
   const imgUrl = require('@/assets/images/hotels/hotel-4.jpg');
 
@@ -48,6 +49,20 @@ const HotelDetailsScreen: React.FC = () => {
           dotStyle={styles.dot}
           activeDotStyle={styles.activeDot}
           style={styles.swiper}
+          nextButton={
+            <MaterialIcons
+              name='navigate-next'
+              size={50}
+              color={colors.white}
+            />
+          }
+          prevButton={
+            <MaterialIcons
+              name='navigate-before'
+              size={50}
+              color={colors.white}
+            />
+          }
         >
           {hotelImages.map((imageUrl, index) => (
             <Image
@@ -69,7 +84,7 @@ const HotelDetailsScreen: React.FC = () => {
 
       <View style={styles.infoContainer}>
         <View style={[styles.hotelNameContainer, { marginBottom: 10 }]}>
-          <Text style={styles.hotelName}>{name}</Text>
+          <AppText style={{ fontSize: 22 }}>{name}</AppText>
           <View style={styles.starContainer}>
             {Array.from({ length: hotelStar }).map((_, index) => (
               <Ionicons
@@ -77,9 +92,13 @@ const HotelDetailsScreen: React.FC = () => {
                 name='star'
                 size={20}
                 color={colors.primaryDark}
+                style={{
+                  textShadowColor: colors.primaryDark,
+                  textShadowOffset: { width: 1, height: 1 },
+                  textShadowRadius: 3,
+                }}
               />
             ))}
-            <Text style={styles.mediumText}>Star</Text>
           </View>
         </View>
 
@@ -89,9 +108,17 @@ const HotelDetailsScreen: React.FC = () => {
             {address.city} - {address.subcity}
           </Text>
 
-          <View style={styles.starContainer}>
-            <Ionicons name='star' size={16} color={colors.yellow} />
-            <Text style={styles.mediumText}>{rating.toFixed(1)}</Text>
+          <View style={styles.ratingContainer}>
+            <Ionicons name='star' size={16} color={colors.primaryDark} />
+            <AppText
+              style={{
+                fontSize: 16,
+                marginLeft: 5,
+                marginBottom: 0,
+              }}
+            >
+              {rating.toFixed(1)}
+            </AppText>
             <Text style={styles.text}> ({numOfRatings} reviews)</Text>
           </View>
         </View>
@@ -109,17 +136,17 @@ const HotelDetailsScreen: React.FC = () => {
         </View>
 
         <View style={[styles.bottomMargin, { marginTop: 30 }]}>
-          <Text style={styles.largeText}>Summary</Text>
+          <AppText>Summary</AppText>
           <Text style={styles.text}>{summary}</Text>
         </View>
 
         <View style={styles.bottomMargin}>
-          <Text style={styles.largeText}>Description</Text>
+          <AppText>Description</AppText>
           <Text style={styles.text}>{description}</Text>
         </View>
 
         <View style={styles.bottomMargin}>
-          <Text style={styles.largeText}>Facilities</Text>
+          <AppText>Facilities</AppText>
           <View style={styles.facilityContainer}>
             {facilities.map((facility, index) => (
               <Text style={styles.facility} key={index}>
@@ -128,6 +155,10 @@ const HotelDetailsScreen: React.FC = () => {
             ))}
           </View>
         </View>
+      </View>
+
+      <View>
+        <Text>Rooms</Text>
       </View>
     </ScrollView>
   );
@@ -139,16 +170,18 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   dot: {
-    backgroundColor: colors.grey,
-    width: 16,
-    height: 16,
-    borderRadius: 8,
+    backgroundColor: colors.white,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    top: 25,
   },
   activeDot: {
     backgroundColor: colors.primaryDark,
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    top: 25,
   },
   card: {
     backgroundColor: colors.white,
@@ -190,12 +223,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
-  },
-  largeText: {
-    color: colors.greyDark,
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    borderRadius: 10,
   },
   heartIcon: {
     position: 'absolute',
@@ -232,15 +260,9 @@ const styles = StyleSheet.create({
   hotelNameContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginTop: 8,
     paddingRight: 10,
-    gap: 10,
-  },
-  mediumText: {
-    fontSize: 16,
-    marginLeft: 5,
-    color: colors.greyDark,
-    fontWeight: 'bold',
   },
   price: {
     fontSize: 16,
@@ -253,7 +275,10 @@ const styles = StyleSheet.create({
   starContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 5,
+    bottom: 15,
   },
+
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
