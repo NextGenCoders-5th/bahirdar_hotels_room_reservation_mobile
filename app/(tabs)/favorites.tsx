@@ -1,24 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import FavoritesScreen from '@/screens/FavoritesScreen';
+import Screen from '@/components/Screen';
 
-export default function FavoritesScreen() {
+export default function Favorities() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>My Favorites</Text>
-      <Text>Your favorites will appear here.</Text>
-    </View>
+    <Screen style={{ paddingTop: 10 }}>
+      <FavoritesScreen />
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-});

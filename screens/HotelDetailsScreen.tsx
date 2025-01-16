@@ -64,6 +64,7 @@ const HotelDetailsScreen: React.FC = () => {
             />
           }
         >
+          <Image source={imageCover} style={styles.image} resizeMode='cover' />
           {hotelImages.map((imageUrl, index) => (
             <Image
               key={index}
