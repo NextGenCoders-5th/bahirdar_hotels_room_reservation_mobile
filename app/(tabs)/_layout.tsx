@@ -20,8 +20,6 @@ export default function TabsLayout() {
           tabBarLabelStyle: {
             marginTop: 5,
             fontSize: 12,
-            // fontWeight: 'bold',
-            // color: colors.grey,
           },
           tabBarLabelPosition: 'below-icon',
         }}

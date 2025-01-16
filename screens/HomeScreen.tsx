@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput } from 'react-native';
 import HotelsList from '../components/HotelsList';
 import colors from '@/config/colors';
 import { Ionicons } from '@expo/vector-icons';
+import AppText from '@/components/AppText';
 
 export default function HomeScreen() {
   return (
@@ -19,7 +20,15 @@ export default function HomeScreen() {
           color={colors.grey}
         />
       </View>
-      <Text style={styles.title}>Featured Hotels</Text>
+      <AppText
+        style={{
+          fontSize: 24,
+          // marginBottom: 10,
+          color: colors.black,
+        }}
+      >
+        Featured Hotels
+      </AppText>
       <HotelsList />
     </View>
   );

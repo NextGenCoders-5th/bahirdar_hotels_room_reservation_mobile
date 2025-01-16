@@ -50,15 +50,21 @@ const HotelCard: React.FC<HotelCardProps> = ({
         <View style={styles.row}>
           <Text style={styles.hotelName}>{name}</Text>
           <View style={styles.ratingContainer}>
-            <Ionicons name='star' size={16} color='#FFD700' />
+            <Ionicons name='star' size={16} color={colors.yellow} />
             <Text style={styles.rating}>{rating.toFixed(1)} (11 reviews)</Text>
           </View>
         </View>
         <Text style={styles.hotelAddress}>
           {address.city} - {address.subcity}
         </Text>
-        <View style={styles.row}>
-          <Text style={styles.price}>${pricePerNight}/night</Text>
+        <View style={[styles.row, { paddingRight: 10 }]}>
+          <Text style={styles.price}>
+            ${pricePerNight}
+            <Text style={{ fontWeight: '300' }}>/night</Text>
+          </Text>
+          <TouchableOpacity>
+            <Text style={styles.book}>Book now</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -76,6 +82,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 3,
+  },
+  book: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    backgroundColor: colors.primary,
+    color: colors.white,
+    borderRadius: 5,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   imageContainer: {
     position: 'relative',
@@ -112,10 +128,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   price: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    backgroundColor: colors.primaryDark,
-    color: colors.white,
+    fontSize: 20,
+    fontWeight: '900',
+    color: colors.primaryDark,
     padding: 10,
     borderRadius: 5,
   },

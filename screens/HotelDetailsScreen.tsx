@@ -146,7 +146,7 @@ const HotelDetailsScreen: React.FC = () => {
         </View>
 
         <View style={styles.bottomMargin}>
-          <AppText>Facilities</AppText>
+          <AppText>Services and Facilities</AppText>
           <View style={styles.facilityContainer}>
             {facilities.map((facility, index) => (
               <Text style={styles.facility} key={index}>
@@ -155,10 +155,10 @@ const HotelDetailsScreen: React.FC = () => {
             ))}
           </View>
         </View>
-      </View>
 
-      <View>
-        <AppText>Rooms</AppText>
+        <View style={styles.bottomMargin}>
+          <AppText>Rooms</AppText>
+        </View>
       </View>
     </ScrollView>
   );
