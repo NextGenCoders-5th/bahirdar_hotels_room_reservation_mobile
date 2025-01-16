@@ -4,6 +4,7 @@ export default {
   primaryMedium: '#CDC1FF',
   primaryLight: '#E5D9F2',
   primaryExtraLight: '#F5EFFF',
+  primaryExtraLight2: 'rgb(240, 237, 245)',
 
   greyDark: 'rgba(37, 37, 37, 0.9)',
   grey: 'rgba(124, 124, 126, 0.9)',
