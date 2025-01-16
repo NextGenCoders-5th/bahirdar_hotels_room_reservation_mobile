@@ -158,7 +158,7 @@ const HotelDetailsScreen: React.FC = () => {
       </View>
 
       <View>
-        <Text>Rooms</Text>
+        <AppText>Rooms</AppText>
       </View>
     </ScrollView>
   );

@@ -30,19 +30,19 @@ const TabBarIcon: React.FC<TabBarIconProps> = ({ name, focused }) => {
         {
           alignItems: 'center',
           justifyContent: 'center',
-          width: 40,
-          height: 40,
-          borderRadius: 20,
+          width: 30,
+          height: 30,
+          borderRadius: 15,
         },
         {
-          borderWidth,
+          borderWidth: 2,
           borderColor: focused ? colors.primaryDark : 'transparent',
         },
       ]}
     >
       <Ionicons
         name={name}
-        size={28}
+        size={22}
         color={focused ? colors.primaryDark : colors.grey}
       />
     </Animated.View>

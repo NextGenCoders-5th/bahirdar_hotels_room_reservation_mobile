@@ -17,8 +17,8 @@ export default function TabsLayout() {
 
         tabBarLabelStyle: {
           marginTop: 5,
-          fontSize: 14,
-          fontWeight: 'bold',
+          fontSize: 12,
+          // fontWeight: 'bold',
           // color: colors.grey,
         },
         tabBarLabelPosition: 'below-icon',
@@ -30,7 +30,10 @@ export default function TabsLayout() {
           title: 'Home',
 
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon name='home' focused={focused} />
+            <TabBarIcon
+              name={focused ? 'home-sharp' : 'home-outline'}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -41,7 +44,10 @@ export default function TabsLayout() {
           title: 'Favorites',
 
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon name='heart' focused={focused} />
+            <TabBarIcon
+              name={focused ? 'heart-sharp' : 'heart-outline'}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -51,7 +57,10 @@ export default function TabsLayout() {
           title: 'Bookings',
 
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon name='calendar' focused={focused} />
+            <TabBarIcon
+              name={focused ? 'calendar-clear' : 'calendar-clear-outline'}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -61,7 +70,10 @@ export default function TabsLayout() {
           title: 'Profile',
 
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon name='person' focused={focused} />
+            <TabBarIcon
+              name={focused ? 'person-circle' : 'person-circle-outline'}
+              focused={focused}
+            />
           ),
         }}
       />
