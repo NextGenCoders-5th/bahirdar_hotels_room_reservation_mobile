@@ -13,12 +13,14 @@ export default function TabsLayout() {
           tabBarActiveTintColor: colors.primaryDark,
           tabBarInactiveTintColor: colors.grey,
           tabBarStyle: {
-            borderTopWidth: 0,
-            height: 60,
+            // borderTopWidth: 0,
+            // height: 60,
+            // borderWidth: 5,
+            // borderColor: colors.primary,
           },
           tabBarHideOnKeyboard: true,
           tabBarLabelStyle: {
-            marginTop: 5,
+            // marginTop: 5,
             fontSize: 12,
           },
           tabBarLabelPosition: 'below-icon',
@@ -28,7 +30,6 @@ export default function TabsLayout() {
           name='index'
           options={{
             title: 'Home',
-
             tabBarIcon: ({ focused }) => (
               <TabBarIcon
                 name={focused ? 'home-sharp' : 'home-outline'}
