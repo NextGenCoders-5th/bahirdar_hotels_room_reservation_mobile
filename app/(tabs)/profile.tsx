@@ -14,6 +14,8 @@ import { signOut } from '@/redux/slices/authSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useRouter } from 'expo-router';
 import colors from '@/config/colors';
+import AppText from '@/components/AppText';
+import AppTextInput from '@/components/AppTextInput';
 
 export default function ProfileScreen() {
   // const dispatch = useDispatch<AppDispatch>();
@@ -84,7 +86,16 @@ export default function ProfileScreen() {
           top: 100,
           padding: 20,
         }}
-      ></View>
+      >
+        <View style={styles.inputContainer}>
+          <AppText style={styles.inputLabel}>First Name</AppText>
+          <AppTextInput placeholder='First name' />
+        </View>
+        <View style={styles.inputContainer}>
+          <AppText style={styles.inputLabel}>Last Name</AppText>
+          <AppTextInput placeholder='First name' />
+        </View>
+      </View>
     </ScrollView>
   );
 }
@@ -101,4 +112,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     padding: 20,
   },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  inputLabel: { marginBottom: 0, fontWeight: '600' },
 });
