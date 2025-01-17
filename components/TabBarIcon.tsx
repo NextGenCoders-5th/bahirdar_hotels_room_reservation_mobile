@@ -35,7 +35,7 @@ const TabBarIcon: React.FC<TabBarIconProps> = ({ name, focused }) => {
           borderRadius: 15,
         },
         {
-          borderWidth: 2,
+          // borderWidth: 2,
           borderColor: focused ? colors.primaryDark : 'transparent',
         },
       ]}
