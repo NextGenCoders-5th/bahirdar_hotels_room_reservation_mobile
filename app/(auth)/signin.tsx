@@ -15,7 +15,7 @@ export default function SignInScreen() {
   const handleSignIn = async () => {
     try {
       await dispatch(signIn({ email, password })).unwrap();
-      router.replace('/(tabs)');
+      router.replace('/(tabs)/home');
     } catch (error) {
       console.error('Sign in error:', error);
     }
