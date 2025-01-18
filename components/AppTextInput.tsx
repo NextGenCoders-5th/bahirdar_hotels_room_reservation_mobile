@@ -31,7 +31,11 @@ function AppTextInput({
           style={styles.icon}
         />
       )}
-      <TextInput placeholderTextColor={colors.greyLight} {...otherProps} />
+      <TextInput
+        style={styles.textInput}
+        placeholderTextColor={colors.greyLight}
+        {...otherProps}
+      />
     </View>
   );
 }
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 15,
     flexDirection: 'row',
-    padding: 10,
+    padding: 5,
     marginVertical: 10,
     borderWidth: 1,
     borderColor: colors.grey,
@@ -52,6 +56,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
+    fontSize: 16,
   },
 });
 
