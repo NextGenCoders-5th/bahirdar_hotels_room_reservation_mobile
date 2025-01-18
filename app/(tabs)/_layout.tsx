@@ -12,12 +12,6 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarActiveTintColor: colors.primaryDark,
           tabBarInactiveTintColor: colors.grey,
-          tabBarStyle: {
-            // borderTopWidth: 0,
-            // height: 60,
-            // borderWidth: 5,
-            // borderColor: colors.primary,
-          },
           tabBarHideOnKeyboard: true,
           tabBarLabelStyle: {
             // marginTop: 5,
@@ -27,7 +21,7 @@ export default function TabsLayout() {
         }}
       >
         <Tabs.Screen
-          name='index'
+          name='home'
           options={{
             title: 'Home',
             tabBarIcon: ({ focused }) => (
