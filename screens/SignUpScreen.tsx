@@ -93,7 +93,11 @@ export default function SignUpScreen() {
           }}
         >
           <Text
-            style={{ color: colors.greyDark, fontSize: 14, marginRight: 2 }}
+            style={{
+              color: colors.greyMediumDark,
+              fontSize: 14,
+              marginRight: 2,
+            }}
           >
             Already have an account?
           </Text>
