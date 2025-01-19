@@ -41,7 +41,15 @@ const CheckBox: React.FC<CheckBoxProps> = ({
           <Ionicons name='checkmark' size={20} color={colors.white} />
         )}
       </View>
-      <Text style={[styles.description, textStyle]}>{description}</Text>
+      <Text
+        style={[
+          styles.description,
+          textStyle,
+          { color: isChecked ? colors.greyDark : colors.grey },
+        ]}
+      >
+        {description}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -64,7 +72,6 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
-    color: colors.greyDark,
   },
 });
 
