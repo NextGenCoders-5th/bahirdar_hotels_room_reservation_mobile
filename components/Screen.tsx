@@ -10,7 +10,8 @@ interface ScreenProps {
 function Screen({ children, style }: ScreenProps) {
   return (
     <SafeAreaView style={[styles.screen, style]}>
-      <View style={[styles.view, style]}>{children}</View>
+      {/* <View style={[styles.view, style]}>{children}</View> */}
+      {children}
     </SafeAreaView>
   );
 }
