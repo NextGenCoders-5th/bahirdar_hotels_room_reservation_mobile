@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import colors from '@/config/colors';
 
@@ -8,13 +8,25 @@ export default function WelcomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Hotel Booking App</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.replace('/(tabs)/home')}
+      <Text style={styles.title}>Welcome to your home</Text>
+      <Image
+        style={styles.image}
+        source={require('@/assets/images/welcome.png')}
+      />
+      <View
+        style={{
+          // justifyContent: 'center',
+          padding: 20,
+          gap: 15,
+        }}
       >
-        <Text style={styles.buttonText}>Get Started</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push('/get-started')}
+        >
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -22,24 +34,34 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: colors.primaryDark,
+    justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.primaryExtraLight,
+    paddingVertical: 50,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-    color: colors.primaryDark,
+    color: colors.white,
+    textAlign: 'center',
+  },
+  image: {
+    width: 250,
+    height: 250,
+    resizeMode: 'contain',
+    backgroundColor: colors.white,
+    borderRadius: 125,
   },
   button: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.yellow,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
   },
   buttonText: {
-    color: colors.white,
+    color: colors.greyDark,
+    textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
   },
