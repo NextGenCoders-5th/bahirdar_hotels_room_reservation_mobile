@@ -96,7 +96,7 @@ export default function ProfileScreen() {
         </View>
         <View style={styles.marginBottom}>
           <AppText style={styles.inputLabel}>Last Name</AppText>
-          <AppTextInput placeholder='First name' />
+          <AppTextInput placeholder='Last name' />
         </View>
         <View style={styles.marginBottom}>
           <AppText style={styles.inputLabel}>Email</AppText>
@@ -108,7 +108,7 @@ export default function ProfileScreen() {
         </View>
         <View>
           <AppText style={styles.inputLabel}>Phone number</AppText>
-          <AppTextInput placeholder='First name' secureTextEntry />
+          <AppTextInput placeholder='Phone number' secureTextEntry />
         </View>
         <TouchableHighlight style={styles.button}>
           <Text
