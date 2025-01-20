@@ -87,12 +87,24 @@ export default function SignUpScreen() {
           }}
           boxStyle={{ marginBottom: 15 }}
         />
+
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 16,
+            color: colors.greyMediumDark,
+            marginVertical: 10,
+          }}
+        >
+          Or continue with
+        </Text>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             gap: 20,
             marginBottom: 20,
+            justifyContent: 'center',
           }}
         >
           <IconButton
@@ -102,9 +114,6 @@ export default function SignUpScreen() {
           <IconButton
             icon={require('@/assets/images/facebook.jpg')}
             onPress={() => {}}
-            buttonStyle={{
-              marginBottom: 20,
-            }}
           />
         </View>
 
