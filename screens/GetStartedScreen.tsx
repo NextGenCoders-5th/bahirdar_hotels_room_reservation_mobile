@@ -10,6 +10,7 @@ import {
 import { useRouter } from 'expo-router';
 import colors from '@/config/colors';
 import Screen from '@/components/Screen';
+import AppButton from '@/components/AppButton';
 
 export default function GetStartedScreen() {
   const router = useRouter();
@@ -24,17 +25,22 @@ export default function GetStartedScreen() {
         />
         <View
           style={{
-            // justifyContent: 'center',
-            // padding: 20,
-            gap: 15,
+            width: '100%',
+            gap: 5,
           }}
         >
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => router.push('/signup')}
-          >
-            <Text style={styles.buttonText}>Sign up</Text>
-          </TouchableOpacity>
+          <View style={{ padding: 20 }}>
+            <AppButton
+              title='Sign up'
+              onPress={() => router.push('/signup')}
+              boxStyle={{
+                backgroundColor: colors.yellow,
+              }}
+              textStyle={{
+                color: colors.greyDark,
+              }}
+            />
+          </View>
           <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
             <Text style={{ color: colors.white, fontSize: 14, marginRight: 2 }}>
               Already have an account?

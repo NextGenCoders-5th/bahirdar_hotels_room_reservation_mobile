@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import colors from '@/config/colors';
+import AppButton from '@/components/AppButton';
 
 export default function WelcomeScreen() {
   const router = useRouter();
@@ -15,17 +16,21 @@ export default function WelcomeScreen() {
       />
       <View
         style={{
-          // justifyContent: 'center',
+          width: '100%',
           padding: 20,
           gap: 15,
         }}
       >
-        <TouchableOpacity
-          style={styles.button}
+        <AppButton
+          title='Continue'
           onPress={() => router.push('/get-started')}
-        >
-          <Text style={styles.buttonText}>Continue</Text>
-        </TouchableOpacity>
+          boxStyle={{
+            backgroundColor: colors.yellow,
+          }}
+          textStyle={{
+            color: colors.greyDark,
+          }}
+        />
       </View>
     </View>
   );
