@@ -1,87 +1,139 @@
-// import React, { useState } from 'react';
-// import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { signIn } from '@/redux/slices/authSlice';
-// import { AppDispatch, RootState } from '@/redux/store';
-// import { StackNavigationProp } from '@react-navigation/stack';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import colors from '@/config/colors';
+import AppText from '@/components/AppText';
+import AppTextInput from '@/components/AppTextInput';
+import AppButton from '@/components/AppButton';
+import { router } from 'expo-router';
+import IconButton from '@/components/IconButton';
 
-// type SignInScreenNavigationProp = StackNavigationProp<
-//   RootStackParamList,
-//   'SignIn'
-// >;
+export default function SignInScreen() {
+  return (
+    <View style={styles.container}>
+      <Image
+        style={{
+          width: 120,
+          height: 120,
+          borderRadius: 60,
+          resizeMode: 'cover',
+          alignSelf: 'center',
+          marginVertical: 20,
+        }}
+        source={require('@/assets/images/get-started.png')}
+      />
+      <View
+        style={{
+          backgroundColor: colors.white,
+          flex: 1,
+          borderTopRightRadius: 40,
+          borderTopLeftRadius: 40,
+          padding: 20,
+          paddingTop: 40,
+        }}
+      >
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+            Email address
+          </AppText>
+          <AppTextInput placeholder='Email' />
+        </View>
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+            Password
+          </AppText>
+          <AppTextInput
+            placeholder='Password'
+            secureTextEntry
+            cursorColor={colors.primaryDark}
+          />
+        </View>
+        <Pressable onPress={() => router.push('/forget-password')}>
+          <Text style={styles.text}>Forgot password?</Text>
+        </Pressable>
+        <AppButton
+          title='Sign in'
+          onPress={() => {
+            router.push('/home');
+          }}
+          boxStyle={{
+            backgroundColor: colors.yellow,
+          }}
+          textStyle={{
+            color: colors.greyDark,
+          }}
+        />
 
-// interface Props {
-//   navigation: SignInScreenNavigationProp;
-// }
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 16,
+            color: colors.greyMediumDark,
+            marginVertical: 10,
+          }}
+        >
+          Or continue with
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 20,
+            marginBottom: 20,
+            justifyContent: 'center',
+          }}
+        >
+          <IconButton
+            icon={require('@/assets/images/google.jpeg')}
+            onPress={() => {}}
+          />
+          <IconButton
+            icon={require('@/assets/images/facebook.jpg')}
+            onPress={() => {}}
+          />
+        </View>
 
-// const SignInScreen = ({ navigation }: Props) => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const dispatch = useDispatch<AppDispatch>();
-//   const { isLoading, error } = useSelector((state: RootState) => state.auth);
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              color: colors.greyMediumDark,
+              fontSize: 14,
+              marginRight: 2,
+            }}
+          >
+            Don't have an account?
+          </Text>
+          <Pressable onPress={() => router.push('/signup')}>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+                color: colors.primaryDark,
+              }}
+            >
+              Sign up
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    </View>
+  );
+}
 
-//   const handleSignIn = async () => {
-//     try {
-//       await dispatch(signIn({ email, password })).unwrap();
-//       navigation.navigate('Main');
-//     } catch (error) {
-//       console.error('Sign in error:', error);
-//     }
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Sign In</Text>
-//       <TextInput
-//         style={styles.input}
-//         placeholder='Email'
-//         value={email}
-//         onChangeText={setEmail}
-//       />
-//       <TextInput
-//         style={styles.input}
-//         placeholder='Password'
-//         value={password}
-//         onChangeText={setPassword}
-//         secureTextEntry
-//       />
-//       <Button title='Sign In' onPress={handleSignIn} disabled={isLoading} />
-//       {error && <Text style={styles.error}>{error}</Text>}
-//       <Button
-//         title="Don't have an account? Sign Up"
-//         onPress={() => navigation.navigate('SignUp')}
-//       />
-//       <Button
-//         title='Forgot Password?'
-//         onPress={() => navigation.navigate('ForgotPassword')}
-//       />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     padding: 20,
-//   },
-//   title: {
-//     fontSize: 24,
-//     marginBottom: 20,
-//   },
-//   input: {
-//     width: '100%',
-//     height: 40,
-//     borderColor: 'gray',
-//     borderWidth: 1,
-//     marginBottom: 10,
-//     paddingHorizontal: 10,
-//   },
-//   error: {
-//     color: 'red',
-//     marginBottom: 10,
-//   },
-// });
-
-// export default SignInScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.primaryDark,
+  },
+  text: {
+    marginBottom: 10,
+    color: colors.primary,
+    fontWeight: '500',
+    fontSize: 16,
+    textDecorationLine: 'underline',
+    textAlign: 'right',
+  },
+});
