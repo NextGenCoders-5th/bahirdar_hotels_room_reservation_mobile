@@ -6,28 +6,38 @@ import {
   TextInputProps,
   ViewStyle,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '@/config/colors';
 
-type IoniconsProps = ComponentProps<typeof Ionicons>;
+type IconProps =
+  | ComponentProps<typeof Ionicons>
+  | ComponentProps<typeof MaterialCommunityIcons>;
 
 interface AppTextInputProps extends TextInputProps {
-  icon?: IoniconsProps['name'];
+  icon?: IconProps['name'];
   width?: string | number;
+  iconColor?: string;
 }
 
 function AppTextInput({
   icon,
   width = '100%',
+  iconColor = colors.grey,
   ...otherProps
 }: AppTextInputProps) {
+  const isMaterialCommunityIcon =
+    icon && icon in MaterialCommunityIcons.glyphMap;
+  const IconLibrary = isMaterialCommunityIcon
+    ? MaterialCommunityIcons
+    : Ionicons;
+
   return (
     <View style={[styles.container, { width } as ViewStyle]}>
       {icon && (
-        <Ionicons
-          name='person'
+        <IconLibrary
+          name={icon as any}
           size={20}
-          color={colors.primary}
+          color={iconColor}
           style={styles.icon}
         />
       )}
