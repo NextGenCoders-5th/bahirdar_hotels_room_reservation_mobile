@@ -35,7 +35,7 @@ export default function SignInScreen() {
           <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
             Email address
           </AppText>
-          <AppTextInput placeholder='Email' />
+          <AppTextInput placeholder='Email' icon='email' />
         </View>
         <View style={{ marginBottom: 10 }}>
           <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
@@ -45,6 +45,7 @@ export default function SignInScreen() {
             placeholder='Password'
             secureTextEntry
             cursorColor={colors.primaryDark}
+            icon='lock'
           />
         </View>
         <Pressable onPress={() => router.push('/forget-password')}>

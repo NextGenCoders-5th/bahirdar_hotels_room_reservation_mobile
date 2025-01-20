@@ -1,24 +1,11 @@
+import Screen from '@/components/Screen';
+import ForgetPasswordScreen from '@/screens/ForgetPasswordScreen';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 
 export default function ForgotPasswordScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Forgot Password</Text>
-      <Text>Password reset form will be implemented here.</Text>
-    </View>
+    <Screen style={{ paddingTop: 0 }}>
+      <ForgetPasswordScreen />
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-});
