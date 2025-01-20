@@ -5,45 +5,34 @@ import {
   StyleSheet,
   ViewStyle,
   TextStyle,
+  ImageSourcePropType,
+  Image,
+  ImageStyle,
 } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '@/config/colors';
 
 interface IconButtonProps {
-  icon:
-    | keyof typeof MaterialCommunityIcons.glyphMap
-    | keyof typeof Ionicons.glyphMap;
+  imageUrl: ImageSourcePropType;
   onPress: () => void;
   label?: string;
   buttonStyle?: ViewStyle;
-  iconStyle?: TextStyle;
+  imageStyle?: ImageStyle;
   labelStyle?: TextStyle;
-  color?: string;
-  size?: number;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
-  icon,
+  imageUrl,
   onPress,
   label,
   buttonStyle,
-  iconStyle,
+  imageStyle,
   labelStyle,
-  color = colors.primaryLight,
-  size = 24,
 }) => {
-  const isMaterialCommunityIcon = icon in MaterialCommunityIcons.glyphMap;
-  const IconLibrary = isMaterialCommunityIcon
-    ? MaterialCommunityIcons
-    : Ionicons;
-
   return (
     <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
-      <IconLibrary
-        name={icon as any}
-        size={size}
-        color={color}
-        style={iconStyle}
+      <Image
+        source={imageUrl}
+        style={[styles.image, imageStyle && (imageStyle as any)]}
       />
 
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
@@ -56,18 +45,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 15,
-    width: '100%',
-    backgroundColor: colors.primaryDark,
-    borderRadius: 20,
+    padding: 5,
+    borderRadius: 40,
     marginVertical: 10,
+    gap: 4,
   },
   label: {
-    marginLeft: 8,
     fontSize: 16,
-    color: colors.primaryExtraLight,
+    color: colors.greyDark,
     textTransform: 'uppercase',
     fontWeight: 'bold',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    resizeMode: 'contain',
   },
 });
 

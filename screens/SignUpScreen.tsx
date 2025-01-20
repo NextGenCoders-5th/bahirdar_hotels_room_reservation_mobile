@@ -1,5 +1,4 @@
 import {
-  Button,
   Image,
   Pressable,
   ScrollView,
@@ -15,6 +14,7 @@ import CheckBox from '@/components/CheckBox';
 import AppButton from '@/components/AppButton';
 import { router } from 'expo-router';
 import IconButton from '@/components/IconButton';
+import ImageButton from '@/components/ImageButton';
 
 export default function SignUpScreen() {
   const [isChecked, setIsChecked] = React.useState(true);
@@ -103,19 +103,22 @@ export default function SignUpScreen() {
         </Text>
         <View
           style={{
+            flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            gap: 20,
+            gap: 5,
             marginBottom: 20,
             justifyContent: 'center',
+            width: '100%',
+            overflow: 'hidden',
           }}
         >
-          <IconButton
-            icon={require('@/assets/images/google.jpeg')}
+          <ImageButton
+            imageUrl={require('@/assets/images/google.jpeg')}
             onPress={() => {}}
           />
-          <IconButton
-            icon={require('@/assets/images/facebook.jpg')}
+          <ImageButton
+            imageUrl={require('@/assets/images/facebook.jpg')}
             onPress={() => {}}
           />
         </View>
