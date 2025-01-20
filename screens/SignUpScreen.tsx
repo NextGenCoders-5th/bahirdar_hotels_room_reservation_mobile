@@ -14,6 +14,7 @@ import AppTextInput from '@/components/AppTextInput';
 import CheckBox from '@/components/CheckBox';
 import AppButton from '@/components/AppButton';
 import { router } from 'expo-router';
+import IconButton from '@/components/IconButton';
 
 export default function SignUpScreen() {
   const [isChecked, setIsChecked] = React.useState(true);
@@ -86,6 +87,27 @@ export default function SignUpScreen() {
           }}
           boxStyle={{ marginBottom: 15 }}
         />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 20,
+            marginBottom: 20,
+          }}
+        >
+          <IconButton
+            icon={require('@/assets/images/google.jpeg')}
+            onPress={() => {}}
+          />
+          <IconButton
+            icon={require('@/assets/images/facebook.jpg')}
+            onPress={() => {}}
+            buttonStyle={{
+              marginBottom: 20,
+            }}
+          />
+        </View>
+
         <View
           style={{
             flexDirection: 'row',
