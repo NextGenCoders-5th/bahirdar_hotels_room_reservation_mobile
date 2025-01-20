@@ -68,6 +68,12 @@ export default function SignUpScreen() {
         </View>
         <View style={{ marginBottom: 10 }}>
           <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+            Phone number
+          </AppText>
+          <AppTextInput placeholder='Phone number' />
+        </View>
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
             Password
           </AppText>
           <AppTextInput secureTextEntry placeholder='Password' />

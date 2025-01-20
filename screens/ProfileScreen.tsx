@@ -84,7 +84,7 @@ export default function ProfileScreen() {
       <View
         style={{
           flex: 1,
-          marginTop: 100,
+          marginTop: 80,
           padding: 20,
         }}
       >
@@ -100,13 +100,13 @@ export default function ProfileScreen() {
           <AppText style={styles.inputLabel}>Email</AppText>
           <AppTextInput placeholder='Email' />
         </View>
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>Password</AppText>
-          <AppTextInput placeholder='Password' secureTextEntry />
-        </View>
         <View>
           <AppText style={styles.inputLabel}>Phone number</AppText>
           <AppTextInput placeholder='Phone number' secureTextEntry />
+        </View>
+        <View style={styles.marginBottom}>
+          <AppText style={styles.inputLabel}>Password</AppText>
+          <AppTextInput placeholder='Password' secureTextEntry />
         </View>
         <TouchableHighlight style={styles.button}>
           <Text
