@@ -12,7 +12,7 @@ export default function SuccessEmailScreen() {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.white,
+        backgroundColor: colors.primaryDark,
         padding: 20,
         marginBottom: 20,
       }}
@@ -24,9 +24,16 @@ export default function SuccessEmailScreen() {
           height: 150,
           borderRadius: 75,
           resizeMode: 'center',
+          backgroundColor: colors.white,
         }}
       />
-      <AppText style={{ color: colors.greyMediumDark, marginVertical: 20 }}>
+      <AppText
+        style={{
+          color: colors.white,
+          textAlign: 'center',
+          marginVertical: 20,
+        }}
+      >
         An email has been sent successfully to tew*****ie@gmail.com. Please
         click the link to reset your password.
       </AppText>

@@ -48,7 +48,7 @@ export default function FavoriteCard({
         }}
       />
 
-      <View>
+      <View style={{ flex: 1 }}>
         <AppText
           style={{
             fontSize: 20,
@@ -84,7 +84,7 @@ export default function FavoriteCard({
         buttonStyle={{
           position: 'absolute',
           right: 0,
-          top: 0,
+          top: -12,
           width: 'auto',
           padding: 0,
           margin: 0,
@@ -92,12 +92,12 @@ export default function FavoriteCard({
         }}
       />
       <AppButton
-        label='Book now'
+        label='View Details'
         onPress={() => {}}
         buttonStyle={{
           position: 'absolute',
-          bottom: 2,
-          right: 2,
+          bottom: -6,
+          right: 0,
           width: 'auto',
           margin: 0,
           padding: 6,
