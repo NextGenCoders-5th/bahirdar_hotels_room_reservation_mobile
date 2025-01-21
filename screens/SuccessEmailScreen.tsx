@@ -32,7 +32,7 @@ export default function SuccessEmailScreen() {
       </AppText>
 
       <AppButton
-        title='Back to Sign In'
+        label='Back to Sign In'
         onPress={() => {
           router.push('/signin');
         }}

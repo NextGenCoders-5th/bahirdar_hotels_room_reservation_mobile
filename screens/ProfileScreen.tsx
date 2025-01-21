@@ -16,6 +16,7 @@ import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import AppTextInput from '@/components/AppTextInput';
 import { Ionicons } from '@expo/vector-icons';
+import AppButton from '@/components/AppButton';
 
 export default function ProfileScreen() {
   // const dispatch = useDispatch<AppDispatch>();
@@ -108,13 +109,14 @@ export default function ProfileScreen() {
           <AppText style={styles.inputLabel}>Password</AppText>
           <AppTextInput placeholder='Password' secureTextEntry />
         </View>
-        <TouchableHighlight style={styles.button}>
+        {/* <TouchableHighlight style={styles.button}>
           <Text
             style={{ color: colors.white, textAlign: 'center', fontSize: 16 }}
           >
             Update
           </Text>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
+        <AppButton label='Update' onPress={() => {}} />
       </View>
     </ScrollView>
   );

@@ -45,7 +45,7 @@ export default function ForgetPasswordScreen() {
       </Text>
       <AppTextInput placeholder='Email' icon='email' />
       <AppButton
-        title='Reset Password'
+        label='Reset Password'
         onPress={() => {
           router.push('/success-email');
         }}

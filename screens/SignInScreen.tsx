@@ -62,7 +62,7 @@ export default function SignInScreen() {
           <Text style={styles.text}>Forgot password?</Text>
         </Pressable>
         <AppButton
-          title='Sign in'
+          label='Sign in'
           onPress={() => {
             router.push('/home');
           }}

@@ -10,21 +10,21 @@ import {
 import colors from '@/config/colors';
 
 type AppButtonProps = {
-  title: string;
+  label: string;
   onPress: () => void;
   buttonStyle?: ViewStyle;
   labelStyle?: TextStyle;
 };
 
 function AppButton({
-  title,
+  label,
   onPress,
   buttonStyle,
   labelStyle,
 }: AppButtonProps) {
   return (
     <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
-      <Text style={[styles.text, labelStyle]}>{title}</Text>
+      <Text style={[styles.text, labelStyle]}>{label}</Text>
     </TouchableOpacity>
   );
 }

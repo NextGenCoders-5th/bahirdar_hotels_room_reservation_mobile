@@ -167,7 +167,7 @@ const HotelCard: React.FC<HotelCardProps> = ({
             </Text>
           </Text>
           <AppButton
-            title='Book now'
+            label='Book now'
             onPress={() => {}}
             buttonStyle={{
               width: 'auto',

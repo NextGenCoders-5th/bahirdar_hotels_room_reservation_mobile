@@ -30,7 +30,7 @@ export default function GetStartedScreen() {
       >
         <View style={{ padding: 20 }}>
           <AppButton
-            title='Sign up'
+            label='Sign up'
             onPress={() => router.push('/signup')}
             buttonStyle={{
               backgroundColor: colors.yellow,

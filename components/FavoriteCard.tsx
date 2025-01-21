@@ -92,7 +92,7 @@ export default function FavoriteCard({
         }}
       />
       <AppButton
-        title='Boo now'
+        label='Book now'
         onPress={() => {}}
         buttonStyle={{
           position: 'absolute',

@@ -22,7 +22,7 @@ export default function WelcomeScreen() {
         }}
       >
         <AppButton
-          title='Continue'
+          label='Continue'
           onPress={() => router.push('/get-started')}
           buttonStyle={{
             backgroundColor: colors.yellow,

@@ -97,7 +97,7 @@ export default function SignUpScreen() {
         />
 
         <AppButton
-          title='Sign Up'
+          label='Sign Up'
           onPress={() => {
             router.push('/signin');
           }}
