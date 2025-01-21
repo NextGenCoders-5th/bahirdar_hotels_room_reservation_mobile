@@ -6,7 +6,6 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  TouchableHighlight,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from '@/redux/slices/authSlice';
@@ -109,14 +108,17 @@ export default function ProfileScreen() {
           <AppText style={styles.inputLabel}>Password</AppText>
           <AppTextInput placeholder='Password' secureTextEntry />
         </View>
-        {/* <TouchableHighlight style={styles.button}>
-          <Text
-            style={{ color: colors.white, textAlign: 'center', fontSize: 16 }}
-          >
-            Update
-          </Text>
-        </TouchableHighlight> */}
-        <AppButton label='Update' onPress={() => {}} />
+
+        <AppButton
+          label='Update'
+          onPress={() => {}}
+          buttonStyle={{
+            width: 150,
+            borderRadius: 10,
+            padding: 10,
+            alignSelf: 'flex-end',
+          }}
+        />
       </View>
     </ScrollView>
   );
