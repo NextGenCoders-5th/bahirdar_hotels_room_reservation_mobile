@@ -12,6 +12,8 @@ import Swiper from 'react-native-swiper';
 import colors from '@/config/colors';
 import hotels from '@/data/hotels';
 import AppText from '@/components/AppText';
+import RoomCard from '@/components/RoomCard';
+import rooms from '@/data/rooms';
 
 const HotelDetailsScreen: React.FC = () => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -93,6 +95,7 @@ const HotelDetailsScreen: React.FC = () => {
       <View
         style={{
           padding: 10,
+          marginTop: 15,
         }}
       >
         <View
@@ -100,10 +103,8 @@ const HotelDetailsScreen: React.FC = () => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginTop: 8,
             paddingRight: 10,
-            height: 40,
-            marginVertical: 10,
+            marginVertical: 5,
           }}
         >
           <AppText style={{ fontSize: 22 }}>{name}</AppText>
@@ -112,7 +113,7 @@ const HotelDetailsScreen: React.FC = () => {
               flexDirection: 'row',
               alignItems: 'center',
               gap: 5,
-              bottom: 15,
+              bottom: 6,
             }}
           >
             {Array.from({ length: hotelStar }).map((_, index) => (
@@ -131,25 +132,38 @@ const HotelDetailsScreen: React.FC = () => {
           </View>
         </View>
 
-        <View style={styles.locationContainer}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 10,
+            gap: 5,
+          }}
+        >
           <Ionicons name='location' size={18} color={colors.primaryDark} />
           <Text style={styles.text}>
             {address.city} - {address.subcity}
           </Text>
+        </View>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Ionicons name='star' size={16} color={colors.primaryDark} />
-            <AppText
-              style={{
-                fontSize: 16,
-                marginLeft: 5,
-                marginBottom: 0,
-              }}
-            >
-              {rating.toFixed(1)}
-            </AppText>
-            <Text style={styles.text}> ({numOfRatings} reviews)</Text>
-          </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 10,
+          }}
+        >
+          <Ionicons name='star' size={16} color={colors.yellow} />
+          <AppText
+            style={{
+              fontSize: 16,
+              marginLeft: 5,
+              marginBottom: 0,
+            }}
+          >
+            {rating.toFixed(1)}
+          </AppText>
+          <Text style={styles.text}> ({numOfRatings} reviews)</Text>
         </View>
 
         <View style={styles.row}>
@@ -186,7 +200,26 @@ const HotelDetailsScreen: React.FC = () => {
         </View>
 
         <View style={styles.bottomMargin}>
-          <AppText>Rooms</AppText>
+          <AppText
+            style={{
+              marginBottom: 10,
+            }}
+          >
+            Available Hotel Rooms
+          </AppText>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{
+              backgroundColor: colors.primaryExtraLight,
+              padding: 20,
+              borderRadius: 10,
+            }}
+          >
+            {rooms.map((room, index) => (
+              <RoomCard key={index} {...room} />
+            ))}
+          </ScrollView>
         </View>
       </View>
     </ScrollView>
@@ -277,12 +310,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     color: colors.grey,
-  },
-  locationContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-    gap: 8,
   },
 
   price: {
