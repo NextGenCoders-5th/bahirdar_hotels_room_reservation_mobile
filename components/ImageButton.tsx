@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import colors from '@/config/colors';
 
-interface IconButtonProps {
+interface ImageButtonProps {
   imageUrl: ImageSourcePropType;
   onPress: () => void;
   label?: string;
@@ -20,7 +20,7 @@ interface IconButtonProps {
   labelStyle?: TextStyle;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({
+const ImageButton: React.FC<ImageButtonProps> = ({
   imageUrl,
   onPress,
   label,
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IconButton;
+export default ImageButton;
