@@ -26,15 +26,25 @@ export default function SuccessEmailScreen() {
           resizeMode: 'center',
         }}
       />
-      <AppText style={{ color: colors.greyDark, marginVertical: 20 }}>
+      <AppText style={{ color: colors.greyMediumDark, marginVertical: 20 }}>
         An email has been sent successfully to tew*****ie@gmail.com. Please
         click the link to reset your password.
       </AppText>
 
       <AppButton
-        title='Go Back'
+        title='Home'
         onPress={() => {
           router.push('/signin');
+        }}
+        boxStyle={{
+          width: 'auto',
+          padding: 12,
+          borderRadius: 10,
+        }}
+        textStyle={{
+          textTransform: 'capitalize',
+          fontSize: 16,
+          color: colors.primaryLight,
         }}
       />
     </View>

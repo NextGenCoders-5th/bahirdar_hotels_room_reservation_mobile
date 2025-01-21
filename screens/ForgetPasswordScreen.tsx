@@ -29,27 +29,36 @@ export default function ForgetPasswordScreen() {
       <AppText
         style={{ color: colors.white, fontSize: 24, textAlign: 'center' }}
       >
-        Forget Password Screen?
+        Forget Your Password?
       </AppText>
 
-      <Text style={{ color: colors.white, marginBottom: 20, fontSize: 14 }}>
+      <Text
+        style={{
+          color: colors.white,
+          marginBottom: 20,
+          fontSize: 14,
+          textAlign: 'center',
+        }}
+      >
         Please enter your email address. You will receive a link to create a new
         password via email.
       </Text>
       <AppTextInput placeholder='Email' icon='email' />
       <AppButton
-        title='Send Email'
+        title='Reset Password'
         onPress={() => {
           router.push('/success-email');
         }}
         boxStyle={{
           backgroundColor: colors.yellow,
-          width: '50%',
-          alignSelf: 'flex-start',
+          width: '60%',
+          alignSelf: 'center',
           padding: 10,
         }}
         textStyle={{
           color: colors.greyMediumDark,
+          fontSize: 16,
+          textTransform: 'capitalize',
         }}
       />
     </View>

@@ -38,6 +38,16 @@ export default function SignUpScreen() {
         }}
         source={require('@/assets/images/get-started.png')}
       />
+      <AppText
+        style={{
+          color: colors.white,
+          textAlign: 'center',
+          fontSize: 24,
+          marginBottom: 20,
+        }}
+      >
+        Create New Account
+      </AppText>
       <View
         style={{
           backgroundColor: colors.white,

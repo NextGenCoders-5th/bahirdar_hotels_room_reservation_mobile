@@ -17,10 +17,20 @@ export default function SignInScreen() {
           borderRadius: 60,
           resizeMode: 'cover',
           alignSelf: 'center',
-          marginVertical: 20,
+          marginVertical: 10,
         }}
         source={require('@/assets/images/get-started.png')}
       />
+      <AppText
+        style={{
+          color: colors.white,
+          textAlign: 'center',
+          fontSize: 24,
+          marginBottom: 10,
+        }}
+      >
+        Sign In
+      </AppText>
       <View
         style={{
           backgroundColor: colors.white,
