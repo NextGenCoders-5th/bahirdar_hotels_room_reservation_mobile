@@ -32,10 +32,10 @@ export default function GetStartedScreen() {
           <AppButton
             title='Sign up'
             onPress={() => router.push('/signup')}
-            boxStyle={{
+            buttonStyle={{
               backgroundColor: colors.yellow,
             }}
-            textStyle={{
+            labelStyle={{
               color: colors.greyDark,
             }}
           />

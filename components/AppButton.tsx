@@ -12,14 +12,19 @@ import colors from '@/config/colors';
 type AppButtonProps = {
   title: string;
   onPress: () => void;
-  boxStyle?: ViewStyle;
-  textStyle?: TextStyle;
+  buttonStyle?: ViewStyle;
+  labelStyle?: TextStyle;
 };
 
-function AppButton({ title, onPress, boxStyle, textStyle }: AppButtonProps) {
+function AppButton({
+  title,
+  onPress,
+  buttonStyle,
+  labelStyle,
+}: AppButtonProps) {
   return (
-    <TouchableOpacity style={[styles.button, boxStyle]} onPress={onPress}>
-      <Text style={[styles.text, textStyle]}>{title}</Text>
+    <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
+      <Text style={[styles.text, labelStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 }

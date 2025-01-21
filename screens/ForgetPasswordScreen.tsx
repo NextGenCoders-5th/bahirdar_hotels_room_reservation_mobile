@@ -49,13 +49,13 @@ export default function ForgetPasswordScreen() {
         onPress={() => {
           router.push('/success-email');
         }}
-        boxStyle={{
+        buttonStyle={{
           backgroundColor: colors.yellow,
           width: '60%',
           alignSelf: 'center',
           padding: 10,
         }}
-        textStyle={{
+        labelStyle={{
           color: colors.greyMediumDark,
           fontSize: 16,
           textTransform: 'capitalize',

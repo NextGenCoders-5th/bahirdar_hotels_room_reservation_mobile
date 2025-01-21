@@ -101,8 +101,8 @@ export default function SignUpScreen() {
           onPress={() => {
             router.push('/signin');
           }}
-          boxStyle={{ marginBottom: 15, backgroundColor: colors.yellow }}
-          textStyle={{
+          buttonStyle={{ marginBottom: 15, backgroundColor: colors.yellow }}
+          labelStyle={{
             color: colors.greyDark,
           }}
         />

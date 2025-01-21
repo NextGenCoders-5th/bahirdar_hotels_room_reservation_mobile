@@ -66,10 +66,10 @@ export default function SignInScreen() {
           onPress={() => {
             router.push('/home');
           }}
-          boxStyle={{
+          buttonStyle={{
             backgroundColor: colors.yellow,
           }}
-          textStyle={{
+          labelStyle={{
             color: colors.greyDark,
           }}
         />

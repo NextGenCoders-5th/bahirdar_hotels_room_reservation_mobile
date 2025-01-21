@@ -36,12 +36,12 @@ export default function SuccessEmailScreen() {
         onPress={() => {
           router.push('/signin');
         }}
-        boxStyle={{
+        buttonStyle={{
           width: 'auto',
           padding: 12,
           borderRadius: 10,
         }}
-        textStyle={{
+        labelStyle={{
           textTransform: 'capitalize',
           fontSize: 16,
           color: colors.primaryLight,
