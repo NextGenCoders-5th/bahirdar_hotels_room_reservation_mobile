@@ -35,6 +35,7 @@ const HotelsList: React.FC = () => {
           address={hotel.address}
           pricePerNight={hotel.minPricePerNight}
           rating={hotel.avgRating}
+          hotelStar={hotel.hotelStar}
         />
       ))}
     </View>

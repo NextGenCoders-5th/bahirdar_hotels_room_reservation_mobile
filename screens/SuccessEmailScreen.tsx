@@ -32,7 +32,7 @@ export default function SuccessEmailScreen() {
       </AppText>
 
       <AppButton
-        title='Home'
+        title='Back to Sign In'
         onPress={() => {
           router.push('/signin');
         }}
@@ -40,11 +40,13 @@ export default function SuccessEmailScreen() {
           width: 'auto',
           padding: 12,
           borderRadius: 10,
+          borderWidth: 2,
+          borderColor: colors.primaryDark,
+          backgroundColor: colors.white,
         }}
         labelStyle={{
-          textTransform: 'capitalize',
           fontSize: 16,
-          color: colors.primaryLight,
+          color: colors.primaryDark,
         }}
       />
     </View>

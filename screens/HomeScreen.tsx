@@ -10,7 +10,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder='Search hotels here...'
+          placeholder='Search here...'
           style={styles.input}
         ></TextInput>
         <Ionicons
