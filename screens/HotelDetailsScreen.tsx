@@ -74,19 +74,47 @@ const HotelDetailsScreen: React.FC = () => {
             />
           ))}
         </Swiper>
-        <TouchableOpacity onPress={toggleFavorite} style={styles.heartIcon}>
+        <TouchableOpacity
+          onPress={toggleFavorite}
+          style={{
+            position: 'absolute',
+            top: 10,
+            right: 10,
+          }}
+        >
           <Ionicons
             name={isFavorite ? 'heart' : 'heart-outline'}
-            size={24}
-            color={isFavorite ? colors.primaryDark : colors.grey}
+            size={34}
+            color={isFavorite ? colors.red : colors.white}
           />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.infoContainer}>
-        <View style={[styles.hotelNameContainer, { marginVertical: 10 }]}>
+      <View
+        style={{
+          padding: 10,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginTop: 8,
+            paddingRight: 10,
+            height: 40,
+            marginVertical: 10,
+          }}
+        >
           <AppText style={{ fontSize: 22 }}>{name}</AppText>
-          <View style={styles.starContainer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 5,
+              bottom: 15,
+            }}
+          >
             {Array.from({ length: hotelStar }).map((_, index) => (
               <Ionicons
                 key={index}
@@ -109,7 +137,7 @@ const HotelDetailsScreen: React.FC = () => {
             {address.city} - {address.subcity}
           </Text>
 
-          <View style={styles.ratingContainer}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Ionicons name='star' size={16} color={colors.primaryDark} />
             <AppText
               style={{
@@ -234,9 +262,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 5,
   },
-  infoContainer: {
-    padding: 10,
-  },
+
   hotelName: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -258,14 +284,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     gap: 8,
   },
-  hotelNameContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 8,
-    paddingRight: 10,
-    height: 40,
-  },
+
   price: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -273,17 +292,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     padding: 10,
     borderRadius: 5,
-  },
-  starContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    bottom: 15,
-  },
-
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
 

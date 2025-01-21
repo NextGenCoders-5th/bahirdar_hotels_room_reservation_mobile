@@ -119,7 +119,7 @@ const HotelCard: React.FC<HotelCardProps> = ({
             left: -5,
           }}
         >
-          <Ionicons name='star' size={16} color={colors.yellow} />
+          <Ionicons name='star' size={20} color={colors.yellow} />
           <Text
             style={{
               fontSize: 14,
@@ -127,7 +127,16 @@ const HotelCard: React.FC<HotelCardProps> = ({
               color: colors.grey,
             }}
           >
-            {rating.toFixed(1)} (11 reviews)
+            <Text
+              style={{
+                color: colors.primaryDark,
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}
+            >
+              {rating.toFixed(1)}
+            </Text>{' '}
+            (11 reviews)
           </Text>
         </View>
         <View
