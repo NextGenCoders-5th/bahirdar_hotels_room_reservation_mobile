@@ -12,7 +12,7 @@ export default function SuccessEmailScreen() {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.primaryDark,
+        backgroundColor: colors.white,
         padding: 20,
         marginBottom: 20,
       }}
@@ -24,12 +24,12 @@ export default function SuccessEmailScreen() {
           height: 150,
           borderRadius: 75,
           resizeMode: 'center',
-          backgroundColor: colors.white,
+          backgroundColor: colors.primary,
         }}
       />
       <AppText
         style={{
-          color: colors.white,
+          color: colors.grey,
           textAlign: 'center',
           marginVertical: 20,
         }}

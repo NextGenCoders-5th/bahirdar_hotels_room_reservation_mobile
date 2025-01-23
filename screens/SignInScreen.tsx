@@ -7,7 +7,7 @@ import AppText from '@/components/AppText';
 import AppButton from '@/components/AppButton';
 import { router } from 'expo-router';
 import ImageButton from '@/components/ImageButton';
-import { AppForm, FormField } from '@/components/forms';
+import { AppForm, FormField, SubmitButton } from '@/components/forms';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -70,6 +70,7 @@ export default function SignInScreen() {
               keyboardType='email-address'
               name='email'
               placeholder='Email'
+              icon='email'
             />
           </View>
           <View style={{ marginBottom: 10 }}>
@@ -82,23 +83,13 @@ export default function SignInScreen() {
               autoCorrect={false}
               name='password'
               placeholder='Password'
+              icon='lock'
             />
           </View>
           <Pressable onPress={() => router.push('/forget-password')}>
             <Text style={styles.text}>Forgot password?</Text>
           </Pressable>
-          <AppButton
-            label='Sign in'
-            onPress={() => {
-              router.push('/home');
-            }}
-            buttonStyle={{
-              backgroundColor: colors.yellow,
-            }}
-            labelStyle={{
-              color: colors.greyDark,
-            }}
-          />
+          <SubmitButton label='Sign in' />
         </AppForm>
         <Text
           style={{
