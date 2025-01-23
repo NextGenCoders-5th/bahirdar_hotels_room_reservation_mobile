@@ -27,7 +27,7 @@ const CheckBoxField: React.FC<CheckBoxFieldProps> = ({
   };
 
   return (
-    <View>
+    <>
       <CheckBox
         isChecked={isChecked}
         description={description}
@@ -39,7 +39,7 @@ const CheckBoxField: React.FC<CheckBoxFieldProps> = ({
         error={errors[name] as string}
         visible={touched[name] as boolean}
       />
-    </View>
+    </>
   );
 };
 

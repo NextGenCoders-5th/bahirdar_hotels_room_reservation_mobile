@@ -7,24 +7,46 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
+import { router } from 'expo-router';
+import * as Yup from 'yup';
+
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import AppTextInput from '@/components/AppTextInput';
-import CheckBox from '@/components/CheckBox';
-import AppButton from '@/components/AppButton';
-import { router } from 'expo-router';
-import IconButton from '@/components/IconButton';
 import ImageButton from '@/components/ImageButton';
+import AppForm from '@/components/forms/AppForm';
+import AppFormField from '@/components/forms/AppFormField';
+import SubmitButton from '@/components/forms/SubmitButton';
+import CheckBoxField from '@/components/forms/CheckBoxField';
+
+const validationSchema = Yup.object().shape({
+  username: Yup.string().required().min(3).max(255).label('Username'),
+  email: Yup.string().required().email().label('Email'),
+  password: Yup.string().required().min(8).label('Password'),
+  passwordConfirm: Yup.string()
+    .required()
+    .oneOf([Yup.ref('password')], 'Passwords do not match')
+    .label('Password confirm'),
+  acceptTerms: Yup.boolean()
+    .required()
+    .oneOf([true], 'You must accept the terms and conditions'),
+});
 
 export default function SignUpScreen() {
-  const [isChecked, setIsChecked] = React.useState(true);
+  const signupInitialValues = {
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    acceptTerms: false,
+  };
+
+  const handleSubmit = () => {};
 
   return (
     <ScrollView
       style={{
         flex: 1,
         backgroundColor: colors.primaryDark,
-        // marginBottom: 5,
       }}
     >
       <Image
@@ -34,7 +56,7 @@ export default function SignUpScreen() {
           borderRadius: 75,
           resizeMode: 'cover',
           alignSelf: 'center',
-          marginVertical: 40,
+          marginVertical: 20,
         }}
         source={require('@/assets/images/get-started.png')}
       />
@@ -58,54 +80,67 @@ export default function SignUpScreen() {
           // marginBottom: 20,
         }}
       >
-        <View style={{ marginBottom: 10 }}>
-          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-            First Name
-          </AppText>
-          <AppTextInput placeholder='First name' />
-        </View>
-        <View style={{ marginBottom: 10 }}>
-          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-            Last Name
-          </AppText>
-          <AppTextInput placeholder='Last name' />
-        </View>
-        <View style={{ marginBottom: 10 }}>
-          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-            Email
-          </AppText>
-          <AppTextInput placeholder='Email' />
-        </View>
-        <View style={{ marginBottom: 10 }}>
-          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-            Phone number
-          </AppText>
-          <AppTextInput placeholder='Phone number' />
-        </View>
-        <View style={{ marginBottom: 10 }}>
-          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-            Password
-          </AppText>
-          <AppTextInput secureTextEntry placeholder='Password' />
-        </View>
-        <CheckBox
-          description='I agree to the terms and conditions'
-          isChecked={isChecked}
-          onToggle={() => {
-            setIsChecked(!isChecked);
-          }}
-        />
+        <AppForm
+          initialValues={signupInitialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <View style={{ marginBottom: 10 }}>
+            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+              User Name
+            </AppText>
+            <AppFormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='username'
+              placeholder='User name'
+            />
+          </View>
 
-        <AppButton
-          label='Sign Up'
-          onPress={() => {
-            router.push('/signin');
-          }}
-          buttonStyle={{ marginBottom: 15, backgroundColor: colors.yellow }}
-          labelStyle={{
-            color: colors.greyDark,
-          }}
-        />
+          <View style={{ marginBottom: 10 }}>
+            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+              Email
+            </AppText>
+            <AppFormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='email'
+              placeholder='Email'
+            />
+          </View>
+
+          <View style={{ marginBottom: 10 }}>
+            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+              Password
+            </AppText>
+            <AppFormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='password'
+              placeholder='Password'
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+              Password Confirm
+            </AppText>
+            <AppFormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='passwordConfirm'
+              placeholder='Password confirm'
+            />
+          </View>
+
+          <View style={{ marginBottom: 20 }}>
+            <CheckBoxField
+              name='acceptTerms'
+              description='I agree to the terms and conditions'
+            />
+          </View>
+
+          <SubmitButton label='Sign Up' />
+        </AppForm>
 
         <Text
           style={{
