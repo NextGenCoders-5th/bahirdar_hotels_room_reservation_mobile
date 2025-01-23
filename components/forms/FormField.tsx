@@ -5,16 +5,16 @@ import { TextInput, View } from 'react-native';
 import ErrorMessage from './ErrorMessage';
 import AppTextInput from '../AppTextInput';
 
-interface AppFormFieldProps extends React.ComponentProps<typeof TextInput> {
+interface FormFieldProps extends React.ComponentProps<typeof TextInput> {
   name: string;
   width?: number | string;
 }
 
-function AppFormField<T extends FormikValues>({
+function FormField<T extends FormikValues>({
   name,
   width,
   ...otherProps
-}: AppFormFieldProps) {
+}: FormFieldProps) {
   const { setFieldTouched, setFieldValue, errors, touched, values } =
     useFormikContext<T>();
 
@@ -35,4 +35,4 @@ function AppFormField<T extends FormikValues>({
   );
 }
 
-export default AppFormField;
+export default FormField;

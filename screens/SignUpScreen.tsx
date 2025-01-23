@@ -105,6 +105,7 @@ export default function SignUpScreen() {
             </AppText>
             <FormField
               autoCapitalize='none'
+              keyboardType='email-address'
               autoCorrect={false}
               name='email'
               placeholder='Email'
@@ -117,6 +118,7 @@ export default function SignUpScreen() {
             </AppText>
             <FormField
               autoCapitalize='none'
+              secureTextEntry
               autoCorrect={false}
               name='password'
               placeholder='Password'
@@ -129,6 +131,7 @@ export default function SignUpScreen() {
             <FormField
               autoCapitalize='none'
               autoCorrect={false}
+              secureTextEntry
               name='passwordConfirm'
               placeholder='Password confirm'
             />

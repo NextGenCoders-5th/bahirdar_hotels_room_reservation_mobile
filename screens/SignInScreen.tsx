@@ -1,13 +1,27 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import * as Yup from 'yup';
+
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import AppTextInput from '@/components/AppTextInput';
 import AppButton from '@/components/AppButton';
 import { router } from 'expo-router';
 import ImageButton from '@/components/ImageButton';
+import { AppForm, FormField } from '@/components/forms';
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label('Email'),
+  password: Yup.string().required().min(8).label('Password'),
+});
 
 export default function SignInScreen() {
+  const signupInitialValues = {
+    email: '',
+    password: '',
+  };
+
+  const handleSubmit = () => {};
+
   return (
     <View style={styles.container}>
       <Image
@@ -41,39 +55,51 @@ export default function SignInScreen() {
           paddingTop: 40,
         }}
       >
-        <View style={{ marginBottom: 10 }}>
-          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-            Email address
-          </AppText>
-          {/* <AppTextInput placeholder='Email' icon='email' /> */}
-        </View>
-        <View style={{ marginBottom: 10 }}>
-          <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-            Password
-          </AppText>
-          <AppTextInput
-            placeholder='Password'
-            secureTextEntry
-            cursorColor={colors.primaryDark}
-            icon='lock'
-          />
-        </View>
-        <Pressable onPress={() => router.push('/forget-password')}>
-          <Text style={styles.text}>Forgot password?</Text>
-        </Pressable>
-        <AppButton
-          label='Sign in'
-          onPress={() => {
-            router.push('/home');
-          }}
-          buttonStyle={{
-            backgroundColor: colors.yellow,
-          }}
-          labelStyle={{
-            color: colors.greyDark,
-          }}
-        />
+        <AppForm
+          initialValues={signupInitialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          <View style={{ marginBottom: 10 }}>
+            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+              Email address
+            </AppText>
+            <FormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              keyboardType='email-address'
+              name='email'
+              placeholder='Email'
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
+              Password
+            </AppText>
 
+            <FormField
+              secureTextEntry
+              autoCorrect={false}
+              name='password'
+              placeholder='Password'
+            />
+          </View>
+          <Pressable onPress={() => router.push('/forget-password')}>
+            <Text style={styles.text}>Forgot password?</Text>
+          </Pressable>
+          <AppButton
+            label='Sign in'
+            onPress={() => {
+              router.push('/home');
+            }}
+            buttonStyle={{
+              backgroundColor: colors.yellow,
+            }}
+            labelStyle={{
+              color: colors.greyDark,
+            }}
+          />
+        </AppForm>
         <Text
           style={{
             textAlign: 'center',
