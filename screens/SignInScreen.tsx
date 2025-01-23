@@ -45,7 +45,7 @@ export default function SignInScreen() {
           <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
             Email address
           </AppText>
-          <AppTextInput placeholder='Email' icon='email' />
+          {/* <AppTextInput placeholder='Email' icon='email' /> */}
         </View>
         <View style={{ marginBottom: 10 }}>
           <AppText style={{ marginBottom: 0, fontWeight: '600' }}>

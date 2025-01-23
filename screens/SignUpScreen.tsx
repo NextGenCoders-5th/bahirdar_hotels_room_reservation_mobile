@@ -13,10 +13,12 @@ import * as Yup from 'yup';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import ImageButton from '@/components/ImageButton';
-import AppForm from '@/components/forms/AppForm';
-import AppFormField from '@/components/forms/AppFormField';
-import SubmitButton from '@/components/forms/SubmitButton';
-import CheckBoxField from '@/components/forms/CheckBoxField';
+import {
+  AppForm,
+  FormField,
+  CheckBoxField,
+  SubmitButton,
+} from '@/components/forms';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(3).max(255).label('Username'),
@@ -89,7 +91,7 @@ export default function SignUpScreen() {
             <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
               User Name
             </AppText>
-            <AppFormField
+            <FormField
               autoCapitalize='none'
               autoCorrect={false}
               name='username'
@@ -101,7 +103,7 @@ export default function SignUpScreen() {
             <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
               Email
             </AppText>
-            <AppFormField
+            <FormField
               autoCapitalize='none'
               autoCorrect={false}
               name='email'
@@ -113,7 +115,7 @@ export default function SignUpScreen() {
             <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
               Password
             </AppText>
-            <AppFormField
+            <FormField
               autoCapitalize='none'
               autoCorrect={false}
               name='password'
@@ -124,7 +126,7 @@ export default function SignUpScreen() {
             <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
               Password Confirm
             </AppText>
-            <AppFormField
+            <FormField
               autoCapitalize='none'
               autoCorrect={false}
               name='passwordConfirm'
