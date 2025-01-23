@@ -9,7 +9,7 @@ import {
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '@/config/colors';
 
-type IconProps =
+export type IconProps =
   | ComponentProps<typeof Ionicons>
   | ComponentProps<typeof MaterialCommunityIcons>;
 

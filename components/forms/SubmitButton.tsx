@@ -3,18 +3,23 @@ import { useFormikContext } from 'formik';
 
 import AppButton from '../AppButton';
 import colors from '@/config/colors';
+import { TextStyle, ViewStyle } from 'react-native';
 
-function SubmitButton({ label }: { label: string }) {
+interface SubmitButtonProps {
+  label: string;
+  buttonStyle?: ViewStyle;
+  labelStyle?: TextStyle;
+}
+
+function SubmitButton({ label, buttonStyle, labelStyle }: SubmitButtonProps) {
   const { handleSubmit } = useFormikContext();
 
   return (
     <AppButton
       label={label}
       onPress={handleSubmit}
-      buttonStyle={{ marginBottom: 15, backgroundColor: colors.yellow }}
-      labelStyle={{
-        color: colors.greyDark,
-      }}
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
     />
   );
 }

@@ -3,16 +3,18 @@ import { useFormikContext, type FormikValues } from 'formik';
 import { TextInput, View } from 'react-native';
 
 import ErrorMessage from './ErrorMessage';
-import AppTextInput from '../AppTextInput';
+import AppTextInput, { IconProps } from '@/components/AppTextInput';
 
 interface FormFieldProps extends React.ComponentProps<typeof TextInput> {
   name: string;
   width?: number | string;
+  icon?: IconProps['name'];
 }
 
 function FormField<T extends FormikValues>({
   name,
   width,
+  icon,
   ...otherProps
 }: FormFieldProps) {
   const { setFieldTouched, setFieldValue, errors, touched, values } =
@@ -25,6 +27,7 @@ function FormField<T extends FormikValues>({
         onChangeText={(text: string) => setFieldValue(name, text)}
         value={values[name] as string}
         width={width}
+        icon={icon}
         {...otherProps}
       />
       <ErrorMessage
