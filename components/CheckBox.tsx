@@ -15,14 +15,14 @@ interface CheckBoxProps {
   description: string;
   onToggle: () => void;
   boxStyle?: ViewStyle;
-  textStyle?: TextStyle;
+  descriptionStyle?: TextStyle;
 }
 
 const CheckBox: React.FC<CheckBoxProps> = ({
   isChecked,
   description,
   onToggle,
-  textStyle,
+  descriptionStyle,
   boxStyle,
 }) => {
   return (
@@ -44,7 +44,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
       <Text
         style={[
           styles.description,
-          textStyle,
+          descriptionStyle,
           { color: isChecked ? colors.greyDark : colors.grey },
         ]}
       >
