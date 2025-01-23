@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+
 import colors from '@/config/colors';
 import AppButton from '@/components/AppButton';
+import { routes } from '@/routes';
 
 export default function WelcomeScreen() {
   const router = useRouter();
@@ -23,7 +25,7 @@ export default function WelcomeScreen() {
       >
         <AppButton
           label='Continue'
-          onPress={() => router.push('/get-started')}
+          onPress={() => router.push(routes.GET_STARTED)}
           buttonStyle={{
             backgroundColor: colors.yellow,
           }}

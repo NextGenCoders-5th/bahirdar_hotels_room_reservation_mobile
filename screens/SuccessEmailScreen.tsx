@@ -1,9 +1,11 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { Image, StyleSheet, View } from 'react-native';
+import { router } from 'expo-router';
+
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import AppButton from '@/components/AppButton';
-import { router } from 'expo-router';
+import { routes } from '@/routes';
 
 export default function SuccessEmailScreen() {
   return (
@@ -41,7 +43,7 @@ export default function SuccessEmailScreen() {
       <AppButton
         label='Back to Sign In'
         onPress={() => {
-          router.push('/signin');
+          router.push(routes.SIGN_IN);
         }}
         buttonStyle={{
           width: 'auto',

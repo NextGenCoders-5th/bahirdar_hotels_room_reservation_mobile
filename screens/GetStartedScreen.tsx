@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Pressable,
-} from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
+
 import colors from '@/config/colors';
-import Screen from '@/components/Screen';
 import AppButton from '@/components/AppButton';
+import { routes } from '@/routes';
 
 export default function GetStartedScreen() {
   const router = useRouter();
@@ -31,7 +25,7 @@ export default function GetStartedScreen() {
         <View style={{ padding: 20 }}>
           <AppButton
             label='Sign up'
-            onPress={() => router.push('/signup')}
+            onPress={() => router.push(routes.SIGN_UP)}
             buttonStyle={{
               backgroundColor: colors.yellow,
             }}
@@ -44,7 +38,7 @@ export default function GetStartedScreen() {
           <Text style={{ color: colors.white, fontSize: 14, marginRight: 2 }}>
             Already have an account?
           </Text>
-          <Pressable onPress={() => router.push('/signin')}>
+          <Pressable onPress={() => router.push(routes.SIGN_IN)}>
             <Text
               style={{
                 textDecorationLine: 'underline',

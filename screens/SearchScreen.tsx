@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { fetchHotels } from '@/redux/slices/hotelsSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 

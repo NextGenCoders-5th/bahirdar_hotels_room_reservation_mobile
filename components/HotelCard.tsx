@@ -6,6 +6,7 @@ import colors from '@/config/colors';
 import { router } from 'expo-router';
 import { ImageSourcePropType } from 'react-native';
 import AppButton from './AppButton';
+import { routes } from '@/routes';
 
 export type HotelCardProps = {
   imageUrl: ImageSourcePropType;
@@ -31,7 +32,7 @@ const HotelCard: React.FC<HotelCardProps> = ({
   };
 
   const handlePress = () => {
-    router.push('/hotel-details');
+    router.push(routes.HOTEL_DETAILS);
   };
 
   return (

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Yup from 'yup';
+import { router } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import AppButton from '@/components/AppButton';
-import { router } from 'expo-router';
 import ImageButton from '@/components/ImageButton';
 import { AppForm, FormField, SubmitButton } from '@/components/forms';
+import { routes } from '@/routes';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -20,7 +20,9 @@ export default function SignInScreen() {
     password: '',
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    router.push(routes.HOME);
+  };
 
   return (
     <View style={styles.container}>
@@ -86,7 +88,7 @@ export default function SignInScreen() {
               icon='lock'
             />
           </View>
-          <Pressable onPress={() => router.push('/forget-password')}>
+          <Pressable onPress={() => router.push(routes.FORGOT_PASSWORD)}>
             <Text style={styles.text}>Forgot password?</Text>
           </Pressable>
           <SubmitButton label='Sign in' />
@@ -138,7 +140,7 @@ export default function SignInScreen() {
           >
             Don't have an account?
           </Text>
-          <Pressable onPress={() => router.push('/signup')}>
+          <Pressable onPress={() => router.push(routes.SIGN_UP)}>
             <Text
               style={{
                 textDecorationLine: 'underline',

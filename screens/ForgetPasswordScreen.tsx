@@ -8,6 +8,7 @@ import AppTextInput from '@/components/AppTextInput';
 import AppButton from '@/components/AppButton';
 import { router } from 'expo-router';
 import { AppForm, FormField, SubmitButton } from '@/components/forms';
+import { routes } from '@/routes';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -15,7 +16,7 @@ const validationSchema = Yup.object().shape({
 
 export default function ForgetPasswordScreen() {
   const handleSubmit = () => {
-    router.push('/success-email');
+    router.push(routes.SUCCESS_EMAIL);
   };
 
   return (

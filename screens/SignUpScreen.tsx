@@ -19,6 +19,7 @@ import {
   CheckBoxField,
   SubmitButton,
 } from '@/components/forms';
+import { routes } from '@/routes';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(3).max(255).label('Username'),
@@ -42,7 +43,9 @@ export default function SignUpScreen() {
     acceptTerms: false,
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    router.push(routes.SIGN_IN);
+  };
 
   return (
     <ScrollView
@@ -194,7 +197,7 @@ export default function SignUpScreen() {
           >
             Already have an account?
           </Text>
-          <Pressable onPress={() => router.push('/signin')}>
+          <Pressable onPress={() => routes.SIGN_IN}>
             <Text
               style={{
                 textDecorationLine: 'underline',
