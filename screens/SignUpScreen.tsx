@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import * as Yup from 'yup';
 
 import colors from '@/config/colors';
@@ -18,8 +18,12 @@ import {
   FormField,
   CheckBoxField,
   SubmitButton,
+  ErrorMessage,
 } from '@/components/forms';
 import { routes } from '@/routes';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/redux/store';
+import { signup } from '@/redux/slices/authSlice';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(3).max(255).label('Username'),
@@ -34,17 +38,37 @@ const validationSchema = Yup.object().shape({
     .oneOf([true], 'You must accept the terms and conditions'),
 });
 
-export default function SignUpScreen() {
-  const signupInitialValues = {
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    acceptTerms: false,
-  };
+const signupInitialValues = {
+  username: '',
+  email: '',
+  password: '',
+  passwordConfirm: '',
+  acceptTerms: false,
+};
 
-  const handleSubmit = () => {
-    router.push(routes.SIGN_IN);
+export default function SignUpScreen() {
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const { isLoading, error, user } = useSelector(
+    (state: RootState) => state.auth
+  );
+  console.log('data', user);
+
+  const handleSubmit = async (values: {
+    username: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
+    acceptTerms: boolean;
+  }) => {
+    const { username, email, password, passwordConfirm } = values;
+    const result = await dispatch(
+      signup({ username, email, password, passwordConfirm })
+    );
+    // console.log('response', result);
+    if (signup.fulfilled.match(result)) {
+      router.push(routes.HOME);
+    }
   };
 
   return (
@@ -147,6 +171,7 @@ export default function SignUpScreen() {
             />
           </View>
 
+          {error && <ErrorMessage error={error} visible={error !== null} />}
           <SubmitButton label='Sign Up' />
         </AppForm>
 
