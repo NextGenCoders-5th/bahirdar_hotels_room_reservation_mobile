@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
+
 import colors from '@/config/colors';
 import hotels from '@/data/hotels';
 import AppText from '@/components/AppText';

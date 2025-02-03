@@ -1,8 +1,9 @@
+import React from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
+
 import AppText from '@/components/AppText';
 import FavoriteCard from '@/components/FavoriteCard';
 import hotels from '@/data/hotels';
-import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
 
 export default function FavoritesScreen() {
   return (

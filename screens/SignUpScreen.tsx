@@ -22,7 +22,6 @@ import {
 } from '@/components/forms';
 import { routes } from '@/routes';
 import { useSignupMutation } from '@/redux/authApi';
-import { API_BASE_URL } from '@env';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(3).max(255).label('Username'),

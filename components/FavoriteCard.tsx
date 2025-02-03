@@ -1,9 +1,10 @@
-import AppText from '@/components/AppText';
-import colors from '@/config/colors';
-import { Address } from '@/types/address';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ImageProps } from 'react-native';
+
+import { IAddress } from '@/types/addressTypes';
+import AppText from '@/components/AppText';
+import colors from '@/config/colors';
 import IconButton from './IconButton';
 import AppButton from './AppButton';
 
@@ -11,7 +12,7 @@ interface FavoriteCardProps {
   name: string;
   imageCover: ImageProps;
   rating: number;
-  address: Address;
+  address: IAddress;
 }
 
 export default function FavoriteCard({

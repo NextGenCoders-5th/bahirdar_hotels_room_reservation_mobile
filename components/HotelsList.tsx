@@ -1,43 +1,27 @@
-import React, { useEffect } from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchHotels } from '@/redux/slices/hotelsSlice';
-import { AppDispatch, RootState } from '@/redux/store';
+import React from 'react';
+import { View, StyleSheet, Text } from 'react-native';
+
 import HotelCard from '@/components/HotelCard';
-import hotels from '@/data/hotels';
+import { useGetHotelsQuery } from '@/redux/hotelApi';
 
 const HotelsList: React.FC = () => {
-  // const dispatch = useDispatch<AppDispatch>();
-  // const { hotels, isLoading, error } = useSelector(
-  //   (state: RootState) => state.hotels
-  // );
-  // console.log(hotels);
+  const { data: fetchedHotels, error: hotelsError } = useGetHotelsQuery();
 
-  // useEffect(() => {
-  //   dispatch(fetchHotels());
-  // }, [dispatch]);
-
-  // if (isLoading) {
-  //   return <Text>Loading hotels...</Text>;
-  // }
-
-  // if (error) {
-  //   return <Text>Error: {error}</Text>;
-  // }
+  if (hotelsError) {
+    return (
+      <View>
+        <Text>Error loading hotels</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      {hotels.map((hotel) => (
-        <HotelCard
-          key={hotel._id}
-          imageUrl={hotel.imageCover}
-          name={hotel.name}
-          address={hotel.address}
-          pricePerNight={hotel.minPricePerNight}
-          rating={hotel.avgRating}
-          hotelStar={hotel.hotelStar}
-        />
-      ))}
+      {fetchedHotels &&
+        fetchedHotels.results > 0 &&
+        fetchedHotels.data.hotels.map((hotel) => (
+          <HotelCard key={hotel._id} {...hotel} />
+        ))}
     </View>
   );
 };

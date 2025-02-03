@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Yup from 'yup';
+import { useRouter } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
@@ -12,7 +13,6 @@ import {
   SubmitButton,
 } from '@/components/forms';
 import { routes } from '@/routes';
-import { useRouter } from 'expo-router';
 import { useLoginMutation } from '@/redux/authApi';
 
 const validationSchema = Yup.object().shape({

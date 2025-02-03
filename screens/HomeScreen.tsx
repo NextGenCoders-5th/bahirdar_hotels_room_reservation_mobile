@@ -7,12 +7,32 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
 import HotelsList from '../components/HotelsList';
 import colors from '@/config/colors';
-import { Ionicons } from '@expo/vector-icons';
 import AppText from '@/components/AppText';
+import { useGetHotelsQuery } from '@/redux/hotelApi';
 
 export default function HomeScreen() {
+  const { isLoading: hotelsLoading, error: hotelsError } = useGetHotelsQuery();
+
+  if (hotelsLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (hotelsError) {
+    return (
+      <View>
+        <Text>Error loading hotel s</Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={styles.container}>
       <ImageBackground

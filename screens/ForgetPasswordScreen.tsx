@@ -1,12 +1,10 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
 import * as Yup from 'yup';
+import { router } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import AppTextInput from '@/components/AppTextInput';
-import AppButton from '@/components/AppButton';
-import { router } from 'expo-router';
 import { AppForm, FormField, SubmitButton } from '@/components/forms';
 import { routes } from '@/routes';
 

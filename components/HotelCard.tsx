@@ -1,28 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Address } from '@/types/address';
-import colors from '@/config/colors';
 import { router } from 'expo-router';
-import { ImageSourcePropType } from 'react-native';
+
+import colors from '@/config/colors';
 import AppButton from './AppButton';
 import { routes } from '@/routes';
+import { IHotel } from '@/types/hotelTypes';
 
-export type HotelCardProps = {
-  imageUrl: ImageSourcePropType;
-  name: string;
-  address: Address;
-  pricePerNight: number;
-  rating: number;
-  hotelStar: number;
-};
-
-const HotelCard: React.FC<HotelCardProps> = ({
-  imageUrl,
+const HotelCard: React.FC<IHotel> = ({
+  imageCover: imageUrl,
   name,
   address,
-  pricePerNight,
-  rating,
+  minPricePerNight: pricePerNight,
+  avgRating: rating,
   hotelStar,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -40,7 +31,7 @@ const HotelCard: React.FC<HotelCardProps> = ({
       <View style={{ position: 'relative' }}>
         <TouchableOpacity onPress={handlePress}>
           <Image
-            source={imageUrl}
+            source={{ uri: imageUrl }}
             style={{ width: '100%', height: 200, borderRadius: 10 }}
           />
         </TouchableOpacity>
@@ -89,19 +80,20 @@ const HotelCard: React.FC<HotelCardProps> = ({
               bottom: 5,
             }}
           >
-            {Array.from({ length: hotelStar }).map((_, index) => (
-              <Ionicons
-                key={index}
-                name='star'
-                size={20}
-                color={colors.primaryDark}
-                style={{
-                  textShadowColor: colors.primaryDark,
-                  textShadowOffset: { width: 1, height: 1 },
-                  textShadowRadius: 3,
-                }}
-              />
-            ))}
+            {hotelStar &&
+              Array.from({ length: hotelStar }).map((_, index) => (
+                <Ionicons
+                  key={index}
+                  name='star'
+                  size={20}
+                  color={colors.primaryDark}
+                  style={{
+                    textShadowColor: colors.primaryDark,
+                    textShadowOffset: { width: 1, height: 1 },
+                    textShadowRadius: 3,
+                  }}
+                />
+              ))}
           </View>
         </View>
         <Text
