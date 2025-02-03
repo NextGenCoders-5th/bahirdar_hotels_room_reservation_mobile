@@ -1,28 +1,52 @@
 import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Yup from 'yup';
-import { router } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import ImageButton from '@/components/ImageButton';
-import { AppForm, FormField, SubmitButton } from '@/components/forms';
+import {
+  AppForm,
+  ErrorMessage,
+  FormField,
+  SubmitButton,
+} from '@/components/forms';
 import { routes } from '@/routes';
+import { useRouter } from 'expo-router';
+import { useLoginMutation } from '@/redux/authApi';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(8).label('Password'),
 });
 
+const signupInitialValues = {
+  email: '',
+  password: '',
+};
+
 export default function SignInScreen() {
-  const signupInitialValues = {
-    email: '',
-    password: '',
+  const router = useRouter();
+
+  const [login, { isLoading, error: loginError }] = useLoginMutation();
+
+  const handleSubmit = async (values: { email: string; password: string }) => {
+    try {
+      const response = await login(values).unwrap();
+      console.log(response);
+      router.push(routes.HOME);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleSubmit = () => {
-    router.push(routes.HOME);
-  };
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -91,6 +115,18 @@ export default function SignInScreen() {
           <Pressable onPress={() => router.push(routes.FORGOT_PASSWORD)}>
             <Text style={styles.text}>Forgot password?</Text>
           </Pressable>
+          {loginError &&
+            (typeof loginError.message === 'string' ? (
+              <ErrorMessage
+                error={loginError.message}
+                visible={loginError.message !== null}
+              />
+            ) : (
+              <ErrorMessage
+                error={loginError.message.message}
+                visible={loginError.message.message !== null}
+              />
+            ))}
           <SubmitButton label='Sign in' />
         </AppForm>
         <Text
