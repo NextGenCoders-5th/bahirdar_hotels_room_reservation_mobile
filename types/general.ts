@@ -7,8 +7,13 @@ export interface CreateResponse {
 }
 
 export interface ErrorResponse {
-  status: string;
-  message: string;
+  status:
+    | number
+    | 'FETCH_ERROR'
+    | 'PARSING_ERROR'
+    | 'TIMEOUT_ERROR'
+    | 'CUSTOM_ERROR';
+  message: string | any;
 }
 
 export interface ITimeStamp {

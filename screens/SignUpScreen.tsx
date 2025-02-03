@@ -21,9 +21,7 @@ import {
   ErrorMessage,
 } from '@/components/forms';
 import { routes } from '@/routes';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/redux/store';
-import { signup } from '@/redux/slices/authSlice';
+import { useSignupMutation } from '@/redux/authApi';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(3).max(255).label('Username'),
@@ -47,12 +45,8 @@ const signupInitialValues = {
 };
 
 export default function SignUpScreen() {
-  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const { isLoading, error, user } = useSelector(
-    (state: RootState) => state.auth
-  );
-  console.log('data', user);
+  const [signup, { isLoading, error: signUpError }] = useSignupMutation();
 
   const handleSubmit = async (values: {
     username: string;
@@ -62,14 +56,27 @@ export default function SignUpScreen() {
     acceptTerms: boolean;
   }) => {
     const { username, email, password, passwordConfirm } = values;
-    const result = await dispatch(
-      signup({ username, email, password, passwordConfirm })
-    );
-    // console.log('response', result);
-    if (signup.fulfilled.match(result)) {
-      router.push(routes.HOME);
+    try {
+      const response = await signup({
+        username,
+        email,
+        password,
+        passwordConfirm,
+      }).unwrap();
+      console.log(response);
+      router.push(routes.SIGN_IN);
+    } catch (err) {
+      console.log(err);
     }
   };
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView
@@ -171,7 +178,19 @@ export default function SignUpScreen() {
             />
           </View>
 
-          {error && <ErrorMessage error={error} visible={error !== null} />}
+          {signUpError &&
+            (typeof signUpError.message === 'string' ? (
+              <ErrorMessage
+                error={signUpError.message}
+                visible={signUpError.message !== null}
+              />
+            ) : (
+              <ErrorMessage
+                error={signUpError.message.message}
+                visible={signUpError.message.message !== null}
+              />
+            ))}
+
           <SubmitButton label='Sign Up' />
         </AppForm>
 

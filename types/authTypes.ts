@@ -7,8 +7,6 @@ export interface ISignupRequest {
   passwordConfirm: string;
 }
 
-interface AuthResponse {}
-
 export interface ISignupResponse {
   status: string;
   isOnboarding: boolean;
