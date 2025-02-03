@@ -5,16 +5,17 @@ import {
   ISignupResponse,
 } from '@/types/authTypes';
 import { ErrorResponse } from '@/types/general';
+import { API_BASE_URL } from '@env';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const BASE_URL = 'http://192.168.43.41:5000/api/v1/auth';
+const AUTH_BASE_URL = `${API_BASE_URL}/auth`;
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  // baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  // baseQuery: fetchBaseQuery({ baseUrl: AUTH_BASE_URL }),
   baseQuery: async (args, api, extraOptions) => {
     const baseQuery = fetchBaseQuery({
-      baseUrl: BASE_URL,
+      baseUrl: AUTH_BASE_URL,
     });
 
     try {
