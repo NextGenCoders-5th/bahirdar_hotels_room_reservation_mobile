@@ -15,8 +15,3 @@ export interface ErrorResponse {
     | 'CUSTOM_ERROR';
   message: string | any;
 }
-
-export interface ITimeStamp {
-  createdAt: string;
-  updatedAt: string;
-}

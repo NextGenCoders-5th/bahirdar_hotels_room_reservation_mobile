@@ -1,14 +1,14 @@
-import { Hotel } from './hotelTypes';
-import { Room } from './roomTypes';
+import { IHotel } from './hotelTypes';
+import { IRoom } from './roomTypes';
 import { User } from './userTypes';
 
-export interface Booking {
+export interface IBooking {
   id: number;
   roomId: number;
   userId: number;
-  hotel: Hotel;
+  hotel: IHotel;
   user: User;
-  room: Room;
+  room: IRoom;
   numOfNights: number;
   checkInDate: string;
   checkOutDate: string;

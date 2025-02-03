@@ -1,25 +1,34 @@
+import { HotelLocation } from '@/enums/hotelLocationEnums';
 import { IAddress } from './addressTypes';
-import { Booking } from './bookingTypes';
-import { ITimeStamp } from './general';
+import { IBooking } from './bookingTypes';
 import { IUser } from './userTypes';
+import { IRoom } from './roomTypes';
 
-export interface Hotel {
+export interface IHotel {
   _id: string;
   id: string;
   name: string;
+  hotelStar?: number;
   imageCover: string;
-  hotelStar: string;
-  address: string;
-  numOfRooms: number;
-  facilities: string[];
-  description: string;
+  hotelImages: string[] | File[];
+  address: IAddress;
+  location: {
+    type: HotelLocation;
+    coordinates: number[];
+  };
   summary: string;
-  avgRating: number;
-  numOfRatings: number;
+  description: string;
+  facilities: string[];
+  manager: string | IUser;
   minPricePerNight: number;
-  hotelImages: string[];
-  bookings: Booking[];
-  [key: string]: unknown;
+  numOfRooms: number;
+  numOfRatings: number;
+  avgRating: number;
+  createdAt: string;
+  updatedAt: string;
+  rooms?: IRoom[];
+  bookings?: IBooking[];
+  reviews?: string[];
 }
 
 export interface HotelFilter {
@@ -29,23 +38,17 @@ export interface HotelFilter {
   selectedStars: string[];
 }
 
-export interface IHotel {
-  _id?: string;
-  name: string;
-  hotelStar?: number;
-  imageCover: string;
-  hotelImages: string[] | File[];
-  address: IAddress;
-  summary: string;
-  description: string;
-  facilities: string[];
-  manager: string | IUser;
-  minPricePerNight: number;
-  numOfRooms: number;
-  numOfRatings: number;
-  avgRating: number;
+export interface IHotelsResponse {
+  status: string;
+  results: number;
+  data: {
+    hotels: IHotel[];
+  };
 }
 
 export interface IHotelResponse {
-  data: IHotel & ITimeStamp;
+  status: string;
+  data: {
+    hotel: IHotel;
+  };
 }
