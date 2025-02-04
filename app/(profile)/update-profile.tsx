@@ -1,12 +1,12 @@
 import React from 'react';
+
 import Screen from '@/components/Screen';
-import ProfileScreen from '@/screens/ProfileScreen';
 import UpdateProfileScreen from '@/screens/UpdateProfileScreen';
 
-export default function Profile() {
+export default function UpdateProfile() {
   return (
     <Screen>
-      <ProfileScreen />
+      <UpdateProfileScreen />
     </Screen>
   );
 }

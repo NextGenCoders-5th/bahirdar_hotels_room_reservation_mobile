@@ -7,4 +7,5 @@ export enum routes {
   FORGOT_PASSWORD = '/forgot-password',
   SUCCESS_EMAIL = '/success-email',
   HOTEL_DETAILS = '/hotel-details',
+  UPDATE_PROFILE = '/update-profile',
 }

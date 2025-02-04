@@ -1,37 +1,19 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { signOut } from '@/redux/slices/authSlice';
-import { AppDispatch, RootState } from '@/redux/store';
-import { useRouter } from 'expo-router';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+
+import { router, useRouter } from 'expo-router';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import AppTextInput from '@/components/AppTextInput';
-import { Ionicons } from '@expo/vector-icons';
 import AppButton from '@/components/AppButton';
+import { routes } from '@/routes';
 
 export default function ProfileScreen() {
-  // const dispatch = useDispatch<AppDispatch>();
-  // const router = useRouter();
-  // const { user } = useSelector((state: RootState) => state.auth);
-
-  // const handleSignOut = async () => {
-  //   await dispatch(signOut());
-  //   router.replace('/(auth)/signin');
-  // };
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <Text
           style={{
+            marginTop: 30,
             fontSize: 24,
             color: colors.white,
           }}
@@ -57,68 +39,126 @@ export default function ProfileScreen() {
               borderColor: colors.white,
             }}
           />
-          <TouchableOpacity
-            style={{
-              left: '30%',
-              position: 'absolute',
+        </View>
+        <View style={{ position: 'absolute', bottom: 0, right: 10, zIndex: 2 }}>
+          <AppButton
+            buttonStyle={{
+              backgroundColor: 'transparent',
+              borderRadius: 5,
               top: 90,
-              flexDirection: 'row',
+              padding: 2,
             }}
-          >
-            <Text
-              style={{
-                padding: 5,
-                width: 100,
-                textAlign: 'center',
-                color: colors.greyDark,
-                fontSize: 14,
-                textDecorationLine: 'underline',
-              }}
-            >
-              Update photo
-            </Text>
-          </TouchableOpacity>
+            label='Update profile'
+            labelStyle={{
+              color: colors.primaryDark,
+              textDecorationLine: 'underline',
+            }}
+            onPress={() => {
+              router.push(routes.UPDATE_PROFILE);
+            }}
+          />
         </View>
       </View>
 
-      <View
-        style={{
-          flex: 1,
-          marginTop: 80,
-          padding: 20,
-        }}
-      >
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>First Name</AppText>
-          <AppTextInput placeholder='First name' />
+      <View style={{ flex: 1, padding: 10 }}>
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ fontWeight: '500' }}>Full name</AppText>
+          <Text
+            style={{
+              fontSize: 16,
+              backgroundColor: colors.primaryExtraLight2,
+              padding: 10,
+              borderRadius: 5,
+              color: colors.greyMediumDark,
+            }}
+          >
+            Henok Alemu
+          </Text>
         </View>
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>Last Name</AppText>
-          <AppTextInput placeholder='Last name' />
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ fontWeight: '500' }}>Email</AppText>
+          <Text
+            style={{
+              fontSize: 16,
+              backgroundColor: colors.primaryExtraLight2,
+              padding: 10,
+              borderRadius: 5,
+              color: colors.greyMediumDark,
+            }}
+          >
+            henokalemu@test.com
+          </Text>
         </View>
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>Email</AppText>
-          <AppTextInput placeholder='Email' />
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ fontWeight: '500' }}>Username</AppText>
+          <Text
+            style={{
+              fontSize: 16,
+              backgroundColor: colors.primaryExtraLight2,
+              padding: 10,
+              borderRadius: 5,
+              color: colors.greyMediumDark,
+            }}
+          >
+            henok
+          </Text>
         </View>
-        <View>
-          <AppText style={styles.inputLabel}>Phone number</AppText>
-          <AppTextInput placeholder='Phone number' secureTextEntry />
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ fontWeight: '500' }}>Phone number</AppText>
+          <Text
+            style={{
+              fontSize: 16,
+              backgroundColor: colors.primaryExtraLight2,
+              padding: 10,
+              borderRadius: 5,
+              color: colors.greyMediumDark,
+            }}
+          >
+            0961234567
+          </Text>
         </View>
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>Password</AppText>
-          <AppTextInput placeholder='Password' secureTextEntry />
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ fontWeight: '500' }}>Date of birth</AppText>
+          <Text
+            style={{
+              fontSize: 16,
+              backgroundColor: colors.primaryExtraLight2,
+              padding: 10,
+              borderRadius: 5,
+              color: colors.greyMediumDark,
+            }}
+          >
+            01/01/1990
+          </Text>
         </View>
-
-        <AppButton
-          label='Update'
-          onPress={() => {}}
-          buttonStyle={{
-            width: 150,
-            borderRadius: 10,
-            padding: 10,
-            alignSelf: 'flex-end',
-          }}
-        />
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ fontWeight: '500' }}>Gender</AppText>
+          <Text
+            style={{
+              fontSize: 16,
+              backgroundColor: colors.primaryExtraLight2,
+              padding: 10,
+              borderRadius: 5,
+              color: colors.greyMediumDark,
+            }}
+          >
+            Male
+          </Text>
+        </View>
+        <View style={{ marginBottom: 10 }}>
+          <AppText style={{ fontWeight: '500' }}>Address</AppText>
+          <Text
+            style={{
+              fontSize: 16,
+              backgroundColor: colors.primaryExtraLight2,
+              padding: 10,
+              borderRadius: 5,
+              color: colors.greyMediumDark,
+            }}
+          >
+            Bahir Dar, Ethiopia - Kebele 10
+          </Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -134,11 +174,11 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: colors.primary,
     padding: 20,
+    marginBottom: 70,
   },
   marginBottom: {
     marginBottom: 10,
   },
-  inputLabel: { marginBottom: 0, fontWeight: '600' },
   button: {
     backgroundColor: colors.primary,
     padding: 10,

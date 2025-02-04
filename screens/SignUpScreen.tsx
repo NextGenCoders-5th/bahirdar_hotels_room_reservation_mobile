@@ -63,7 +63,7 @@ export default function SignUpScreen() {
         password,
         passwordConfirm,
       }).unwrap();
-      console.log(response);
+      // console.log(response);
       router.push(routes.SIGN_IN);
     } catch (err) {
       console.log(err);
