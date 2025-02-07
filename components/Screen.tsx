@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import Constants from 'expo-constants';
 import { StyleSheet, SafeAreaView, View, ViewStyle } from 'react-native';
+import colors from '@/config/colors';
 
 interface ScreenProps {
   children: ReactNode;
@@ -18,8 +19,9 @@ function Screen({ children, style }: ScreenProps) {
 
 const styles = StyleSheet.create({
   screen: {
-    // paddingTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight,
     flex: 1,
+    backgroundColor: colors.white,
   },
   view: {
     flex: 1,

@@ -4,7 +4,7 @@ import React from 'react';
 export default function Bookings() {
   return (
     <View style={styles.container}>
-      <Text>Bookings will be here</Text>
+      <Text>search here</Text>
     </View>
   );
 }

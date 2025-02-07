@@ -17,12 +17,14 @@ interface AppTextInputProps extends TextInputProps {
   icon?: IconProps['name'];
   width?: string | number;
   iconColor?: string;
+  containerStyle?: ViewStyle;
 }
 
 function AppTextInput({
   icon,
   width = '100%',
   iconColor = colors.grey,
+  containerStyle,
   ...otherProps
 }: AppTextInputProps) {
   const isMaterialCommunityIcon =
@@ -32,7 +34,7 @@ function AppTextInput({
     : Ionicons;
 
   return (
-    <View style={[styles.container, { width } as ViewStyle]}>
+    <View style={[styles.container, containerStyle, { width } as ViewStyle]}>
       {icon && (
         <IconLibrary
           name={icon as any}
