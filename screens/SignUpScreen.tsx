@@ -241,7 +241,7 @@ export default function SignUpScreen() {
           >
             Already have an account?
           </Text>
-          <Pressable onPress={() => routes.SIGN_IN}>
+          <Pressable onPress={() => router.push(routes.SIGN_IN)}>
             <Text
               style={{
                 textDecorationLine: 'underline',

@@ -14,6 +14,8 @@ import {
 } from '@/components/forms';
 import { routes } from '@/routes';
 import { useLoginMutation } from '@/redux/authApi';
+import { useAuth } from '@/hooks/useAuth';
+import { ErrorResponse } from '@/types/general';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -27,20 +29,25 @@ const signupInitialValues = {
 
 export default function SignInScreen() {
   const router = useRouter();
+  const [error, setError] = React.useState<ErrorResponse | null>(null);
 
-  const [login, { isLoading, error: loginError }] = useLoginMutation();
+  // const [_, { isLoading, error: loginError }] = useLoginMutation();
+  // console.log('loginError', loginError);
+
+  const { login, loading } = useAuth();
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
-      const response = await login(values).unwrap();
+      const response = await login(values);
       console.log(response);
       router.push(routes.HOME);
-    } catch (error) {
+    } catch (error: any) {
+      setError(error);
       console.log(error);
     }
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <View>
         <Text>Loading...</Text>
@@ -115,16 +122,16 @@ export default function SignInScreen() {
           <Pressable onPress={() => router.push(routes.FORGOT_PASSWORD)}>
             <Text style={styles.text}>Forgot password?</Text>
           </Pressable>
-          {loginError &&
-            (typeof loginError.message === 'string' ? (
+          {error &&
+            (typeof error.message === 'string' ? (
               <ErrorMessage
-                error={loginError.message}
-                visible={loginError.message !== null}
+                error={error.message}
+                visible={error.message !== null}
               />
             ) : (
               <ErrorMessage
-                error={loginError.message.message}
-                visible={loginError.message.message !== null}
+                error={error.message.message}
+                visible={error.message.message !== null}
               />
             ))}
           <SubmitButton label='Sign in' />

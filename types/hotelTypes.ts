@@ -6,7 +6,7 @@ import { IRoom } from './roomTypes';
 
 export interface IHotel {
   _id: string;
-  id: string;
+  id?: string;
   name: string;
   hotelStar?: number;
   imageCover: string;
@@ -29,6 +29,7 @@ export interface IHotel {
   rooms?: IRoom[];
   bookings?: IBooking[];
   reviews?: string[];
+  __v?: number;
 }
 
 export interface HotelFilter {
@@ -41,8 +42,11 @@ export interface HotelFilter {
 export interface IHotelsResponse {
   status: string;
   results: number;
-  data: {
-    hotels: IHotel[];
+  data: IHotel[];
+  pagination: {
+    limit: number;
+    page: number;
+    totalPages: number;
   };
 }
 

@@ -8,8 +8,9 @@ const HOTELS_BASE_URL = `${API_BASE_URL}/hotels`;
 export const hotelApi = createApi({
   reducerPath: 'hotelApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${HOTELS_BASE_URL}/`,
+    baseUrl: HOTELS_BASE_URL,
   }),
+
   endpoints: (builder) => ({
     getHotels: builder.query<IHotelsResponse, void>({
       query: () => '/',

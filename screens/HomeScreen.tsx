@@ -1,30 +1,23 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-  ImageBackground,
-  Pressable,
-  Image,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 
 import HotelsList from '../components/HotelsList';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import { useGetHotelsQuery } from '@/redux/hotelApi';
 import { router } from 'expo-router';
-import { routes } from '@/routes';
 import ImageButton from '@/components/ImageButton';
+import { useAuth } from '@/hooks/useAuth';
+import { routes } from '@/routes';
 
 export default function HomeScreen() {
   const {
     data: hotels,
     isLoading: hotelsLoading,
-    error: hotelsError,
+    isError: hotelsError,
   } = useGetHotelsQuery();
+
+  const { user } = useAuth();
 
   if (hotelsLoading) {
     return (
@@ -44,113 +37,89 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      {/* <ImageBackground
-        source={require('@/assets/images/hotels/hotel-2.jpg')}
-        style={{
-          width: '100%',
-          height: 150,
-          justifyContent: 'flex-end',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          padding: 5,
-        }}
-      >
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder='Search here...'
-            style={styles.input}
-          ></TextInput>
-          <Ionicons
-            style={styles.icon}
-            name='search'
-            size={30}
-            color={colors.grey}
+      {user === null ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 20,
+            flexWrap: 'wrap',
+            backgroundColor: colors.primaryLight,
+          }}
+        >
+          <Pressable onPress={() => router.push(routes.SIGN_IN)}>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+                color: colors.primaryDark,
+                paddingRight: 5,
+                fontSize: 18,
+              }}
+            >
+              Log in
+            </Text>
+          </Pressable>
+          <Text
+            style={{
+              color: colors.grey,
+              fontSize: 18,
+              marginRight: 2,
+            }}
+          >
+            to book hotels.
+          </Text>
+          <Text
+            style={{
+              color: colors.grey,
+              fontSize: 18,
+              marginRight: 2,
+            }}
+          >
+            Don't have an account?
+          </Text>
+
+          <Pressable onPress={() => router.push(routes.SIGN_UP)}>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+                color: colors.primaryDark,
+                paddingLeft: 3,
+                fontSize: 18,
+              }}
+            >
+              Sign up
+            </Text>
+          </Pressable>
+        </View>
+      ) : (
+        <View
+          style={{
+            backgroundColor: colors.primaryDark,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: 10,
+          }}
+        >
+          <Text
+            style={{
+              color: colors.primaryLight,
+              fontSize: 20,
+            }}
+          >
+            Welcome, {user.data.username}
+          </Text>
+          <ImageButton
+            imageUrl={require('@/assets/images/profile/profile-1.jpg')}
+            onPress={() => router.push('/profile')}
+            buttonStyle={{
+              backgroundColor: colors.primary,
+              padding: 0,
+              margin: 0,
+            }}
           />
         </View>
-      </ImageBackground> */}
-
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          padding: 20,
-          flexWrap: 'wrap',
-          backgroundColor: colors.primaryLight,
-        }}
-      >
-        <Pressable onPress={() => router.push(routes.SIGN_UP)}>
-          <Text
-            style={{
-              textDecorationLine: 'underline',
-              color: colors.primaryDark,
-              paddingRight: 5,
-              fontSize: 18,
-            }}
-          >
-            Log in
-          </Text>
-        </Pressable>
-        <Text
-          style={{
-            color: colors.grey,
-            fontSize: 18,
-            marginRight: 2,
-          }}
-        >
-          to book hotels.
-        </Text>
-        <Text
-          style={{
-            color: colors.grey,
-            fontSize: 18,
-            marginRight: 2,
-          }}
-        >
-          Don't have an account?
-        </Text>
-
-        <Pressable onPress={() => router.push(routes.SIGN_UP)}>
-          <Text
-            style={{
-              textDecorationLine: 'underline',
-              color: colors.primaryDark,
-              paddingLeft: 3,
-              fontSize: 18,
-            }}
-          >
-            Sign up
-          </Text>
-        </Pressable>
-      </View> */}
-
-      <View
-        style={{
-          backgroundColor: colors.primaryDark,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 10,
-        }}
-      >
-        <Text
-          style={{
-            color: colors.primaryLight,
-            fontSize: 20,
-          }}
-        >
-          Welcome, Abrham
-        </Text>
-        <ImageButton
-          imageUrl={require('@/assets/images/profile/profile-1.jpg')}
-          onPress={() => router.push('/profile')}
-          buttonStyle={{
-            backgroundColor: colors.primary,
-            padding: 0,
-            // alignSelf: 'flex-end',
-            margin: 0,
-          }}
-        />
-      </View>
+      )}
 
       <View style={{ padding: 10 }}>
         <AppText
@@ -171,8 +140,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 10,
-    // position: 'relative',
     backgroundColor: colors.white,
     width: '100%',
   },
