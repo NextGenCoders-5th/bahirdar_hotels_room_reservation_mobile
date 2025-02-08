@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, useWindowDimensions } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { Dimensions, View, useWindowDimensions } from 'react-native';
+import { TabView, TabBar } from 'react-native-tab-view';
+
 import colors from '@/config/colors';
 import FavoritesTab from '@/components/profile/FavoritesTab';
 import BookingsTab from '@/components/profile/BookingsTab';
@@ -13,23 +14,29 @@ export default function ProfileScreen() {
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
+    { key: 'profile', title: 'Profile' },
     { key: 'bookings', title: 'Bookings' },
     { key: 'favorites', title: 'Favorites' },
-    { key: 'profile', title: 'Profile' },
     { key: 'settings', title: 'Settings' },
   ]);
 
-  const renderScene = SceneMap({
-    bookings: BookingsTab,
-    favorites: FavoritesTab,
-    profile: ProfileDetailsScreen,
-    settings: SettingsTab,
-  });
+  const renderScene = ({ route }: { route: { key: string } }) => {
+    switch (route.key) {
+      case 'profile':
+        return <ProfileDetailsScreen />;
+      case 'bookings':
+        return <BookingsTab />;
+      case 'favorites':
+        return <FavoritesTab />;
+      case 'settings':
+        return <SettingsTab />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <View
-      style={{ flex: 1, backgroundColor: colors.white, paddingVertical: 15 }}
-    >
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
       <ProfileHeader />
       <TabView
         navigationState={{ index, routes }}
@@ -39,11 +46,16 @@ export default function ProfileScreen() {
         renderTabBar={(props) => (
           <TabBar
             {...props}
-            style={{ backgroundColor: colors.white, marginBottom: 15 }}
-            indicatorStyle={{ backgroundColor: colors.primary }}
+            style={{ backgroundColor: colors.primaryExtraLight }}
+            indicatorStyle={{
+              backgroundColor: colors.primary,
+              height: 3,
+              width: Dimensions.get('window').width / 4,
+            }}
             contentContainerStyle={{ justifyContent: 'center' }}
-            activeColor={colors.primary}
-            inactiveColor={colors.greyDark}
+            activeColor={colors.primaryDark}
+            inactiveColor={colors.grey}
+            tabStyle={{ minWidth: 100 }}
           />
         )}
       />

@@ -40,33 +40,22 @@ export default function TabsLayout() {
 
             tabBarIcon: ({ focused }) => (
               <TabBarIcon
-                name={focused ? 'heart-sharp' : 'heart-outline'}
+                name={focused ? 'heart' : 'heart-outline'}
                 focused={focused}
               />
             ),
           }}
         />
+
         <Tabs.Screen
-          name='bookings'
+          name='search'
           options={{
-            title: 'Bookings',
+            title: 'Search',
 
             tabBarIcon: ({ focused }) => (
               <TabBarIcon
-                name={focused ? 'calendar-clear' : 'calendar-clear-outline'}
-                focused={focused}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name='profile'
-          options={{
-            title: 'Profile',
-
-            tabBarIcon: ({ focused }) => (
-              <TabBarIcon
-                name={focused ? 'person-circle' : 'person-circle-outline'}
+                // name={focused ? 'calendar-clear' : 'calendar-clear-outline'}
+                name={focused ? 'search' : 'search-outline'}
                 focused={focused}
               />
             ),

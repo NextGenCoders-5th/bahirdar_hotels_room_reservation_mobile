@@ -23,17 +23,16 @@ export default function ProfileHeader() {
           color: colors.red,
         }}
         buttonStyle={{
-          width: 80,
-
+          width: 'auto',
           borderRadius: 5,
           borderWidth: 1,
-          borderColor: colors.primaryDark,
+          borderColor: colors.red,
           marginVertical: 0,
-          opacity: 0.7,
+          opacity: 0.8,
           padding: 5,
           top: -10,
           right: -5,
-          backgroundColor: 'transparent',
+          backgroundColor: colors.white,
         }}
       />
     </View>
@@ -45,7 +44,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    marginBottom: 15,
+    // marginBottom: 15,
+    backgroundColor: colors.primaryDark,
   },
   profileImage: {
     width: 60,
@@ -55,12 +55,13 @@ const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '800',
+    color: colors.primaryLight,
   },
   profileEmail: {
     fontSize: 14,
-    color: colors.greyDark,
-    fontWeight: '400',
+    color: colors.primaryLight,
+    fontWeight: 'thin',
     top: -10,
   },
 });

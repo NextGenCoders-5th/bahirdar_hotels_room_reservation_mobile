@@ -6,6 +6,8 @@ import {
   TextInput,
   ScrollView,
   ImageBackground,
+  Pressable,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -13,9 +15,16 @@ import HotelsList from '../components/HotelsList';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import { useGetHotelsQuery } from '@/redux/hotelApi';
+import { router } from 'expo-router';
+import { routes } from '@/routes';
+import ImageButton from '@/components/ImageButton';
 
 export default function HomeScreen() {
-  const { isLoading: hotelsLoading, error: hotelsError } = useGetHotelsQuery();
+  const {
+    data: hotels,
+    isLoading: hotelsLoading,
+    error: hotelsError,
+  } = useGetHotelsQuery();
 
   if (hotelsLoading) {
     return (
@@ -28,14 +37,14 @@ export default function HomeScreen() {
   if (hotelsError) {
     return (
       <View>
-        <Text>Error loading hotel s</Text>
+        <Text>Error loading hotels</Text>
       </View>
     );
   }
 
   return (
     <ScrollView style={styles.container}>
-      <ImageBackground
+      {/* <ImageBackground
         source={require('@/assets/images/hotels/hotel-2.jpg')}
         style={{
           width: '100%',
@@ -58,7 +67,91 @@ export default function HomeScreen() {
             color={colors.grey}
           />
         </View>
-      </ImageBackground>
+      </ImageBackground> */}
+
+      {/* <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          padding: 20,
+          flexWrap: 'wrap',
+          backgroundColor: colors.primaryLight,
+        }}
+      >
+        <Pressable onPress={() => router.push(routes.SIGN_UP)}>
+          <Text
+            style={{
+              textDecorationLine: 'underline',
+              color: colors.primaryDark,
+              paddingRight: 5,
+              fontSize: 18,
+            }}
+          >
+            Log in
+          </Text>
+        </Pressable>
+        <Text
+          style={{
+            color: colors.grey,
+            fontSize: 18,
+            marginRight: 2,
+          }}
+        >
+          to book hotels.
+        </Text>
+        <Text
+          style={{
+            color: colors.grey,
+            fontSize: 18,
+            marginRight: 2,
+          }}
+        >
+          Don't have an account?
+        </Text>
+
+        <Pressable onPress={() => router.push(routes.SIGN_UP)}>
+          <Text
+            style={{
+              textDecorationLine: 'underline',
+              color: colors.primaryDark,
+              paddingLeft: 3,
+              fontSize: 18,
+            }}
+          >
+            Sign up
+          </Text>
+        </Pressable>
+      </View> */}
+
+      <View
+        style={{
+          backgroundColor: colors.primaryDark,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: 10,
+        }}
+      >
+        <Text
+          style={{
+            color: colors.primaryLight,
+            fontSize: 20,
+          }}
+        >
+          Welcome, Abrham
+        </Text>
+        <ImageButton
+          imageUrl={require('@/assets/images/profile/profile-1.jpg')}
+          onPress={() => router.push('/profile')}
+          buttonStyle={{
+            backgroundColor: colors.primary,
+            padding: 0,
+            // alignSelf: 'flex-end',
+            margin: 0,
+          }}
+        />
+      </View>
+
       <View style={{ padding: 10 }}>
         <AppText
           style={{
@@ -79,6 +172,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // padding: 10,
+    // position: 'relative',
     backgroundColor: colors.white,
     width: '100%',
   },
