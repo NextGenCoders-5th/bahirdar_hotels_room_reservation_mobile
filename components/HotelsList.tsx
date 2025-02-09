@@ -6,6 +6,7 @@ import { useGetHotelsQuery } from '@/redux/hotelApi';
 
 const HotelsList: React.FC = () => {
   const { data: fetchedHotels, error: hotelsError } = useGetHotelsQuery();
+  // console.log('fetchedHotels', fetchedHotels);
 
   if (hotelsError) {
     return (
@@ -19,7 +20,7 @@ const HotelsList: React.FC = () => {
     <View style={styles.container}>
       {fetchedHotels &&
         fetchedHotels.results > 0 &&
-        fetchedHotels.data.hotels.map((hotel) => (
+        fetchedHotels.data.map((hotel) => (
           <HotelCard key={hotel._id} {...hotel} />
         ))}
     </View>
