@@ -1,32 +1,23 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, Image, Text } from 'react-native';
 
 import colors from '@/config/colors';
-import AppText from '@/components/AppText';
-import AppTextInput from '@/components/AppTextInput';
-import AppButton from '@/components/AppButton';
+import { AppForm, FormField, SubmitButton } from '@/components/forms';
+import * as Yup from 'yup';
+import IconButton from '@/components/IconButton';
+
+const validationSchema = Yup.object().shape({});
+
+const profileInitialValues = {};
 
 export default function UpdateProfileScreen() {
+  const handleSubmit = (values: any) => {
+    console.log(values);
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <Text
-          style={{
-            marginTop: 30,
-            fontSize: 24,
-            color: colors.white,
-          }}
-        >
-          Welcome, Henok 👋
-        </Text>
-
         <View
           style={{
             zIndex: 1,
@@ -45,68 +36,147 @@ export default function UpdateProfileScreen() {
               borderColor: colors.white,
             }}
           />
-          <TouchableOpacity
-            style={{
-              left: '30%',
+
+          <IconButton
+            icon='camera'
+            onPress={() => {}}
+            color={colors.white}
+            buttonStyle={{
               position: 'absolute',
-              top: 90,
-              flexDirection: 'row',
+              bottom: 0,
+              right: -5,
+              width: 40,
+              height: 40,
+              padding: 5,
+              margin: 0,
+              borderRadius: 25,
+              backgroundColor: colors.grey,
             }}
-          >
-            <Text
-              style={{
-                padding: 5,
-                width: 100,
-                textAlign: 'center',
-                color: colors.greyDark,
-                fontSize: 14,
-                textDecorationLine: 'underline',
-              }}
-            >
-              Update photo
-            </Text>
-          </TouchableOpacity>
+          />
         </View>
       </View>
 
       <View
         style={{
           flex: 1,
-          // marginTop: 80,
           padding: 20,
         }}
       >
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>First Name</AppText>
-          <AppTextInput placeholder='First name' />
-        </View>
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>Last Name</AppText>
-          <AppTextInput placeholder='Last name' />
-        </View>
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>Email</AppText>
-          <AppTextInput placeholder='Email' />
-        </View>
-        <View>
-          <AppText style={styles.inputLabel}>Phone number</AppText>
-          <AppTextInput placeholder='Phone number' secureTextEntry />
-        </View>
-        <View style={styles.marginBottom}>
-          <AppText style={styles.inputLabel}>Password</AppText>
-          <AppTextInput placeholder='Password' secureTextEntry />
-        </View>
+        <AppForm
+          initialValues={profileInitialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <View style={{ marginBottom: 10 }}>
+            <Text style={styles.labelStyle}>First name</Text>
+            <FormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='firstName'
+              containerStyle={styles.containerStyle}
+              style={{
+                backgroundColor: colors.primaryExtraLight2,
+                width: '100%',
+                fontSize: 16,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={styles.labelStyle}>Last Name</Text>
+            <FormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='lastName'
+              containerStyle={styles.containerStyle}
+              style={{
+                backgroundColor: colors.primaryExtraLight2,
+                width: '100%',
+                fontSize: 16,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={styles.labelStyle}>User Name</Text>
+            <FormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='username'
+              containerStyle={styles.containerStyle}
+              style={{
+                backgroundColor: colors.primaryExtraLight2,
+                width: '100%',
+                fontSize: 16,
+                borderRadius: 10,
+              }}
+            />
+          </View>
 
-        <AppButton
-          label='Update'
-          onPress={() => {}}
-          buttonStyle={{
-            width: 150,
-            borderRadius: 10,
-            padding: 10,
-            alignSelf: 'flex-end',
-          }}
-        />
+          <View style={{ marginBottom: 10 }}>
+            <Text style={styles.labelStyle}>Email</Text>
+            <FormField
+              autoCapitalize='none'
+              keyboardType='email-address'
+              autoCorrect={false}
+              name='email'
+              containerStyle={styles.containerStyle}
+              style={{
+                backgroundColor: colors.primaryExtraLight2,
+                width: '100%',
+                fontSize: 16,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={styles.labelStyle}>Phone number</Text>
+            <FormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='phoneNumber'
+              containerStyle={styles.containerStyle}
+              style={{
+                backgroundColor: colors.primaryExtraLight2,
+                width: '100%',
+                fontSize: 16,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={styles.labelStyle}>Date of birth</Text>
+            <FormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='phoneNumber'
+              containerStyle={styles.containerStyle}
+              style={{
+                backgroundColor: colors.primaryExtraLight2,
+                width: '100%',
+                fontSize: 16,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={styles.labelStyle}>Gender</Text>
+            <FormField
+              autoCapitalize='none'
+              autoCorrect={false}
+              name='gender'
+              containerStyle={styles.containerStyle}
+              style={{
+                backgroundColor: colors.primaryExtraLight2,
+                width: '100%',
+                fontSize: 16,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+
+          <SubmitButton label='Update' />
+        </AppForm>
       </View>
     </ScrollView>
   );
@@ -118,11 +188,11 @@ const styles = StyleSheet.create({
   },
   header: {
     position: 'relative',
-    height: 200,
+    height: 90,
     width: '100%',
     backgroundColor: colors.primary,
     padding: 20,
-    marginBottom: 70,
+    marginBottom: 50,
   },
   marginBottom: {
     marginBottom: 10,
@@ -135,5 +205,12 @@ const styles = StyleSheet.create({
     width: 150,
     marginVertical: 10,
     alignSelf: 'flex-end',
+  },
+  labelStyle: { fontSize: 18, fontWeight: '500' },
+  containerStyle: {
+    marginVertical: 5,
+    borderRadius: 10,
+    borderColor: colors.primary,
+    padding: 0,
   },
 });

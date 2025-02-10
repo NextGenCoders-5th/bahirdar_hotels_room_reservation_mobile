@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { router } from 'expo-router';
 
 import HotelsList from '../components/HotelsList';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import { useGetHotelsQuery } from '@/redux/hotelApi';
-import { router } from 'expo-router';
 import ImageButton from '@/components/ImageButton';
-import { useAuth } from '@/hooks/authContext';
 import { routes } from '@/routes';
 import AppButton from '@/components/AppButton';
 import LoadingIndicator from '@/components/LoadingIndicator';
@@ -20,11 +19,12 @@ export default function HomeScreen() {
     refetch,
   } = useGetHotelsQuery();
 
-  const { data, isLoading, error } = useGetCurrentUserQuery();
+  const { data } = useGetCurrentUserQuery();
   const user = data?.data;
   // const res = useGetCurrentUserQuery();
   // console.log('user', user);
   // console.log('currentUser', res);
+  console.log('user', user);
 
   const { profilePicture, username } = user || {};
 
@@ -58,14 +58,14 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      {user === null ? (
+      {!user ? (
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             padding: 20,
             flexWrap: 'wrap',
-            backgroundColor: colors.primaryLight,
+            backgroundColor: colors.primaryMediumLight,
           }}
         >
           <Pressable onPress={() => router.push(routes.SIGN_IN)}>

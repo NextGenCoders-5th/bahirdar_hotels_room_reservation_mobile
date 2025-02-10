@@ -4,7 +4,6 @@ import { ThemeProvider } from '@react-navigation/native';
 
 import appTheme from '@/config/appTheme';
 import { store } from '@/redux/store';
-import { HotelProvider } from '@/hooks/useHotel';
 import { FavoriteHotelsProvider } from '@/hooks/useFavoriteHotels';
 
 export default function RootLayout() {

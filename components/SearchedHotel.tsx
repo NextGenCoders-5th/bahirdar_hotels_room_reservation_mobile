@@ -1,12 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { Link } from 'expo-router';
 
 import { IAddress } from '@/types/addressTypes';
 import AppText from '@/components/AppText';
 import colors from '@/config/colors';
 import { LOCAL_HOST, LOCAL_HOST_IP } from '@/constants/env';
-import { Link } from 'expo-router';
 
 interface SearchedHotelProps {
   _id: string;
@@ -29,7 +29,7 @@ export default function SearchedHotel({
   );
 
   return (
-    <Link href={`/hotel/${_id}`} asChild>
+    <Link href={`/hotels/${_id}`} asChild>
       <View
         style={{
           flexDirection: 'row',

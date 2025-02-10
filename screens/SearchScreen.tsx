@@ -14,7 +14,7 @@ import SearchedHotel from '@/components/SearchedHotel';
 import { useLazyGetHotelsQuery } from '@/redux/hotelApi';
 
 export default function SearchScreen() {
-  const [searchText, setSearchText] = useState('test');
+  const [searchText, setSearchText] = useState<string>();
   const [triggerSearch, { data: searchedHotels, error: hotelsError }] =
     useLazyGetHotelsQuery();
 
@@ -54,6 +54,7 @@ export default function SearchScreen() {
             onChangeText={(text) => setSearchText(text)}
           />
           <Ionicons
+            onPress={() => triggerSearch(searchText)}
             style={styles.icon}
             name='search'
             size={30}
@@ -66,6 +67,7 @@ export default function SearchScreen() {
         {searchedHotels && searchedHotels?.data?.length > 0 ? (
           searchedHotels.data.map((hotel) => (
             <SearchedHotel
+              key={hotel._id}
               _id={hotel._id}
               imageCoverUrl={hotel.imageCover}
               name={hotel.name}
