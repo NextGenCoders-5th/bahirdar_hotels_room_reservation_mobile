@@ -10,7 +10,7 @@ export interface IHotel {
   name: string;
   hotelStar?: number;
   imageCover: string;
-  hotelImages: string[] | File[];
+  hotelImages: string[];
   address: IAddress;
   location: {
     type: HotelLocation;
@@ -52,7 +52,13 @@ export interface IHotelsResponse {
 
 export interface IHotelResponse {
   status: string;
-  data: {
-    hotel: IHotel;
-  };
+  data: IHotel;
+}
+
+export interface IFavoriteHotel {
+  _id: string;
+  name: string;
+  imageUrl: string;
+  address: IAddress;
+  avgRating: number;
 }

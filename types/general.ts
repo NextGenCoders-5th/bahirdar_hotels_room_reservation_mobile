@@ -13,5 +13,10 @@ export interface ErrorResponse {
     | 'PARSING_ERROR'
     | 'TIMEOUT_ERROR'
     | 'CUSTOM_ERROR';
-  message: string | any;
+  message?: string | any;
+  data?: {
+    status: string;
+    message: string;
+    errors?: string[];
+  };
 }

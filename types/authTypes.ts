@@ -1,4 +1,5 @@
 import { Role } from '@/enums/roleEnum';
+import { IHotel } from './hotelTypes';
 
 export interface ISignupRequest {
   username: string;
@@ -38,12 +39,27 @@ export interface ILoginResponse {
     _id: string;
     username: string;
     email: string;
+    isVerified: boolean;
     password: string;
     role: Role;
     profilePicture: string;
     isOnboarding: boolean;
     createdAt: string;
     updatedAt: string;
-    __v: number;
+    __v?: number;
   };
+}
+
+export interface IAuthResponse {
+  _id: string;
+  username: string;
+  email: string;
+  isVerified?: boolean;
+  password: string;
+  role: Role;
+  profilePicture: string;
+  isOnboarding?: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
 }

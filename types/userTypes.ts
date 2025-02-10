@@ -1,9 +1,8 @@
 import { Gender } from '@/enums/genderEnum';
 import { Role } from '@/enums/roleEnum';
 import { IAddress } from './addressTypes';
-import { Booking } from './bookingTypes';
-import { ITimeStamp } from './general';
-import { Hotel } from './hotelTypes';
+import { IBooking } from './bookingTypes';
+import { IHotel } from './hotelTypes';
 
 export interface User {
   id?: string;
@@ -14,8 +13,8 @@ export interface User {
   role: string;
   photo: string;
   phoneNumber: string;
-  hotel?: Hotel;
-  bookings?: Booking[];
+  hotel?: IHotel;
+  bookings?: IBooking[];
   [key: string]: unknown;
 }
 
@@ -47,19 +46,33 @@ export interface IUpdateMeForm {
 }
 
 export interface IUser {
-  _id?: string;
-  firstName: string;
-  lastName: string;
+  _id: string;
+  id?: string;
+  firstName?: string;
+  lastName?: string;
   username: string;
-  dateOfBirth: Date;
-  gender: Gender;
+  dateOfBirth?: string;
+  gender?: Gender;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string;
+  password: string;
   role: Role;
   profilePicture: string;
   address: IAddress;
+  isOnboarding: boolean;
+  hotel?: string;
+  bookings?: string[];
+  idPhoto?: string;
+  isVerified: boolean;
+  verifiedBy?: string;
+  passwordResetToken?: string;
+  passwordResetExpires?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
 }
 
 export interface IUserResponse {
-  data: (IUser & ITimeStamp)[];
+  status: string;
+  data: IUser;
 }

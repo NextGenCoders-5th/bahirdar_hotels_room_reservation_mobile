@@ -2,22 +2,29 @@ import { Image, StyleSheet, View } from 'react-native';
 import AppText from '../AppText';
 import colors from '@/config/colors';
 import AppButton from '../AppButton';
+import { useAuth } from '@/hooks/authContext';
+import { useGetCurrentUserQuery } from '@/redux/userApi';
+import { useLogoutMutation } from '@/redux/authApi';
 
 export default function ProfileHeader() {
+  // const { user, logout } = useAuth();
+
+  const { data } = useGetCurrentUserQuery();
+  const { username, email, profilePicture } = data?.data || {};
+
+  const [logout] = useLogoutMutation();
+
   return (
     <View style={styles.headerContainer}>
-      <Image
-        source={require('@/assets/images/profile/profile-1.jpg')}
-        style={styles.profileImage}
-      />
+      <Image source={{ uri: profilePicture }} style={styles.profileImage} />
       <View style={{ flex: 1, top: 8 }}>
-        <AppText style={styles.profileName}>Abrham Yihenew</AppText>
-        <AppText style={styles.profileEmail}>abrham@test.com</AppText>
+        <AppText style={styles.profileName}>{username}</AppText>
+        <AppText style={styles.profileEmail}>{email}</AppText>
       </View>
 
       <AppButton
         label='Logout'
-        onPress={() => {}}
+        onPress={logout}
         labelStyle={{
           fontSize: 14,
           color: colors.red,
@@ -44,7 +51,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    // marginBottom: 15,
+    marginBottom: 15,
+    paddingVertical: 15,
     backgroundColor: colors.primaryDark,
   },
   profileImage: {

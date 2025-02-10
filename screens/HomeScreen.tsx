@@ -7,30 +7,51 @@ import AppText from '@/components/AppText';
 import { useGetHotelsQuery } from '@/redux/hotelApi';
 import { router } from 'expo-router';
 import ImageButton from '@/components/ImageButton';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/authContext';
 import { routes } from '@/routes';
+import AppButton from '@/components/AppButton';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { useGetCurrentUserQuery } from '@/redux/userApi';
 
 export default function HomeScreen() {
   const {
-    data: hotels,
     isLoading: hotelsLoading,
-    isError: hotelsError,
+    error: hotelsFetchingError,
+    refetch,
   } = useGetHotelsQuery();
 
-  const { user } = useAuth();
+  const { data, isLoading, error } = useGetCurrentUserQuery();
+  const user = data?.data;
+  // const res = useGetCurrentUserQuery();
+  // console.log('user', user);
+  // console.log('currentUser', res);
+
+  const { profilePicture, username } = user || {};
+
+  // const { user } = useAuth();
+  // console.log('get current user from Home screen', res);
 
   if (hotelsLoading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <LoadingIndicator />;
   }
 
-  if (hotelsError) {
+  if (hotelsFetchingError) {
     return (
-      <View>
-        <Text>Error loading hotels</Text>
+      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <Text style={{ fontSize: 18 }}>Error fetching hotels</Text>
+        <AppButton
+          label='Retry'
+          onPress={() => refetch()}
+          buttonStyle={{
+            backgroundColor: colors.primaryDark,
+            width: 100,
+            padding: 10,
+            borderRadius: 10,
+          }}
+          labelStyle={{
+            color: colors.white,
+          }}
+        />
       </View>
     );
   }
@@ -107,13 +128,12 @@ export default function HomeScreen() {
               fontSize: 20,
             }}
           >
-            Welcome, {user.data.username}
+            Welcome, {username}
           </Text>
           <ImageButton
-            imageUrl={require('@/assets/images/profile/profile-1.jpg')}
+            imageUrl={{ uri: profilePicture }}
             onPress={() => router.push('/profile')}
             buttonStyle={{
-              backgroundColor: colors.primary,
               padding: 0,
               margin: 0,
             }}
