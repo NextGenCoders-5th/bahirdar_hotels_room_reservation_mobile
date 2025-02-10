@@ -1,18 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-export default function Bookings() {
+import Screen from '@/components/Screen';
+import SearchScreen from '@/screens/SearchScreen';
+
+export default function Search() {
   return (
-    <View style={styles.container}>
-      <Text>search here</Text>
-    </View>
+    <Screen>
+      <SearchScreen />
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
