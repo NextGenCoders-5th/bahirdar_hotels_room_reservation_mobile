@@ -1,13 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { Link } from 'expo-router';
 
 import AppText from '@/components/AppText';
 import colors from '@/config/colors';
 import IconButton from './IconButton';
 import { IFavoriteHotel } from '@/types/hotelTypes';
 import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
-import { Link } from 'expo-router';
 
 export default function FavoriteCard({
   _id,
@@ -34,7 +34,7 @@ export default function FavoriteCard({
   }
 
   return (
-    <Link href={`/hotel/${_id}`} asChild>
+    <Link href={`/hotels/${_id}`} asChild>
       <View
         style={{
           flexDirection: 'row',

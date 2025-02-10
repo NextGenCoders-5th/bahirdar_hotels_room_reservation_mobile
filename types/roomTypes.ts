@@ -1,21 +1,20 @@
 export interface IRoom {
   id?: number;
   _id: string;
-  name: string;
   roomType: string;
   price: number;
   roomNumber: string;
   images: string[];
   description: string;
-  amenities: string[];
-  pricePerNight: string;
-  capacity: string;
-  [key: string]: unknown;
+  pricePerNight: number;
+  roomFacilities: string[];
+  capacity: number;
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
 }
 
-export interface RoomFilter {
-  search: string;
-  roomType: string;
-  sort: string;
-  selectedTypes: string[];
+export interface IRoomResponse {
+  status: string;
+  data: IRoom;
 }

@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
-import Swiper from 'react-native-swiper';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import RoomCard from '@/components/RoomCard';
-import { useLocalSearchParams } from 'expo-router';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import AppButton from '@/components/AppButton';
-import { LOCAL_HOST, LOCAL_HOST_IP } from '@/constants/env';
 import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 import { useTransformedImageUrls } from '@/hooks/useTransformImageUrls';
 import { useGetHotelWithRoomsQuery } from '@/redux/hotelApi';
 import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
+import ImageSlider from '@/components/ImageSlider';
 
 const HotelDetailsScreen: React.FC = () => {
   const { hotel_id } = useLocalSearchParams();
-  const params = useLocalSearchParams();
-  console.log('params', params);
+  // const { hotel_id: global_hotel_id } = useGlobalSearchParams();
+  // const params = useLocalSearchParams();
+  // console.log('params', params);
+  // console.log('global_hotel_id', global_hotel_id);
 
   const { data, isLoading, error } = useGetHotelWithRoomsQuery(
     hotel_id as string
@@ -49,7 +48,7 @@ const HotelDetailsScreen: React.FC = () => {
 
   const newImageCoverUrl = useTransformImageUrl({ imageUrl: imageCover! });
   const newHotelImageUrls = useTransformedImageUrls({
-    imageUrls: hotelImages!,
+    imageUrls: hotelImages || [],
   });
 
   const { isFavorite, removeFavoriteHotel, addFavoriteHotel } =
@@ -96,45 +95,8 @@ const HotelDetailsScreen: React.FC = () => {
   return (
     <ScrollView style={styles.card}>
       <View style={styles.imageContainer}>
-        <Swiper
-          showsButtons
-          showsPagination
-          // autoplay
-          autoplayTimeout={5}
-          loop
-          dotStyle={styles.dot}
-          activeDotStyle={styles.activeDot}
-          style={styles.swiper}
-          nextButton={
-            <MaterialIcons
-              name='navigate-next'
-              size={50}
-              color={colors.white}
-            />
-          }
-          prevButton={
-            <MaterialIcons
-              name='navigate-before'
-              size={50}
-              color={colors.white}
-            />
-          }
-        >
-          <Image
-            source={{ uri: newImageCoverUrl }}
-            style={styles.image}
-            resizeMode='cover'
-          />
-          {newHotelImageUrls &&
-            newHotelImageUrls.map((imageUrl, index) => (
-              <Image
-                key={index}
-                source={{ uri: imageUrl }}
-                style={styles.image}
-                resizeMode='cover'
-              />
-            ))}
-        </Swiper>
+        <ImageSlider images={newHotelImageUrls} />
+
         <TouchableOpacity
           onPress={handleToggleFavorite}
           style={{

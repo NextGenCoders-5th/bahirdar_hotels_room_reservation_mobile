@@ -1,52 +1,42 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ImageSourcePropType,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Image } from 'react-native';
+import { router, useLocalSearchParams } from 'expo-router';
+
 import colors from '@/config/colors';
 import AppButton from './AppButton';
+import { IRoom } from '@/types/roomTypes';
+import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 
-interface RoomCardProps {
-  roomNumber: string;
-  roomType: string;
-  roomFacilities: string[];
-  capacity: number;
-  description: string;
-  pricePerNight: number;
-  images: ImageSourcePropType[];
-}
-
-const { width: screenWidth } = Dimensions.get('window');
-
-const RoomCard: React.FC<RoomCardProps> = ({
+const RoomCard: React.FC<IRoom> = ({
+  _id,
   roomNumber,
   roomType,
-  roomFacilities,
   capacity,
   description,
   pricePerNight,
   images,
 }) => {
+  const { hotel_id } = useLocalSearchParams();
+
+  const newImageUrl = useTransformImageUrl({ imageUrl: images[0] });
+
   return (
     <View
       style={{
         borderRadius: 10,
         overflow: 'hidden',
-        marginRight: 20,
+        marginRight: 10,
         shadowColor: colors.grey,
         shadowOpacity: 0.3,
         shadowRadius: 5,
-        width: 250,
+        width: 280,
         position: 'relative',
         backgroundColor: colors.white,
       }}
     >
       <Image
-        source={images[0]}
+        source={{ uri: newImageUrl }}
         style={{
           width: '100%',
           height: 200,
@@ -56,13 +46,14 @@ const RoomCard: React.FC<RoomCardProps> = ({
       />
 
       <Text style={styles.roomNumber}>Room #{roomNumber}</Text>
-      <View style={{ padding: 15 }}>
+      <View style={{ padding: 5 }}>
         <Text
           style={{
             fontSize: 18,
             fontWeight: 'bold',
-            color: '#333',
+            color: colors.greyDark,
             marginBottom: 5,
+            textTransform: 'capitalize',
           }}
         >
           {roomType}
@@ -70,16 +61,28 @@ const RoomCard: React.FC<RoomCardProps> = ({
         <Text style={styles.capacity}>Capacity: {capacity} people</Text>
         <Text style={styles.price}>${pricePerNight} / night</Text>
         <Text style={styles.description}>{description}</Text>
-        <AppButton
-          label='Book now'
-          onPress={() => {}}
-          buttonStyle={{
-            width: '100%',
-            paddingHorizontal: 10,
-            paddingVertical: 8,
-            borderRadius: 5,
+        <View
+          style={{
+            paddingHorizontal: 5,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
           }}
-        />
+        >
+          <AppButton
+            label='Book now'
+            onPress={() => {}}
+            buttonStyle={styles.bookNowButton}
+            labelStyle={styles.buttonLabel}
+          />
+          <AppButton
+            label='View details'
+            onPress={() => {
+              router.push(`/hotels/${hotel_id}/rooms/${_id}`);
+            }}
+            buttonStyle={styles.bookNowButton}
+            labelStyle={styles.buttonLabel}
+          />
+        </View>
       </View>
     </View>
   );
@@ -144,15 +147,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   bookNowButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: 10,
+    width: 120,
+    paddingHorizontal: 5,
+    paddingVertical: 8,
     borderRadius: 5,
-    alignItems: 'center',
   },
-  bookNowText: {
-    color: '#fff',
+  buttonLabel: {
     fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 

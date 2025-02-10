@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Link, router } from 'expo-router';
+import {  router } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppButton from './AppButton';
 import { IHotel } from '@/types/hotelTypes';
-import { LOCAL_HOST } from '@/constants/env';
 import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
+import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 
 const HotelCard: React.FC<IHotel> = ({
   _id,
-  imageCover: imageUrl,
+  imageCover,
   name,
   address,
   minPricePerNight: pricePerNight,
@@ -20,7 +20,7 @@ const HotelCard: React.FC<IHotel> = ({
 }) => {
   // console.log('favoriteHotels', favoriteHotels);
 
-  const newImageURL = imageUrl.replace(`${LOCAL_HOST}`, `${LOCAL_HOST}`);
+  const imageUrl = useTransformImageUrl({ imageUrl: imageCover });
 
   const { addFavoriteHotel, removeFavoriteHotel, isFavorite } =
     useFavoriteHotels();
@@ -33,7 +33,7 @@ const HotelCard: React.FC<IHotel> = ({
         _id,
         name,
         address,
-        imageUrl: newImageURL,
+        imageUrl,
         avgRating: rating,
       });
     }
@@ -42,12 +42,10 @@ const HotelCard: React.FC<IHotel> = ({
   return (
     <View style={styles.card}>
       <View style={{ position: 'relative' }}>
-        <Link href={`/hotel/${_id}`}>
-          <Image
-            source={{ uri: newImageURL }}
-            style={{ width: '100%', height: 200, borderRadius: 10 }}
-          />
-        </Link>
+        <Image
+          source={{ uri: imageUrl }}
+          style={{ width: '100%', height: 200, borderRadius: 10 }}
+        />
         <TouchableOpacity
           onPress={handleToggleFavorite}
           style={{
@@ -175,7 +173,7 @@ const HotelCard: React.FC<IHotel> = ({
           <AppButton
             label='View Details'
             onPress={() => {
-              router.push(`/hotel/${_id}`);
+              router.push(`/hotels/${_id}`);
             }}
             buttonStyle={{
               width: 'auto',
