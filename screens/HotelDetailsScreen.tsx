@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,19 +11,31 @@ import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
 
 import colors from '@/config/colors';
-import hotels from '@/data/hotels';
 import AppText from '@/components/AppText';
 import RoomCard from '@/components/RoomCard';
-import rooms from '@/data/rooms';
+import { useLocalSearchParams } from 'expo-router';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import AppButton from '@/components/AppButton';
+import { LOCAL_HOST, LOCAL_HOST_IP } from '@/constants/env';
+import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
+import { useTransformedImageUrls } from '@/hooks/useTransformImageUrls';
+import { useGetHotelWithRoomsQuery } from '@/redux/hotelApi';
+import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
 
 const HotelDetailsScreen: React.FC = () => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { hotel_id } = useLocalSearchParams();
+  const params = useLocalSearchParams();
+  console.log('params', params);
+
+  const { data, isLoading, error } = useGetHotelWithRoomsQuery(
+    hotel_id as string
+  );
 
   const {
+    _id,
     name,
     imageCover,
     avgRating: rating,
-    minPricePerNight: pricePerNight,
     address,
     summary,
     description,
@@ -32,13 +44,54 @@ const HotelDetailsScreen: React.FC = () => {
     numOfRatings,
     hotelImages,
     numOfRooms,
-  } = hotels[2];
+    rooms,
+  } = data?.data || {};
 
-  const imgUrl = require('@/assets/images/hotels/hotel-4.jpg');
+  const newImageCoverUrl = useTransformImageUrl({ imageUrl: imageCover! });
+  const newHotelImageUrls = useTransformedImageUrls({
+    imageUrls: hotelImages!,
+  });
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
+  const { isFavorite, removeFavoriteHotel, addFavoriteHotel } =
+    useFavoriteHotels();
+
+  function handleToggleFavorite() {
+    if (!data?.data) return;
+    if (isFavorite(_id!)) {
+      removeFavoriteHotel(_id!);
+    } else {
+      addFavoriteHotel({
+        _id: _id!,
+        name: name!,
+        address: address!,
+        imageUrl: newImageCoverUrl,
+        avgRating: rating!,
+      });
+    }
+  }
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+
+  if (error) {
+    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+      <Text style={{ fontSize: 18 }}>Error fetching hotels</Text>
+      <AppButton
+        label='Retry'
+        onPress={() => {}}
+        buttonStyle={{
+          backgroundColor: colors.primaryDark,
+          width: 100,
+          padding: 10,
+          borderRadius: 10,
+        }}
+        labelStyle={{
+          color: colors.white,
+        }}
+      />
+    </View>;
+  }
 
   return (
     <ScrollView style={styles.card}>
@@ -67,18 +120,23 @@ const HotelDetailsScreen: React.FC = () => {
             />
           }
         >
-          <Image source={imageCover} style={styles.image} resizeMode='cover' />
-          {hotelImages.map((imageUrl, index) => (
-            <Image
-              key={index}
-              source={imageUrl}
-              style={styles.image}
-              resizeMode='cover'
-            />
-          ))}
+          <Image
+            source={{ uri: newImageCoverUrl }}
+            style={styles.image}
+            resizeMode='cover'
+          />
+          {newHotelImageUrls &&
+            newHotelImageUrls.map((imageUrl, index) => (
+              <Image
+                key={index}
+                source={{ uri: imageUrl }}
+                style={styles.image}
+                resizeMode='cover'
+              />
+            ))}
         </Swiper>
         <TouchableOpacity
-          onPress={toggleFavorite}
+          onPress={handleToggleFavorite}
           style={{
             position: 'absolute',
             top: 10,
@@ -86,9 +144,9 @@ const HotelDetailsScreen: React.FC = () => {
           }}
         >
           <Ionicons
-            name={isFavorite ? 'heart' : 'heart-outline'}
+            name={isFavorite(_id!) ? 'heart' : 'heart-outline'}
             size={34}
-            color={isFavorite ? colors.red : colors.white}
+            color={isFavorite(_id!) ? colors.red : colors.white}
           />
         </TouchableOpacity>
       </View>
@@ -117,7 +175,7 @@ const HotelDetailsScreen: React.FC = () => {
               bottom: 6,
             }}
           >
-            {Array.from({ length: hotelStar }).map((_, index) => (
+            {Array.from({ length: Number(hotelStar) }).map((_, index) => (
               <Ionicons
                 key={index}
                 name='star'
@@ -142,9 +200,11 @@ const HotelDetailsScreen: React.FC = () => {
           }}
         >
           <Ionicons name='location' size={18} color={colors.primaryDark} />
-          <Text style={styles.text}>
-            {address.city} - {address.subcity}
-          </Text>
+          {address && (
+            <Text style={styles.text}>
+              {address.city} - {address.subcity}
+            </Text>
+          )}
         </View>
 
         <View
@@ -162,7 +222,7 @@ const HotelDetailsScreen: React.FC = () => {
               marginBottom: 0,
             }}
           >
-            {rating.toFixed(1)}
+            {rating && rating.toFixed(1)}
           </AppText>
           <Text style={styles.text}> ({numOfRatings} reviews)</Text>
         </View>
@@ -171,11 +231,6 @@ const HotelDetailsScreen: React.FC = () => {
           <View style={styles.roomContainer}>
             <FontAwesome5 name='hotel' size={18} color={colors.primaryDark} />
             <Text style={styles.text}>{numOfRooms} Rooms</Text>
-          </View>
-
-          <View style={styles.roomContainer}>
-            <Ionicons name='bed' size={18} color={colors.primaryDark} />
-            <Text style={styles.text}>{numOfRooms} Beds</Text>
           </View>
         </View>
 
@@ -191,13 +246,15 @@ const HotelDetailsScreen: React.FC = () => {
 
         <View style={styles.bottomMargin}>
           <AppText>Services and Facilities</AppText>
-          <View style={styles.facilityContainer}>
-            {facilities.map((facility, index) => (
-              <Text style={styles.facility} key={index}>
-                {facility}
-              </Text>
-            ))}
-          </View>
+          {facilities && (
+            <View style={styles.facilityContainer}>
+              {facilities.map((facility, index) => (
+                <Text style={styles.facility} key={index}>
+                  {facility}
+                </Text>
+              ))}
+            </View>
+          )}
         </View>
 
         <View style={styles.bottomMargin}>
@@ -217,9 +274,8 @@ const HotelDetailsScreen: React.FC = () => {
               borderRadius: 10,
             }}
           >
-            {rooms.map((room, index) => (
-              <RoomCard key={index} {...room} />
-            ))}
+            {rooms &&
+              rooms.map((room, index) => <RoomCard key={index} {...room} />)}
           </ScrollView>
         </View>
       </View>

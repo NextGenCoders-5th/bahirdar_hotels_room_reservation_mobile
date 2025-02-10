@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppButton from './AppButton';
-import { routes } from '@/routes';
 import { IHotel } from '@/types/hotelTypes';
+import { LOCAL_HOST } from '@/constants/env';
+import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
 
 const HotelCard: React.FC<IHotel> = ({
+  _id,
   imageCover: imageUrl,
   name,
   address,
@@ -16,27 +18,38 @@ const HotelCard: React.FC<IHotel> = ({
   avgRating: rating,
   hotelStar,
 }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  // console.log('favoriteHotels', favoriteHotels);
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
+  const newImageURL = imageUrl.replace(`${LOCAL_HOST}`, `${LOCAL_HOST}`);
 
-  const handlePress = () => {
-    router.push(routes.HOTEL_DETAILS);
-  };
+  const { addFavoriteHotel, removeFavoriteHotel, isFavorite } =
+    useFavoriteHotels();
+
+  function handleToggleFavorite() {
+    if (isFavorite(_id)) {
+      removeFavoriteHotel(_id);
+    } else {
+      addFavoriteHotel({
+        _id,
+        name,
+        address,
+        imageUrl: newImageURL,
+        avgRating: rating,
+      });
+    }
+  }
 
   return (
     <View style={styles.card}>
       <View style={{ position: 'relative' }}>
-        <TouchableOpacity onPress={handlePress}>
+        <Link href={`/hotel/${_id}`}>
           <Image
-            source={{ uri: imageUrl }}
+            source={{ uri: newImageURL }}
             style={{ width: '100%', height: 200, borderRadius: 10 }}
           />
-        </TouchableOpacity>
+        </Link>
         <TouchableOpacity
-          onPress={toggleFavorite}
+          onPress={handleToggleFavorite}
           style={{
             position: 'absolute',
             top: 10,
@@ -44,9 +57,9 @@ const HotelCard: React.FC<IHotel> = ({
           }}
         >
           <Ionicons
-            name={isFavorite ? 'heart' : 'heart-outline'}
+            name={isFavorite(_id) ? 'heart' : 'heart-outline'}
             size={34}
-            color={isFavorite ? colors.red : colors.white}
+            color={isFavorite(_id) ? colors.red : colors.white}
           />
         </TouchableOpacity>
       </View>
@@ -160,8 +173,10 @@ const HotelCard: React.FC<IHotel> = ({
             </Text>
           </Text>
           <AppButton
-            label='Book now'
-            onPress={() => {}}
+            label='View Details'
+            onPress={() => {
+              router.push(`/hotel/${_id}`);
+            }}
             buttonStyle={{
               width: 'auto',
               paddingHorizontal: 10,

@@ -11,7 +11,16 @@ export default function GetStartedScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Let's get started</Text>
+      <Text
+        style={{
+          fontSize: 30,
+          fontWeight: 'bold',
+          color: colors.primaryDark,
+          textAlign: 'center',
+        }}
+      >
+        Let us get started
+      </Text>
       <Image
         style={styles.image}
         source={require('@/assets/images/get-started.png')}
@@ -27,28 +36,51 @@ export default function GetStartedScreen() {
             label='Sign up'
             onPress={() => router.push(routes.SIGN_UP)}
             buttonStyle={{
-              backgroundColor: colors.yellow,
+              backgroundColor: colors.primaryDark,
             }}
             labelStyle={{
-              color: colors.greyDark,
+              color: colors.white,
             }}
           />
-        </View>
-        <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
-          <Text style={{ color: colors.white, fontSize: 14, marginRight: 2 }}>
-            Already have an account?
-          </Text>
-          <Pressable onPress={() => router.push(routes.SIGN_IN)}>
+          <AppButton
+            label='Sign in'
+            onPress={() => router.push(routes.SIGN_IN)}
+            buttonStyle={{
+              backgroundColor: colors.primaryDark,
+            }}
+            labelStyle={{
+              color: colors.white,
+            }}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              // flexWrap: 'wrap',
+            }}
+          >
             <Text
               style={{
-                textDecorationLine: 'underline',
-                color: colors.yellow,
-                fontSize: 14,
+                color: colors.greyMediumDark,
+                fontSize: 18,
+                marginRight: 2,
               }}
             >
-              Sign in
+              Or
             </Text>
-          </Pressable>
+            <Pressable onPress={() => router.push(routes.HOME)}>
+              <Text
+                style={{
+                  textDecorationLine: 'underline',
+                  color: colors.primaryDark,
+                  paddingHorizontal: 5,
+                  fontSize: 18,
+                }}
+              >
+                Continue
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </View>
@@ -58,24 +90,19 @@ export default function GetStartedScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primaryDark,
-    justifyContent: 'space-between',
+    backgroundColor: colors.white,
+    // justifyContent: 'space-between',
+    gap: 15,
     alignItems: 'center',
     paddingVertical: 50,
     paddingHorizontal: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: colors.white,
-    textAlign: 'center',
-  },
   image: {
-    width: 250,
-    height: 250,
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
-    backgroundColor: colors.white,
-    borderRadius: 125,
+    backgroundColor: colors.primary,
+    borderRadius: 100,
   },
   button: {
     backgroundColor: colors.yellow,

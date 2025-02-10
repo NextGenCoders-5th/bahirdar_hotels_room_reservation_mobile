@@ -14,7 +14,6 @@ export default function TabsLayout() {
           tabBarInactiveTintColor: colors.grey,
           tabBarHideOnKeyboard: true,
           tabBarLabelStyle: {
-            // marginTop: 5,
             fontSize: 12,
           },
           tabBarLabelPosition: 'below-icon',
@@ -54,7 +53,6 @@ export default function TabsLayout() {
 
             tabBarIcon: ({ focused }) => (
               <TabBarIcon
-                // name={focused ? 'calendar-clear' : 'calendar-clear-outline'}
                 name={focused ? 'search' : 'search-outline'}
                 focused={focused}
               />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Yup from 'yup';
 import { useRouter } from 'expo-router';
@@ -14,8 +14,8 @@ import {
 } from '@/components/forms';
 import { routes } from '@/routes';
 import { useLoginMutation } from '@/redux/authApi';
-import { useAuth } from '@/hooks/useAuth';
 import { ErrorResponse } from '@/types/general';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -23,36 +23,35 @@ const validationSchema = Yup.object().shape({
 });
 
 const signupInitialValues = {
-  email: '',
-  password: '',
+  email: 'admin@test.com',
+  password: 'password',
 };
 
 export default function SignInScreen() {
   const router = useRouter();
-  const [error, setError] = React.useState<ErrorResponse | null>(null);
+  const [error, setError] = useState<ErrorResponse | null>(null);
 
-  // const [_, { isLoading, error: loginError }] = useLoginMutation();
+  const [login, { isLoading, error: loginError }] = useLoginMutation();
   // console.log('loginError', loginError);
 
-  const { login, loading } = useAuth();
+  // const { login, loading } = useAuth();
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
-      const response = await login(values);
-      console.log(response);
+      const response = await login(values).unwrap();
+      console.log('login response', response);
+      // console.log('isLoding', isLoading);
+      // console.log('loginError', loginError);
+
       router.push(routes.HOME);
     } catch (error: any) {
       setError(error);
-      console.log(error);
+      console.log('catched login error', error);
     }
   };
 
-  if (loading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+  if (isLoading) {
+    return <LoadingIndicator />;
   }
 
   return (
@@ -122,18 +121,12 @@ export default function SignInScreen() {
           <Pressable onPress={() => router.push(routes.FORGOT_PASSWORD)}>
             <Text style={styles.text}>Forgot password?</Text>
           </Pressable>
-          {error &&
-            (typeof error.message === 'string' ? (
-              <ErrorMessage
-                error={error.message}
-                visible={error.message !== null}
-              />
-            ) : (
-              <ErrorMessage
-                error={error.message.message}
-                visible={error.message.message !== null}
-              />
-            ))}
+          {error && error.data && (
+            <ErrorMessage
+              error={error.data.message}
+              visible={error.data.message !== null}
+            />
+          )}
           <SubmitButton label='Sign in' />
         </AppForm>
         <Text

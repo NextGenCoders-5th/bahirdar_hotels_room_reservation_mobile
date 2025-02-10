@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import * as Yup from 'yup';
 
@@ -22,6 +22,8 @@ import {
 } from '@/components/forms';
 import { routes } from '@/routes';
 import { useSignupMutation } from '@/redux/authApi';
+import { ErrorResponse } from '@/types/general';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(3).max(255).label('Username'),
@@ -37,16 +39,20 @@ const validationSchema = Yup.object().shape({
 });
 
 const signupInitialValues = {
-  username: '',
-  email: '',
-  password: '',
-  passwordConfirm: '',
-  acceptTerms: false,
+  username: 'user',
+  email: 'user@test.com',
+  password: 'password',
+  passwordConfirm: 'password',
+  acceptTerms: true,
 };
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const [error, setError] = useState<ErrorResponse | null>(null);
+
   const [signup, { isLoading, error: signUpError }] = useSignupMutation();
+
+  // console.log('signUpError', signUpError);
 
   const handleSubmit = async (values: {
     username: string;
@@ -63,19 +69,16 @@ export default function SignUpScreen() {
         password,
         passwordConfirm,
       }).unwrap();
-      // console.log(response);
+      // console.log('sign up response', response);
       router.push(routes.SIGN_IN);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      // console.log('catched signup error', err);
+      setError(err);
     }
   };
 
   if (isLoading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <LoadingIndicator />;
   }
 
   return (
@@ -178,18 +181,16 @@ export default function SignUpScreen() {
             />
           </View>
 
-          {signUpError &&
-            (typeof signUpError.message === 'string' ? (
-              <ErrorMessage
-                error={signUpError.message}
-                visible={signUpError.message !== null}
-              />
-            ) : (
-              <ErrorMessage
-                error={signUpError.message.message}
-                visible={signUpError.message.message !== null}
-              />
-            ))}
+          {error && error.data && error.data.errors && (
+            <ErrorMessage
+              error={error.data.errors[0]}
+              visible={error.data.errors.length > 0}
+            />
+          )}
+
+          {error && error.data && error.status === 500 && (
+            <ErrorMessage error='User already exists' visible={true} />
+          )}
 
           <SubmitButton label='Sign Up' />
         </AppForm>

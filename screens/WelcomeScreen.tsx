@@ -5,13 +5,19 @@ import { useRouter } from 'expo-router';
 import colors from '@/config/colors';
 import AppButton from '@/components/AppButton';
 import { routes } from '@/routes';
+import AppText from '@/components/AppText';
 
 export default function WelcomeScreen() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to your home</Text>
+      <View>
+        <Text style={[styles.title, { fontSize: 36, marginBottom: 10 }]}>
+          Welcome to Hotelify
+        </Text>
+        <Text style={styles.title}>Find Your Hotel Easily!</Text>
+      </View>
       <Image
         style={styles.image}
         source={require('@/assets/images/welcome.png')}
@@ -26,11 +32,13 @@ export default function WelcomeScreen() {
         <AppButton
           label='Continue'
           onPress={() => router.push(routes.GET_STARTED)}
-          buttonStyle={{
-            backgroundColor: colors.yellow,
-          }}
+          buttonStyle={
+            {
+              // backgroundColor: colors.yellow,
+            }
+          }
           labelStyle={{
-            color: colors.greyDark,
+            color: colors.white,
           }}
         />
       </View>
@@ -41,23 +49,23 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.white,
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 50,
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: colors.white,
+    color: colors.primaryDark,
     textAlign: 'center',
   },
   image: {
     width: 250,
     height: 250,
     resizeMode: 'contain',
-    backgroundColor: colors.white,
+    backgroundColor: colors.primary,
     borderRadius: 125,
   },
   button: {

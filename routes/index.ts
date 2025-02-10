@@ -8,4 +8,7 @@ export enum routes {
   SUCCESS_EMAIL = '/success-email',
   HOTEL_DETAILS = '/hotel-details',
   UPDATE_PROFILE = '/update-profile',
+  FAVORITES = '/favorites',
+  BOOKINGS = '/bookings',
+  PROFILE_DETAILS = '/profile-details',
 }
