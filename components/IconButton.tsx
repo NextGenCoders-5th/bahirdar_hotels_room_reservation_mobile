@@ -13,6 +13,7 @@ interface IconButtonProps {
   icon:
     | keyof typeof MaterialCommunityIcons.glyphMap
     | keyof typeof Ionicons.glyphMap;
+  iconDirection?: 'left' | 'right';
   onPress: () => void;
   label?: string;
   buttonStyle?: ViewStyle;
@@ -24,6 +25,7 @@ interface IconButtonProps {
 
 const IconButton: React.FC<IconButtonProps> = ({
   icon,
+  iconDirection = 'left',
   onPress,
   label,
   buttonStyle,
@@ -39,14 +41,24 @@ const IconButton: React.FC<IconButtonProps> = ({
 
   return (
     <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
-      <IconLibrary
-        name={icon as any}
-        size={size}
-        color={color}
-        style={iconStyle}
-      />
+      {iconDirection === 'left' && (
+        <IconLibrary
+          name={icon as any}
+          size={size}
+          color={color}
+          style={iconStyle}
+        />
+      )}
 
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
+      {iconDirection === 'right' && (
+        <IconLibrary
+          name={icon as any}
+          size={size}
+          color={color}
+          style={iconStyle}
+        />
+      )}
     </TouchableOpacity>
   );
 };
