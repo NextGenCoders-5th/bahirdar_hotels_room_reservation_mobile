@@ -1,11 +1,11 @@
 import React from 'react';
 import Screen from '@/components/Screen';
-import FavoritesTab from '@/components/profile/FavoritesTab';
+import FavoritesScreen from '@/screens/FavoritesScreen';
 
 export default function Favorites() {
   return (
     <Screen>
-      <FavoritesTab />
+      <FavoritesScreen />
     </Screen>
   );
 }

@@ -1,114 +1,106 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ImageProps } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
-import { IAddress } from '@/types/addressTypes';
 import AppText from '@/components/AppText';
 import colors from '@/config/colors';
 import IconButton from './IconButton';
-import AppButton from './AppButton';
-
-interface FavoriteCardProps {
-  name: string;
-  imageCover: ImageProps;
-  rating: number;
-  address: IAddress;
-}
+import { IFavoriteHotel } from '@/types/hotelTypes';
+import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
+import { Link } from 'expo-router';
 
 export default function FavoriteCard({
+  _id,
   name,
-  imageCover,
-  rating,
+  imageUrl,
+  avgRating,
   address,
-}: FavoriteCardProps) {
-  const [isFavorite, setIsFavorite] = useState(false);
+}: IFavoriteHotel) {
+  const { isFavorite, addFavoriteHotel, removeFavoriteHotel } =
+    useFavoriteHotels();
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
+  function handleToggleFavorite() {
+    if (isFavorite(_id)) {
+      removeFavoriteHotel(_id);
+    } else {
+      addFavoriteHotel({
+        _id,
+        name,
+        address,
+        imageUrl,
+        avgRating,
+      });
+    }
+  }
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        backgroundColor: colors.primaryExtraLight2,
-        borderRadius: 5,
-        overflow: 'hidden',
-        marginBottom: 20,
-        gap: 10,
-        flex: 1,
-        position: 'relative',
-      }}
-    >
-      <Image
-        source={imageCover}
+    <Link href={`/hotel/${_id}`} asChild>
+      <View
         style={{
-          height: 90,
-          width: 80,
-          borderRadius: 10,
+          flexDirection: 'row',
+          backgroundColor: colors.primaryExtraLight2,
+          borderRadius: 5,
+          overflow: 'hidden',
+          marginBottom: 20,
+          gap: 10,
+          flex: 1,
+          position: 'relative',
         }}
-      />
-
-      <View style={{ flex: 1 }}>
-        <AppText
+      >
+        <Image
+          source={{ uri: imageUrl }}
           style={{
-            fontSize: 20,
-            marginBottom: 5,
+            height: 90,
+            width: 80,
+            borderRadius: 10,
           }}
-        >
-          {name}
-        </AppText>
+        />
 
-        <Text style={{ color: colors.grey, fontSize: 14, marginBottom: 5 }}>
-          {address.city}-{address.subcity}
-        </Text>
-
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-          <Ionicons name='star' size={18} color={colors.yellow} />
-          <Text
+        <View style={{ flex: 1 }}>
+          <AppText
             style={{
-              color: colors.primaryDark,
-              fontSize: 16,
-              fontWeight: 'bold',
+              fontSize: 20,
+              marginBottom: 5,
             }}
           >
-            {rating}
-          </Text>
-        </View>
-      </View>
+            {name}
+          </AppText>
 
-      <IconButton
-        icon={isFavorite ? 'heart' : 'heart-outline'}
-        onPress={toggleFavorite}
-        size={34}
-        color={isFavorite ? colors.red : colors.white}
-        buttonStyle={{
-          position: 'absolute',
-          right: 0,
-          top: -12,
-          width: 'auto',
-          padding: 0,
-          margin: 0,
-          backgroundColor: 'transparent',
-        }}
-      />
-      <AppButton
-        label='View Details'
-        onPress={() => {}}
-        buttonStyle={{
-          position: 'absolute',
-          bottom: -6,
-          right: 0,
-          width: 'auto',
-          margin: 0,
-          padding: 6,
-          borderRadius: 5,
-        }}
-        labelStyle={{
-          fontSize: 16,
-        }}
-      />
-    </View>
+          <Text style={{ color: colors.grey, fontSize: 14, marginBottom: 5 }}>
+            {address.city}-{address.subcity}
+          </Text>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+            <Ionicons name='star' size={18} color={colors.yellow} />
+            <Text
+              style={{
+                color: colors.primaryDark,
+                fontSize: 16,
+                fontWeight: 'bold',
+              }}
+            >
+              {avgRating}
+            </Text>
+          </View>
+        </View>
+
+        <IconButton
+          icon={'heart'}
+          onPress={handleToggleFavorite}
+          size={34}
+          color={isFavorite(_id) ? colors.red : colors.white}
+          buttonStyle={{
+            position: 'absolute',
+            right: 0,
+            top: -12,
+            width: 'auto',
+            padding: 0,
+            margin: 0,
+            backgroundColor: 'transparent',
+          }}
+        />
+      </View>
+    </Link>
   );
 }
 

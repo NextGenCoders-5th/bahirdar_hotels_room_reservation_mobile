@@ -4,8 +4,10 @@ import { StyleSheet, ScrollView } from 'react-native';
 import AppText from '@/components/AppText';
 import FavoriteCard from '@/components/FavoriteCard';
 import hotels from '@/data/hotels';
+import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
 
-export default function FavoritesTab() {
+export default function FavoritesScreen() {
+  const { favoriteHotels } = useFavoriteHotels();
   return (
     <ScrollView style={styles.container}>
       <AppText
@@ -14,13 +16,14 @@ export default function FavoritesTab() {
         Your favorite hotels
       </AppText>
 
-      {hotels.map((hotel) => (
+      {favoriteHotels.map((hotel) => (
         <FavoriteCard
+          _id={hotel._id}
           key={hotel._id}
-          imageCover={hotel.imageCover}
+          imageUrl={hotel.imageUrl}
           name={hotel.name}
           address={hotel.address}
-          rating={hotel.avgRating}
+          avgRating={hotel.avgRating}
         />
       ))}
     </ScrollView>
