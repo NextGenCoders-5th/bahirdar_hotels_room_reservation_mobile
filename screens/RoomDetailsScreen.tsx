@@ -1,6 +1,10 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import React from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import {
+  router,
+  useGlobalSearchParams,
+  useLocalSearchParams,
+} from 'expo-router';
 
 import colors from '@/config/colors';
 import AppButton from '@/components/AppButton';
@@ -11,7 +15,10 @@ import ImageSlider from '@/components/ImageSlider';
 import { useTransformedImageUrls } from '@/hooks/useTransformImageUrls';
 
 export default function RoomDetailsScreen() {
-  const { room_id } = useLocalSearchParams();
+  // const { room_id } = useLocalSearchParams();
+  const { hotel_id, room_id } = useGlobalSearchParams();
+  // console.log('hotel_id', hotel_id);
+  // console.log('room_id', room_id);
 
   const { data, isLoading, error } = useGetRoomQuery(room_id as string);
   // console.log('Room data', data);
@@ -48,7 +55,7 @@ export default function RoomDetailsScreen() {
         style={{ width: '100%', height: 250, borderRadius: 10 }}
       />
       <Text style={styles.roomNumber}>Room {roomNumber}</Text>
-      <View style={{ padding: 5 }}>
+      <View style={{ padding: 5, marginBottom: 30 }}>
         <Text style={styles.roomType}>{roomType}</Text>
         <Text style={styles.capacity}>Capacity: {capacity} people</Text>
         <Text style={styles.price}>${pricePerNight} / night</Text>
@@ -68,9 +75,12 @@ export default function RoomDetailsScreen() {
         <ImageSlider images={roomImageUrls} />
 
         <Text style={styles.description}>{description}</Text>
+
         <AppButton
           label='Book now'
-          onPress={() => {}}
+          onPress={() => {
+            router.push(`/hotels/${hotel_id}/rooms/${room_id}/book`);
+          }}
           buttonStyle={styles.bookNowButton}
         />
       </View>

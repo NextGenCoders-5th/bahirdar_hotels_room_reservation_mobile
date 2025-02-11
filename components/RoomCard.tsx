@@ -69,17 +69,28 @@ const RoomCard: React.FC<IRoom> = ({
           }}
         >
           <AppButton
-            label='Book now'
-            onPress={() => {}}
-            buttonStyle={styles.bookNowButton}
-            labelStyle={styles.buttonLabel}
-          />
-          <AppButton
             label='View details'
             onPress={() => {
               router.push(`/hotels/${hotel_id}/rooms/${_id}`);
             }}
-            buttonStyle={styles.bookNowButton}
+            buttonStyle={{
+              width: 120,
+              paddingHorizontal: 5,
+              paddingVertical: 8,
+              borderRadius: 5,
+              borderColor: colors.primaryDark,
+              borderWidth: 1,
+
+              backgroundColor: 'transparent',
+            }}
+            labelStyle={{ fontSize: 16, color: colors.primary }}
+          />
+          <AppButton
+            label='Book now'
+            onPress={() => {
+              router.push(`/hotels/${hotel_id}/rooms/${_id}/book`);
+            }}
+            buttonStyle={styles.button}
             labelStyle={styles.buttonLabel}
           />
         </View>
@@ -146,7 +157,7 @@ const styles = StyleSheet.create({
     color: colors.grey,
     marginBottom: 10,
   },
-  bookNowButton: {
+  button: {
     width: 120,
     paddingHorizontal: 5,
     paddingVertical: 8,

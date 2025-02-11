@@ -11,12 +11,14 @@ import { Ionicons } from '@expo/vector-icons';
 
 import colors from '@/config/colors';
 import SearchedHotel from '@/components/SearchedHotel';
-import { useLazyGetHotelsQuery } from '@/redux/hotelApi';
+import { useGetHotelsQuery, useLazyGetHotelsQuery } from '@/redux/hotelApi';
 
 export default function SearchScreen() {
-  const [searchText, setSearchText] = useState<string>();
-  const [triggerSearch, { data: searchedHotels, error: hotelsError }] =
+  const [searchText, setSearchText] = useState<string>('');
+  const [triggerSearch, { data: searchedHotels, error: searchHotelsError }] =
     useLazyGetHotelsQuery();
+
+  const { data: fetchedHotels, error: fetchHotelsError } = useGetHotelsQuery();
 
   // Fetch hotels based on search text when it changes
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function SearchScreen() {
     }
   }, [searchText]);
 
-  if (hotelsError) {
+  if (searchHotelsError || fetchHotelsError) {
     return (
       <View>
         <Text>Error loading hotels</Text>
@@ -34,69 +36,91 @@ export default function SearchScreen() {
   }
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <ImageBackground
-        source={require('@/assets/images/hotels/hotel-2.jpg')}
+    <View style={{ flex: 1 }}>
+      <View
         style={{
-          width: '100%',
-          height: 150,
-          justifyContent: 'flex-end',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          padding: 5,
+          borderRadius: 5,
         }}
       >
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder='Search here...'
-            style={styles.input}
-            value={searchText}
-            onChangeText={(text) => setSearchText(text)}
-          />
-          <Ionicons
-            onPress={() => triggerSearch(searchText)}
-            style={styles.icon}
-            name='search'
-            size={30}
-            color={colors.grey}
-          />
-        </View>
-      </ImageBackground>
-
-      <View style={{ flex: 1, padding: 20 }}>
-        {searchedHotels && searchedHotels?.data?.length > 0 ? (
-          searchedHotels.data.map((hotel) => (
-            <SearchedHotel
-              key={hotel._id}
-              _id={hotel._id}
-              imageCoverUrl={hotel.imageCover}
-              name={hotel.name}
-              address={hotel.address}
-              rating={hotel.avgRating}
+        <ImageBackground
+          source={require('@/assets/images/hotels/hotel-2.jpg')}
+          style={{
+            width: '100%',
+            height: 150,
+            justifyContent: 'flex-end',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            padding: 5,
+            borderRadius: 5,
+          }}
+        >
+          <View style={styles.searchContainer}>
+            <TextInput
+              placeholder='Search here...'
+              style={styles.input}
+              value={searchText}
+              onChangeText={(text) => setSearchText(text)}
             />
-          ))
-        ) : (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 20,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                color: colors.primaryDark,
-                fontWeight: 'bold',
-              }}
-            >
-              No hotel found. try another!
-            </Text>
+            <Ionicons
+              onPress={() => triggerSearch(searchText)}
+              style={styles.icon}
+              name='search'
+              size={30}
+              color={colors.grey}
+            />
           </View>
-        )}
+        </ImageBackground>
       </View>
-    </ScrollView>
+      <ScrollView style={{ flex: 1 }}>
+        <View style={{ flex: 1, padding: 20 }}>
+          {searchText ? (
+            searchedHotels && searchedHotels?.data?.length > 0 ? (
+              searchedHotels.data.map((hotel) => (
+                <SearchedHotel
+                  key={hotel._id}
+                  _id={hotel._id}
+                  imageCoverUrl={hotel.imageCover}
+                  name={hotel.name}
+                  address={hotel.address}
+                  rating={hotel.avgRating}
+                />
+              ))
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 20,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: colors.primaryDark,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  No hotel found. try another!
+                </Text>
+              </View>
+            )
+          ) : (
+            fetchedHotels &&
+            fetchedHotels.data.map((hotel) => (
+              <SearchedHotel
+                key={hotel._id}
+                _id={hotel._id}
+                imageCoverUrl={hotel.imageCover}
+                name={hotel.name}
+                address={hotel.address}
+                rating={hotel.avgRating}
+              />
+            ))
+          )}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 

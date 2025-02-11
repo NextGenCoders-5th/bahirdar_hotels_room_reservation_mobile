@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontSize: 16,
     color: colors.primaryExtraLight,
-    textTransform: 'uppercase',
+    textTransform: 'capitalize',
     fontWeight: 'bold',
   },
 });

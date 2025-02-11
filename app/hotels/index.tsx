@@ -1,7 +1,9 @@
-import Screen from '@/components/Screen';
-import HotelsScreen from '@/screens/HotelsScreen';
+import React from 'react';
 
-export default function Home() {
+import HotelsScreen from '@/screens/HotelsScreen';
+import Screen from '@/components/Screen';
+
+export default function index() {
   return (
     <Screen>
       <HotelsScreen />

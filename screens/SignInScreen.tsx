@@ -39,7 +39,7 @@ export default function SignInScreen() {
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
       const response = await login(values).unwrap();
-      console.log('login response', response);
+      // console.log('login response', response);
       // console.log('isLoding', isLoading);
       // console.log('loginError', loginError);
 

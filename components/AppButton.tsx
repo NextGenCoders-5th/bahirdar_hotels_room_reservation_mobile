@@ -14,6 +14,7 @@ type AppButtonProps = {
   onPress: () => void;
   buttonStyle?: ViewStyle;
   labelStyle?: TextStyle;
+  disabled?: boolean;
 };
 
 function AppButton({
@@ -21,9 +22,14 @@ function AppButton({
   onPress,
   buttonStyle,
   labelStyle,
+  disabled = false,
 }: AppButtonProps) {
   return (
-    <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.button, buttonStyle]}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <Text style={[styles.text, labelStyle]}>{label}</Text>
     </TouchableOpacity>
   );

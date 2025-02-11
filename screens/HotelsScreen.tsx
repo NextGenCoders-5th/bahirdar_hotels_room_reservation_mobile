@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { router } from 'expo-router';
 
-import HotelsList from '../components/HotelsList';
+import HotelsList from '@/components/HotelsList';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import { useGetHotelsQuery } from '@/redux/hotelApi';
@@ -13,26 +13,27 @@ import LoadingIndicator from '@/components/LoadingIndicator';
 import { useGetCurrentUserQuery } from '@/redux/userApi';
 import TextSlider from '@/components/TextSlider';
 
-export default function HomeScreen() {
+export default function HotelsScreen() {
   const {
     isLoading: hotelsLoading,
     error: hotelsFetchingError,
     refetch,
   } = useGetHotelsQuery();
 
-  const { data } = useGetCurrentUserQuery();
+  const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
   const user = data?.data;
   // const res = useGetCurrentUserQuery();
   // console.log('user', user);
   // console.log('currentUser', res);
   // console.log('user', user);
+  // console.log('user id', user?._id);
 
   const { profilePicture, username } = user || {};
 
   // const { user } = useAuth();
   // console.log('get current user from Home screen', res);
 
-  if (hotelsLoading) {
+  if (hotelsLoading || userIsLoading) {
     return <LoadingIndicator />;
   }
 

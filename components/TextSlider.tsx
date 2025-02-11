@@ -16,20 +16,20 @@ export default function TextSlider() {
         <View style={styles.slide}>
           <Text style={styles.text}>Welcome to our application!</Text>
         </View>
-        <View style={[styles.slide, { backgroundColor: colors.primary }]}>
+        <View style={styles.slide}>
           <Text style={styles.text}>
             Find the best hotels and rooms for your stay
           </Text>
         </View>
-        <View style={[styles.slide, { backgroundColor: colors.primaryLight }]}>
+        <View style={styles.slide}>
           <Text style={styles.text}>
             We want you to have a great experience
           </Text>
         </View>
-        <View style={[styles.slide, { backgroundColor: 'lightblue' }]}>
+        <View style={styles.slide}>
           <Text style={styles.text}>Enjoy your application</Text>
         </View>
-        <View style={[styles.slide, { backgroundColor: colors.primaryDark }]}>
+        <View style={styles.slide}>
           <Text style={styles.text}>Cheers!</Text>
         </View>
       </Swiper>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.primary,
     borderRadius: 10,
   },
   text: {
