@@ -10,14 +10,7 @@ interface ImageSliderProps {
 
 const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
   return (
-    <View
-      style={{
-        height: 230,
-        width: '100%',
-        borderRadius: 10,
-        backgroundColor: colors.primary,
-      }}
-    >
+    <View style={styles.container}>
       <Swiper
         showsButtons
         showsPagination
@@ -54,6 +47,12 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
 export default ImageSlider;
 
 const styles = StyleSheet.create({
+  container: {
+    height: 230,
+    width: '100%',
+    borderRadius: 10,
+    backgroundColor: colors.primary,
+  },
   slide: {
     width: '100%',
     height: '100%',

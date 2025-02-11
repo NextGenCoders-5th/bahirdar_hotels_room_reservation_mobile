@@ -11,6 +11,7 @@ import { routes } from '@/routes';
 import AppButton from '@/components/AppButton';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import { useGetCurrentUserQuery } from '@/redux/userApi';
+import TextSlider from '@/components/TextSlider';
 
 export default function HomeScreen() {
   const {
@@ -24,7 +25,7 @@ export default function HomeScreen() {
   // const res = useGetCurrentUserQuery();
   // console.log('user', user);
   // console.log('currentUser', res);
-  console.log('user', user);
+  // console.log('user', user);
 
   const { profilePicture, username } = user || {};
 
@@ -140,12 +141,13 @@ export default function HomeScreen() {
           />
         </View>
       )}
+      <TextSlider />
 
       <View style={{ padding: 10 }}>
         <AppText
           style={{
             fontSize: 24,
-            // marginBottom: 10,
+            marginBottom: 10,
             color: colors.black,
           }}
         >
