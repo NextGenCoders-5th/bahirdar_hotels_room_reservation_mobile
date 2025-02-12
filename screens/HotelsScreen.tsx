@@ -1,246 +1,132 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { router } from 'expo-router';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
-import HotelsList from '@/components/HotelsList';
 import colors from '@/config/colors';
-import AppText from '@/components/AppText';
-import { useGetHotelsQuery } from '@/redux/hotelApi';
-import ImageButton from '@/components/ImageButton';
-import { routes } from '@/routes';
-import AppButton from '@/components/AppButton';
+import { useLazyGetHotelsQuery } from '@/redux/hotelApi';
+import HotelsList from '@/components/HotelsList';
+import HotelCard from '@/components/HotelCard';
 import LoadingIndicator from '@/components/LoadingIndicator';
-import { useGetCurrentUserQuery } from '@/redux/userApi';
-import TextSlider from '@/components/TextSlider';
-import IconButton from '@/components/IconButton';
-import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
-import LoginRemainder from '@/components/LoginRemainder';
 
 export default function HotelsScreen() {
-  const {
-    isLoading: hotelsLoading,
-    error: hotelsFetchingError,
-    refetch,
-  } = useGetHotelsQuery();
+  const [searchText, setSearchText] = useState<string>('');
+  const [
+    triggerSearch,
+    {
+      data: searchedHotels,
+      error: searchHotelsError,
+      isLoading: searchIsLoading,
+    },
+  ] = useLazyGetHotelsQuery();
 
-  const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
-  const user = data?.data;
-  const { profilePicture, username } = user || {};
+  // Fetch hotels based on search text when it changes
+  useEffect(() => {
+    if (searchText) {
+      triggerSearch(searchText);
+    }
+  }, [searchText]);
 
-  const profilePictureUrl = useTransformImageUrl({ imageUrl: profilePicture! });
-
-  const [menuVisible, setMenuVisible] = useState(false);
-  const toggleMenu = () => setMenuVisible(!menuVisible);
-  const openMenu = () => setMenuVisible(true);
-  const closeMenu = () => setMenuVisible(false);
-
-  const res = useGetCurrentUserQuery();
-  // console.log('user', user);
-  // console.log('currentUser', res);j
-  // console.log('user', user);
-  // console.log('user id', user?._id);
-
-  if (hotelsLoading || userIsLoading) {
-    return <LoadingIndicator />;
-  }
-  // if (hotelsLoading) {
-  //   return <LoadingIndicator />;
-  // }
-
-  if (hotelsFetchingError) {
+  if (searchHotelsError) {
     return (
-      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <Text style={{ fontSize: 18 }}>Error fetching hotels</Text>
-        <AppButton
-          label='Retry'
-          onPress={() => refetch()}
-          buttonStyle={{
-            backgroundColor: colors.primaryDark,
-            width: 100,
-            padding: 10,
-            borderRadius: 10,
-          }}
-          labelStyle={{
-            color: colors.white,
-          }}
-        />
+      <View>
+        <Text>Error loading hotels</Text>
       </View>
     );
   }
 
+  if (searchIsLoading) {
+    return <LoadingIndicator />;
+  }
+
   return (
-    <ScrollView style={styles.container}>
-      {!user ? (
-        <LoginRemainder />
-      ) : (
-        <View
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          borderRadius: 5,
+        }}
+      >
+        <ImageBackground
+          source={require('@/assets/images/hotels/hotel-2.jpg')}
           style={{
-            backgroundColor: colors.primaryDark,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            width: '100%',
+            height: 120,
+            justifyContent: 'flex-end',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             padding: 5,
+            borderRadius: 5,
           }}
         >
-          <Text
-            style={{
-              color: colors.primaryLight,
-              fontSize: 20,
-            }}
-          >
-            Welcome, {username}
-          </Text>
-
-          <ImageButton
-            onPress={toggleMenu}
-            imageUrl={{ uri: profilePictureUrl }}
-            imageStyle={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-            }}
-            buttonStyle={{
-              padding: 0,
-              margin: 0,
-            }}
-          />
-          {menuVisible && (
-            <View
-              style={{
-                position: 'absolute',
-                top: 0,
-                right: 50,
-                borderColor: colors.greyLight,
-                borderWidth: 1,
-                borderRadius: 5,
-                backgroundColor: colors.white,
-                zIndex: 1,
-              }}
-            >
-              <IconButton
-                icon='account'
-                color={colors.primaryDark}
-                label='Profile'
-                onPress={() => {
-                  closeMenu();
-                  router.push(routes.PROFILE_DETAILS);
+          <View style={styles.searchContainer}>
+            <Ionicons
+              style={{ alignSelf: 'center', paddingLeft: 10 }}
+              name='search'
+              size={24}
+              color={colors.grey}
+            />
+            <TextInput
+              placeholder='Search here...'
+              style={styles.input}
+              value={searchText}
+              onChangeText={(text) => setSearchText(text)}
+            />
+          </View>
+        </ImageBackground>
+      </View>
+      <ScrollView style={{ flex: 1 }}>
+        <View style={{ flex: 1, padding: 20 }}>
+          {searchText ? (
+            searchedHotels && searchedHotels?.data?.length > 0 ? (
+              searchedHotels.data.map((hotel) => (
+                <HotelCard key={hotel._id} {...hotel} />
+              ))
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 20,
                 }}
-                buttonStyle={{
-                  padding: 5,
-                  justifyContent: 'flex-start',
-                  borderBottomWidth: 2,
-                  borderBottomColor: colors.primaryLight,
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                  width: 150,
-                  marginVertical: 0,
-                }}
-                labelStyle={{ color: colors.primaryDark }}
-              />
-
-              <IconButton
-                icon='calendar'
-                color={colors.primaryDark}
-                label='Bookings'
-                onPress={() => {
-                  closeMenu();
-                  router.push(routes.BOOKINGS);
-                }}
-                buttonStyle={{
-                  padding: 5,
-                  justifyContent: 'flex-start',
-                  borderBottomWidth: 2,
-                  borderBottomColor: colors.primaryLight,
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                  width: 150,
-                  marginVertical: 0,
-                }}
-                labelStyle={{ color: colors.primaryDark }}
-              />
-              <IconButton
-                icon='calendar'
-                color={colors.primaryDark}
-                label='Favorites'
-                onPress={() => {
-                  closeMenu();
-                  router.push(routes.FAVORITES);
-                }}
-                buttonStyle={{
-                  padding: 5,
-                  justifyContent: 'flex-start',
-                  borderBottomWidth: 2,
-                  borderBottomColor: colors.primaryLight,
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                  width: 150,
-                  marginVertical: 0,
-                }}
-                labelStyle={{ color: colors.primaryDark }}
-              />
-              {/* <IconButton
-                icon='heart'
-                color={colors.primaryDark}
-                label='Update Profile'
-                onPress={() => {
-                  router.push(routes.UPDATE_PROFILE);
-                }}
-                buttonStyle={{
-                  padding: 5,
-                  justifyContent: 'flex-start',
-                  borderBottomWidth: 2,
-                  borderBottomColor: colors.primaryLight,
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                  width: 150,
-                  marginVertical: 0,
-                }}
-                labelStyle={{ color: colors.primaryDark }}
-              /> */}
-            </View>
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: colors.primaryDark,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  No hotel found. try another!
+                </Text>
+              </View>
+            )
+          ) : (
+            <HotelsList />
           )}
         </View>
-      )}
-
-      {/* <TextSlider /> */}
-
-      <View style={{ padding: 10 }}>
-        <AppText
-          style={{
-            fontSize: 24,
-            marginBottom: 10,
-            color: colors.black,
-          }}
-        >
-          Featured Hotels
-        </AppText>
-        <HotelsList />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-    width: '100%',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: colors.black,
-  },
   searchContainer: {
     flexDirection: 'row',
     width: '100%',
     height: 50,
+    backgroundColor: colors.primaryExtraLight,
     borderColor: colors.primary,
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 30,
+    marginVertical: 10,
     marginBottom: 20,
-    backgroundColor: colors.white,
   },
   icon: {
     width: 60,
@@ -249,7 +135,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     padding: 10,
     color: colors.white,
-    borderRadius: 15,
+    borderRadius: 30,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
   },
@@ -257,10 +143,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     padding: 15,
-    borderRadius: 15,
-    borderRightWidth: 0,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
+    borderRadius: 30,
     fontSize: 16,
     color: colors.greyDark,
   },

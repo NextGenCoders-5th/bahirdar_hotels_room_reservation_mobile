@@ -1,10 +1,10 @@
 import Screen from '@/components/Screen';
-import HotelsScreen from '@/screens/HotelsScreen';
+import HomeScreen from '@/screens/HomeScreen';
 
 export default function Home() {
   return (
     <Screen>
-      <HotelsScreen />
+      <HomeScreen />
     </Screen>
   );
 }

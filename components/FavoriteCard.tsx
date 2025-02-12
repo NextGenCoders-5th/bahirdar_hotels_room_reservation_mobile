@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { Link } from 'expo-router';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { router } from 'expo-router';
 
 import AppText from '@/components/AppText';
 import colors from '@/config/colors';
@@ -34,7 +34,7 @@ export default function FavoriteCard({
   }
 
   return (
-    <Link href={`/hotels/${_id}`} asChild>
+    <TouchableOpacity onPress={() => router.push(`/hotels/${_id}`)}>
       <View
         style={{
           flexDirection: 'row',
@@ -100,7 +100,7 @@ export default function FavoriteCard({
           }}
         />
       </View>
-    </Link>
+    </TouchableOpacity>
   );
 }
 

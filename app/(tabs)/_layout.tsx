@@ -1,8 +1,8 @@
 import { Tabs } from 'expo-router';
 import colors from '@/config/colors';
-import TabBarIcon from '@/components/TabBarIcon';
 import { ThemeProvider } from '@react-navigation/native';
 import appTheme from '@/config/appTheme';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 
 export default function TabsLayout() {
   return (
@@ -24,9 +24,23 @@ export default function TabsLayout() {
           options={{
             title: 'Home',
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon
+              <Ionicons
                 name={focused ? 'home-sharp' : 'home-outline'}
-                focused={focused}
+                size={26}
+                color={focused ? colors.primaryDark : colors.grey}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name='hotels'
+          options={{
+            title: 'Hotels',
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome5
+                name={focused ? 'hotel' : 'hotel'}
+                size={22}
+                color={focused ? colors.primaryDark : colors.grey}
               />
             ),
           }}
@@ -38,23 +52,10 @@ export default function TabsLayout() {
             title: 'Favorites',
 
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon
+              <Ionicons
                 name={focused ? 'heart' : 'heart-outline'}
-                focused={focused}
-              />
-            ),
-          }}
-        />
-
-        <Tabs.Screen
-          name='search'
-          options={{
-            title: 'Search',
-
-            tabBarIcon: ({ focused }) => (
-              <TabBarIcon
-                name={focused ? 'search' : 'search-outline'}
-                focused={focused}
+                size={26}
+                color={focused ? colors.primaryDark : colors.grey}
               />
             ),
           }}

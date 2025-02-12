@@ -1,12 +1,12 @@
 import React from 'react';
 
 import Screen from '@/components/Screen';
-import SearchScreen from '@/screens/SearchScreen';
+import HotelsScreen from '@/screens/HotelsScreen';
 
 export default function Search() {
   return (
     <Screen>
-      <SearchScreen />
+      <HotelsScreen />
     </Screen>
   );
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import HotelsScreen from '@/screens/HotelsScreen';
+import HomeScreen from '@/screens/HomeScreen';
 import Screen from '@/components/Screen';
 
 export default function index() {
   return (
     <Screen>
-      <HotelsScreen />
+      <HomeScreen />
     </Screen>
   );
 }
