@@ -159,6 +159,26 @@ export default function HotelsScreen() {
                 labelStyle={{ color: colors.primaryDark }}
               />
               <IconButton
+                icon='calendar'
+                color={colors.primaryDark}
+                label='Favorites'
+                onPress={() => {
+                  closeMenu();
+                  router.push(routes.FAVORITES);
+                }}
+                buttonStyle={{
+                  padding: 5,
+                  justifyContent: 'flex-start',
+                  borderBottomWidth: 2,
+                  borderBottomColor: colors.primaryLight,
+                  borderRadius: 0,
+                  backgroundColor: 'transparent',
+                  width: 150,
+                  marginVertical: 0,
+                }}
+                labelStyle={{ color: colors.primaryDark }}
+              />
+              {/* <IconButton
                 icon='heart'
                 color={colors.primaryDark}
                 label='Update Profile'
@@ -176,7 +196,7 @@ export default function HotelsScreen() {
                   marginVertical: 0,
                 }}
                 labelStyle={{ color: colors.primaryDark }}
-              />
+              /> */}
             </View>
           )}
         </View>

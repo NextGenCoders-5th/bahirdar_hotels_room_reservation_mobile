@@ -100,21 +100,79 @@ export default function ProfileDetailsScreen() {
             {user?.gender ? `${user.gender}` : '_______'}
           </Text>
         </View>
-        <View style={{ marginBottom: 10 }}>
-          <AppText style={{ fontWeight: '500' }}>Address</AppText>
-          <Text
-            style={{
-              fontSize: 16,
-              backgroundColor: colors.primaryExtraLight2,
-              padding: 10,
-              borderRadius: 5,
-              color: colors.greyMediumDark,
-            }}
-          >
-            {user?.address
-              ? `${user.address.city}, ${user.address.country}`
-              : '_______'}
-          </Text>
+        <View
+          style={{
+            marginBottom: 10,
+            flexDirection: 'row',
+            gap: '10%',
+            // paddingHorizontal: 10,
+          }}
+        >
+          <View style={{ width: '45%' }}>
+            <AppText style={{ fontWeight: '500' }}>Country</AppText>
+            <Text
+              style={{
+                fontSize: 16,
+                backgroundColor: colors.primaryExtraLight2,
+                padding: 10,
+                borderRadius: 5,
+                color: colors.greyMediumDark,
+              }}
+            >
+              {user?.address ? `${user.address.country}` : '_______'}
+            </Text>
+          </View>
+          <View style={{ width: '45%' }}>
+            <AppText style={{ fontWeight: '500' }}>City</AppText>
+            <Text
+              style={{
+                fontSize: 16,
+                backgroundColor: colors.primaryExtraLight2,
+                padding: 10,
+                borderRadius: 5,
+                color: colors.greyMediumDark,
+              }}
+            >
+              {user?.address ? `${user.address.city}` : '_______'}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            marginBottom: 10,
+            flexDirection: 'row',
+            gap: '10%',
+            // paddingHorizontal: 10,
+          }}
+        >
+          <View style={{ width: '45%' }}>
+            <AppText style={{ fontWeight: '500' }}>Subcity</AppText>
+            <Text
+              style={{
+                fontSize: 16,
+                backgroundColor: colors.primaryExtraLight2,
+                padding: 10,
+                borderRadius: 5,
+                color: colors.greyMediumDark,
+              }}
+            >
+              {user?.address ? `${user.address.subcity}` : '_______'}
+            </Text>
+          </View>
+          <View style={{ width: '45%' }}>
+            <AppText style={{ fontWeight: '500' }}>Woreda</AppText>
+            <Text
+              style={{
+                fontSize: 16,
+                backgroundColor: colors.primaryExtraLight2,
+                padding: 10,
+                borderRadius: 5,
+                color: colors.greyMediumDark,
+              }}
+            >
+              {user?.address ? `${user.address.woreda}` : '_______'}
+            </Text>
+          </View>
         </View>
       </View>
     </ScrollView>

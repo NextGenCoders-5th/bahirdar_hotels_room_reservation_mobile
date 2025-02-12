@@ -8,7 +8,16 @@ import IconButton from '@/components/IconButton';
 
 const validationSchema = Yup.object().shape({});
 
-const profileInitialValues = {};
+const profileInitialValues = {
+  firstName: '',
+  lastName: '',
+  username: '',
+  email: '',
+  phoneNumber: '',
+  dateOfBirth: '',
+  gender: '',
+  addres: '',
+};
 
 export default function UpdateProfileScreen() {
   const handleSubmit = (values: any) => {
