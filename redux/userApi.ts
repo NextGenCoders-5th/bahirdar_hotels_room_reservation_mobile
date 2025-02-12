@@ -42,6 +42,12 @@ export const userApi = createApi({
     getCurrentUser: builder.query<IUserResponse, void>({
       query: () => '/current-user',
     }),
+    getUserWithBookingDetails: builder.query({
+      query: (id) => ({
+        url: '/user-with-bookings',
+        params: { id },
+      }),
+    }),
   }),
 });
 
@@ -51,4 +57,5 @@ export const {
   useDeleteUserMutation,
   useGetUserWithBookingsQuery,
   useCompleteOnboardingMutation,
+  useGetUserWithBookingDetailsQuery,
 } = userApi;
