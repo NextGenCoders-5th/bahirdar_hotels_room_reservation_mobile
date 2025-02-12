@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import colors from '@/config/colors';
 import IconButton from './IconButton';
@@ -9,6 +9,11 @@ import { useGlobalSearchParams } from 'expo-router';
 import { useGetRoomQuery } from '@/redux/roomApi';
 import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 import LoadingIndicator from './LoadingIndicator';
+import { useCreateBookingMutation } from '@/redux/bookingApi';
+import { ErrorResponse } from '@/types/general';
+import { ErrorMessage } from './forms';
+import { useGetCurrentUserQuery } from '@/redux/userApi';
+import { IBookingRequest } from '@/types/bookingTypes';
 
 const BookScreen = () => {
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);
@@ -19,7 +24,19 @@ const BookScreen = () => {
   const { hotel_id, room_id } = useGlobalSearchParams();
   // console.log('in Book', hotel_id, room_id);
 
-  const { data, isLoading, error } = useGetRoomQuery(room_id as string);
+  const { data: userData } = useGetCurrentUserQuery();
+
+  const user = userData?.data;
+
+  const {
+    data,
+    isLoading: roomIsLoading,
+    error: roomError,
+  } = useGetRoomQuery(room_id as string);
+
+  const [createBooking, { isLoading: bookingIsLoading, error: bookingError }] =
+    useCreateBookingMutation();
+
   // console.log(data);
   const {
     roomNumber,
@@ -28,7 +45,24 @@ const BookScreen = () => {
     pricePerNight,
     roomFacilities,
     images,
+    description,
   } = data?.data || {};
+
+  const handleBooking = async () => {
+    try {
+      const bookingData = {
+        user: user?._id,
+        room: room_id,
+        checkIn: checkInDate?.toISOString(),
+        checkOut: checkOutDate?.toISOString(),
+      } as IBookingRequest;
+      // console.log('bookingData', bookingData);
+      const response = await createBooking(bookingData).unwrap();
+      console.log(response);
+    } catch (error) {
+      console.log('booking error', error);
+    }
+  };
 
   const handleConfirmDate = (
     event: any,
@@ -42,12 +76,12 @@ const BookScreen = () => {
     setShowCheckOutPicker(false);
   };
 
-  if (isLoading) {
+  if (roomIsLoading || bookingIsLoading) {
     return <LoadingIndicator />;
   }
   const imageUrl = useTransformImageUrl({ imageUrl: images![0] });
 
-  if (error) {
+  if (roomError) {
     return (
       <View>
         <Text>Error loading room...</Text>
@@ -111,71 +145,67 @@ const BookScreen = () => {
               {roomFacilities?.map((facility) => `${facility}, `)}
             </Text>
           </View>
+          <View style={{ flexDirection: 'row', marginTop: 5 }}>
+            <Text style={{ fontSize: 16, color: colors.grey }}>
+              {description}
+            </Text>
+          </View>
         </View>
       </View>
-      {/* <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 10 }}>
-        Select Booking Dates
-      </Text> */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <View style={{}}>
-          <AppText style={{ fontWeight: 'medium' }}>Check-in Date</AppText>
-          <IconButton
-            icon='calendar-month'
-            color={colors.primaryDark}
-            size={18}
-            label={checkInDate ? checkInDate.toDateString() : 'Select Check-in'}
-            onPress={() => setShowCheckInPicker(true)}
-            labelStyle={{
-              fontSize: 14,
-              marginLeft: 2,
-              color: colors.primary,
-            }}
-            buttonStyle={{
-              width: 160,
-              padding: 10,
-              marginVertical: 0,
-              borderRadius: 10,
-              backgroundColor: 'transparent',
-              borderWidth: 1,
-              borderColor: colors.primaryDark,
-            }}
-          />
-        </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          gap: 5,
+          justifyContent: 'space-between',
+        }}
+      >
+        <IconButton
+          icon='calendar-month'
+          color={colors.primaryDark}
+          size={18}
+          label={checkInDate ? checkInDate.toDateString() : 'Select Check-in'}
+          onPress={() => setShowCheckInPicker(true)}
+          labelStyle={{
+            fontSize: 14,
+            marginLeft: 2,
+            color: colors.primary,
+          }}
+          buttonStyle={{
+            width: '50%',
+            padding: 10,
+            marginVertical: 0,
+            borderRadius: 10,
+            backgroundColor: 'transparent',
+            borderWidth: 1,
+            borderColor: colors.primaryDark,
+          }}
+        />
 
-        <View style={{}}>
-          <AppText style={{ fontWeight: 'medium' }}>Check-out Date</AppText>
-          <IconButton
-            icon='calendar-month'
-            color={colors.primaryDark}
-            size={18}
-            label={
-              checkOutDate ? checkOutDate.toDateString() : 'Select Check-out'
-            }
-            onPress={() => setShowCheckOutPicker(true)}
-            labelStyle={{ fontSize: 14, marginLeft: 2, color: colors.primary }}
-            buttonStyle={{
-              width: 160,
-              padding: 10,
-              marginVertical: 0,
-              borderRadius: 10,
-              backgroundColor: 'transparent',
-              borderWidth: 1,
-              borderColor: colors.primaryDark,
-            }}
-          />
-        </View>
+        <IconButton
+          icon='calendar-month'
+          color={colors.primaryDark}
+          size={18}
+          label={
+            checkOutDate ? checkOutDate.toDateString() : 'Select Check-out'
+          }
+          onPress={() => setShowCheckOutPicker(true)}
+          labelStyle={{ fontSize: 14, marginLeft: 2, color: colors.primary }}
+          buttonStyle={{
+            width: '50%',
+            padding: 10,
+            marginVertical: 0,
+            borderRadius: 10,
+            backgroundColor: 'transparent',
+            borderWidth: 1,
+            borderColor: colors.primaryDark,
+          }}
+        />
       </View>
 
       <AppButton
         label='Confirm Booking'
         disabled={!checkInDate || !checkOutDate}
-        onPress={() => {
-          console.log('Check-in Date: ', checkInDate);
-          console.log('Check-out Date: ', checkOutDate);
-          alert(
-            `Booking from ${checkInDate?.toDateString()} to ${checkOutDate?.toDateString()}`
-          );
-        }}
+        onPress={handleBooking}
         buttonStyle={{
           width: 150,
           padding: 10,
@@ -185,6 +215,10 @@ const BookScreen = () => {
         }}
         labelStyle={{ fontSize: 16 }}
       />
+
+      {/* {bookingError && bookingError?.data.message && (
+        <ErrorMessage error={error.data.message} visible={true} />
+      )} */}
 
       {showCheckInPicker && (
         <DateTimePicker
@@ -206,33 +240,5 @@ const BookScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  datePickerContainer: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  dateButton: {
-    backgroundColor: '#007BFF',
-    paddingVertical: 8,
-  },
-  confirmButton: {
-    backgroundColor: '#28A745',
-    marginTop: 20,
-  },
-});
 
 export default BookScreen;

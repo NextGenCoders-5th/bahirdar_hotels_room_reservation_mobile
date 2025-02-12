@@ -10,4 +10,5 @@ export enum routes {
   FAVORITES = '/favorites',
   BOOKINGS = '/bookings',
   PROFILE_DETAILS = '/profile-details',
+  PROFILE = '/profile',
 }

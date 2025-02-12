@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   label: {
-    marginLeft: 8,
+    marginLeft: 4,
     fontSize: 16,
     color: colors.primaryExtraLight,
     textTransform: 'capitalize',
