@@ -10,11 +10,11 @@ import ImageButton from '@/components/ImageButton';
 import { routes } from '@/routes';
 import AppButton from '@/components/AppButton';
 import LoadingIndicator from '@/components/LoadingIndicator';
-import { useGetCurrentUserQuery } from '@/redux/userApi';
 import TextSlider from '@/components/TextSlider';
 import IconButton from '@/components/IconButton';
 import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 import LoginRemainder from '@/components/LoginRemainder';
+import { useAuthContext } from '@/hooks/AuthContext';
 
 export default function HomeScreen() {
   const {
@@ -23,29 +23,45 @@ export default function HomeScreen() {
     refetch,
   } = useGetHotelsQuery();
 
-  const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
-  const user = data?.data;
-  const { profilePicture, username } = user || {};
+  // console.log('hotelsLoading', hotelsLoading);
+
+  // const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
+  // const user = data?.data;
+
+  // const [logout, { isLoading: logoutIsLoading }] = useLogoutMutation();
+
+  const { logout, user, loading } = useAuthContext();
+  const { profilePicture, username } = user?.data || {};
 
   const profilePictureUrl = useTransformImageUrl({ imageUrl: profilePicture! });
 
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleMenu = () => setMenuVisible(!menuVisible);
-  const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
 
-  const res = useGetCurrentUserQuery();
+  // const res = useGetCurrentUserQuery();
   // console.log('user', user);
-  // console.log('currentUser', res);j
+
+  // console.log('currentUser', res);
+
   // console.log('user', user);
   // console.log('user id', user?._id);
 
-  if (hotelsLoading || userIsLoading) {
-    return <LoadingIndicator />;
+  if (loading) {
+    return <LoadingIndicator message='Signing out...' />;
+  }
+
+  if (hotelsLoading) {
+    return <LoadingIndicator message='Loading hotels...' />;
   }
   // if (hotelsLoading) {
   //   return <LoadingIndicator />;
   // }
+
+  const handleLogout = async () => {
+    closeMenu();
+    logout();
+  };
 
   if (hotelsFetchingError) {
     return (
@@ -69,7 +85,13 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+        height: 200,
+        width: '100%',
+      }}
+    >
       {!user ? (
         <LoginRemainder />
       ) : (
@@ -178,12 +200,12 @@ export default function HomeScreen() {
                 }}
                 labelStyle={{ color: colors.primaryDark }}
               />
-              {/* <IconButton
-                icon='heart'
+              <IconButton
+                icon='logout'
                 color={colors.primaryDark}
-                label='Update Profile'
+                label='Sign out'
                 onPress={() => {
-                  router.push(routes.UPDATE_PROFILE);
+                  handleLogout();
                 }}
                 buttonStyle={{
                   padding: 5,
@@ -196,27 +218,28 @@ export default function HomeScreen() {
                   marginVertical: 0,
                 }}
                 labelStyle={{ color: colors.primaryDark }}
-              /> */}
+              />
             </View>
           )}
         </View>
       )}
+      <ScrollView style={styles.container}>
+        <TextSlider />
 
-      <TextSlider />
-
-      <View style={{ padding: 10 }}>
-        <AppText
-          style={{
-            fontSize: 24,
-            marginBottom: 10,
-            color: colors.black,
-          }}
-        >
-          Featured Hotels
-        </AppText>
-        <HotelsList />
-      </View>
-    </ScrollView>
+        <View style={{ padding: 10 }}>
+          <AppText
+            style={{
+              fontSize: 24,
+              marginBottom: 10,
+              color: colors.black,
+            }}
+          >
+            Featured Hotels
+          </AppText>
+          <HotelsList />
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 

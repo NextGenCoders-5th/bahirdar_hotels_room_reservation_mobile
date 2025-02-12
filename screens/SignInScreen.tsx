@@ -5,7 +5,6 @@ import { useRouter } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import ImageButton from '@/components/ImageButton';
 import {
   AppForm,
   ErrorMessage,
@@ -16,6 +15,7 @@ import { routes } from '@/routes';
 import { useLoginMutation } from '@/redux/authApi';
 import { ErrorResponse } from '@/types/general';
 import LoadingIndicator from '@/components/LoadingIndicator';
+import { useAuthContext } from '@/hooks/AuthContext';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -31,18 +31,18 @@ export default function SignInScreen() {
   const router = useRouter();
   const [error, setError] = useState<ErrorResponse | null>(null);
 
-  const [login, { isLoading, error: loginError }] = useLoginMutation();
+  const [_, { isLoading }] = useLoginMutation();
   // console.log('loginError', loginError);
 
-  // const { login, loading } = useAuth();
+  const { login, loading } = useAuthContext();
+  // console.log('logged in user', user);
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
-      const response = await login(values).unwrap();
+      const response = await login(values);
       // console.log('login response', response);
       // console.log('isLoding', isLoading);
       // console.log('loginError', loginError);
-
       router.push(routes.HOME);
     } catch (error: any) {
       setError(error);
@@ -51,7 +51,11 @@ export default function SignInScreen() {
   };
 
   if (isLoading) {
-    return <LoadingIndicator />;
+    return <LoadingIndicator message='Signing in...' />;
+  }
+
+  if (loading) {
+    return <LoadingIndicator message='Loading...' />;
   }
 
   return (
@@ -122,15 +126,12 @@ export default function SignInScreen() {
             <Text style={styles.text}>Forgot password?</Text>
           </Pressable>
           {error && error.data && (
-            <ErrorMessage
-              error={error.data.message}
-              visible={error.data.message !== null}
-            />
+            <ErrorMessage error={error.data.message} visible={true} />
           )}
           <SubmitButton label='Sign in' />
         </AppForm>
-        <Text
-          style={{
+        {/* <Text
+          style={{j
             textAlign: 'center',
             fontSize: 16,
             color: colors.greyMediumDark,
@@ -159,7 +160,7 @@ export default function SignInScreen() {
             imageUrl={require('@/assets/images/facebook.jpg')}
             onPress={() => {}}
           />
-        </View>
+        </View> */}
 
         <View
           style={{

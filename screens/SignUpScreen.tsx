@@ -78,7 +78,7 @@ export default function SignUpScreen() {
   };
 
   if (isLoading) {
-    return <LoadingIndicator />;
+    return <LoadingIndicator message='Creating account...' />;
   }
 
   return (
@@ -189,13 +189,18 @@ export default function SignUpScreen() {
           )}
 
           {error && error.data && error.status === 500 && (
-            <ErrorMessage error='User already exists' visible={true} />
+            <ErrorMessage
+              error='User with this email already exists'
+              visible={true}
+            />
           )}
-
+          {error && error.data && error.status === 400 && (
+            <ErrorMessage error={error.data.message} visible={true} />
+          )}
           <SubmitButton label='Sign Up' />
         </AppForm>
 
-        <Text
+        {/* <Text
           style={{
             textAlign: 'center',
             fontSize: 16,
@@ -225,7 +230,7 @@ export default function SignUpScreen() {
             imageUrl={require('@/assets/images/facebook.jpg')}
             onPress={() => {}}
           />
-        </View>
+        </View> */}
 
         <View
           style={{

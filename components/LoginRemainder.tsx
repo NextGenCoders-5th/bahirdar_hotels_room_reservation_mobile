@@ -29,17 +29,19 @@ export default function LoginRemainder() {
       </Pressable>
       <Text
         style={{
-          color: colors.grey,
-          fontSize: 18,
+          color: colors.white,
+          fontWeight: '600',
+          fontSize: 20,
           marginRight: 2,
         }}
       >
-        to book hotels.
+        to book a hotel.
       </Text>
       <Text
         style={{
-          color: colors.grey,
-          fontSize: 18,
+          color: colors.white,
+          fontWeight: '600',
+          fontSize: 20,
           marginRight: 2,
         }}
       >
