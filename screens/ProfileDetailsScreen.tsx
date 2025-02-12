@@ -3,15 +3,10 @@ import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import { useAuth } from '@/hooks/authContext';
 import { useGetCurrentUserQuery } from '@/redux/userApi';
+import { formatDate } from '@/utils/formatDate';
 
 export default function ProfileDetailsScreen() {
-  // const { user } = useAuth();
-  // console.log('user', user);
-  // const { data } = useGetCurrentUserQuery();
-  // console.log('data', data);
-
   const { data, isLoading, error } = useGetCurrentUserQuery();
   const user = data?.data;
 
@@ -88,7 +83,7 @@ export default function ProfileDetailsScreen() {
               color: colors.greyMediumDark,
             }}
           >
-            {user?.dateOfBirth ? user?.dateOfBirth : '_______'}
+            {user?.dateOfBirth ? formatDate(user?.dateOfBirth) : '_______'}
           </Text>
         </View>
         <View style={{ marginBottom: 10 }}>
@@ -116,7 +111,9 @@ export default function ProfileDetailsScreen() {
               color: colors.greyMediumDark,
             }}
           >
-            {user?.address ? `${user.address}` : '_______'}
+            {user?.address
+              ? `${user.address.city}, ${user.address.country}`
+              : '_______'}
           </Text>
         </View>
       </View>

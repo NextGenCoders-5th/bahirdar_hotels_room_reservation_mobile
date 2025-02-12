@@ -1,7 +1,4 @@
 import { BookingStatus } from '@/enums/bookingStatusEnums';
-import { IHotel } from './hotelTypes';
-import { IRoom } from './roomTypes';
-import { User } from './userTypes';
 
 export interface IBooking {
   _id?: string;
@@ -41,4 +38,10 @@ export interface IBookingRequest {
   room: string;
   checkIn: string;
   checkOut: string;
+}
+
+export interface IBookingSummary {
+  pricePerNight: number;
+  numOfNights: number;
+  totalPrice: number;
 }
