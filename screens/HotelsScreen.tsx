@@ -12,9 +12,9 @@ import AppButton from '@/components/AppButton';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import { useGetCurrentUserQuery } from '@/redux/userApi';
 import TextSlider from '@/components/TextSlider';
-import AccountMenu from '@/components/AccountMenu';
-import { Button, Divider, Menu, PaperProvider } from 'react-native-paper';
 import IconButton from '@/components/IconButton';
+import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
+import LoginRemainder from '@/components/LoginRemainder';
 
 export default function HotelsScreen() {
   const {
@@ -26,6 +26,8 @@ export default function HotelsScreen() {
   const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
   const user = data?.data;
   const { profilePicture, username } = user || {};
+
+  const profilePictureUrl = useTransformImageUrl({ imageUrl: profilePicture! });
 
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleMenu = () => setMenuVisible(!menuVisible);
@@ -68,112 +70,116 @@ export default function HotelsScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <View
-        style={{
-          backgroundColor: colors.primaryDark,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 5,
-        }}
-      >
-        <Text
+      {!user ? (
+        <LoginRemainder />
+      ) : (
+        <View
           style={{
-            color: colors.primaryLight,
-            fontSize: 20,
+            backgroundColor: colors.primaryDark,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: 5,
           }}
         >
-          Welcome, Henok
-        </Text>
-
-        <ImageButton
-          onPress={toggleMenu}
-          imageUrl={require('@/assets/images/profile/profile-1.jpg')}
-          imageStyle={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-          }}
-          buttonStyle={{
-            padding: 0,
-            margin: 0,
-          }}
-        />
-        {menuVisible && (
-          <View
+          <Text
             style={{
-              position: 'absolute',
-              top: 5,
-              right: 50,
-              borderColor: colors.greyLight,
-              borderWidth: 1,
-              borderRadius: 5,
-              backgroundColor: colors.white,
-              zIndex: 1,
+              color: colors.primaryLight,
+              fontSize: 20,
             }}
           >
-            <IconButton
-              icon='account'
-              color={colors.primaryDark}
-              label='Profile'
-              onPress={() => {
-                closeMenu();
-                router.push(routes.PROFILE);
+            Welcome, {username}
+          </Text>
+
+          <ImageButton
+            onPress={toggleMenu}
+            imageUrl={{ uri: profilePictureUrl }}
+            imageStyle={{
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+            }}
+            buttonStyle={{
+              padding: 0,
+              margin: 0,
+            }}
+          />
+          {menuVisible && (
+            <View
+              style={{
+                position: 'absolute',
+                top: 5,
+                right: 50,
+                borderColor: colors.greyLight,
+                borderWidth: 1,
+                borderRadius: 5,
+                backgroundColor: colors.white,
+                zIndex: 1,
               }}
-              buttonStyle={{
-                padding: 5,
-                justifyContent: 'flex-start',
-                borderBottomWidth: 2,
-                borderBottomColor: colors.primaryLight,
-                borderRadius: 0,
-                backgroundColor: 'transparent',
-                width: 150,
-                marginVertical: 0,
-              }}
-              labelStyle={{ color: colors.primaryDark }}
-            />
-            <IconButton
-              icon='heart'
-              color={colors.primaryDark}
-              label='Favorites'
-              onPress={() => {
-                router.push(routes.FAVORITES);
-              }}
-              buttonStyle={{
-                padding: 5,
-                justifyContent: 'flex-start',
-                borderBottomWidth: 2,
-                borderBottomColor: colors.primaryLight,
-                borderRadius: 0,
-                backgroundColor: 'transparent',
-                width: 150,
-                marginVertical: 0,
-              }}
-              labelStyle={{ color: colors.primaryDark }}
-            />
-            <IconButton
-              icon='calendar'
-              color={colors.primaryDark}
-              label='Bookings'
-              onPress={() => {
-                closeMenu();
-                router.push(routes.BOOKINGS);
-              }}
-              buttonStyle={{
-                padding: 5,
-                justifyContent: 'flex-start',
-                borderBottomWidth: 2,
-                borderBottomColor: colors.primaryLight,
-                borderRadius: 0,
-                backgroundColor: 'transparent',
-                width: 150,
-                marginVertical: 0,
-              }}
-              labelStyle={{ color: colors.primaryDark }}
-            />
-          </View>
-        )}
-      </View>
+            >
+              <IconButton
+                icon='account'
+                color={colors.primaryDark}
+                label='Profile'
+                onPress={() => {
+                  closeMenu();
+                  router.push(routes.PROFILE_DETAILS);
+                }}
+                buttonStyle={{
+                  padding: 5,
+                  justifyContent: 'flex-start',
+                  borderBottomWidth: 2,
+                  borderBottomColor: colors.primaryLight,
+                  borderRadius: 0,
+                  backgroundColor: 'transparent',
+                  width: 150,
+                  marginVertical: 0,
+                }}
+                labelStyle={{ color: colors.primaryDark }}
+              />
+              <IconButton
+                icon='heart'
+                color={colors.primaryDark}
+                label='Favorites'
+                onPress={() => {
+                  router.push(routes.FAVORITES);
+                }}
+                buttonStyle={{
+                  padding: 5,
+                  justifyContent: 'flex-start',
+                  borderBottomWidth: 2,
+                  borderBottomColor: colors.primaryLight,
+                  borderRadius: 0,
+                  backgroundColor: 'transparent',
+                  width: 150,
+                  marginVertical: 0,
+                }}
+                labelStyle={{ color: colors.primaryDark }}
+              />
+              <IconButton
+                icon='calendar'
+                color={colors.primaryDark}
+                label='Bookings'
+                onPress={() => {
+                  closeMenu();
+                  router.push(routes.BOOKINGS);
+                }}
+                buttonStyle={{
+                  padding: 5,
+                  justifyContent: 'flex-start',
+                  borderBottomWidth: 2,
+                  borderBottomColor: colors.primaryLight,
+                  borderRadius: 0,
+                  backgroundColor: 'transparent',
+                  width: 150,
+                  marginVertical: 0,
+                }}
+                labelStyle={{ color: colors.primaryDark }}
+              />
+            </View>
+          )}
+        </View>
+      )}
 
       {/* <TextSlider /> */}
 
