@@ -52,7 +52,7 @@ const HotelDetailsScreen: React.FC = () => {
   } = data?.data || {};
 
   const [latitude, longitude] = location?.coordinates || [];
-  console.log(latitude, longitude);
+  // console.log(latitude, longitude);
 
   const newImageCoverUrl = useTransformImageUrl({ imageUrl: imageCover! });
   const newHotelImageUrls = useTransformedImageUrls({
@@ -104,7 +104,7 @@ const HotelDetailsScreen: React.FC = () => {
     <Screen>
       <ScrollView style={styles.card}>
         <View style={styles.imageContainer}>
-          <ImageSlider images={newHotelImageUrls} />
+          <ImageSlider images={newHotelImageUrls} showButtons={true} />
 
           <TouchableOpacity
             onPress={handleToggleFavorite}
@@ -215,12 +215,12 @@ const HotelDetailsScreen: React.FC = () => {
             </View>
           </View>
 
-          {location && location?.coordinates.length > 0 && (
+          {/* {location && location?.coordinates.length > 0 && (
             <MapComponent
               hotelName={name!}
               hotelCoords={{ latitude: 23, longitude: 37.410125 }}
             />
-          )}
+          )} */}
 
           <View style={[styles.bottomMargin, { marginTop: 30 }]}>
             <AppText>Summary</AppText>
@@ -263,7 +263,7 @@ const HotelDetailsScreen: React.FC = () => {
               }}
             >
               {rooms &&
-                rooms.map((room, index) => <RoomCard key={index} {...room} />)}
+                rooms.map((room) => <RoomCard key={room._id} {...room} />)}
             </ScrollView>
           </View>
         </View>

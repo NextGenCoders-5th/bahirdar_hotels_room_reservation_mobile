@@ -1,21 +1,14 @@
-import { View, Text } from 'react-native';
 import React from 'react';
 import { Stack } from 'expo-router';
-import { useAuth } from '@/hooks/authContext';
 import SignInScreen from '@/screens/SignInScreen';
-import { useGetCurrentUserQuery } from '@/redux/userApi';
+import { useAuthContext } from '@/hooks/AuthContext';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 export default function ProfileLayout() {
-  // const { user, loading } = useAuth();
-  const { data, isLoading, error } = useGetCurrentUserQuery();
-  const user = data?.data;
+  const { user, loading } = useAuthContext();
 
-  if (isLoading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+  if (loading) {
+    return <LoadingIndicator />;
   }
 
   if (!user) {

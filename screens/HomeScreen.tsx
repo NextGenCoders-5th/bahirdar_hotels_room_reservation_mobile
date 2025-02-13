@@ -6,15 +6,15 @@ import HotelsList from '@/components/HotelsList';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import { useGetHotelsQuery } from '@/redux/hotelApi';
-import ImageButton from '@/components/ImageButton';
 import { routes } from '@/routes';
 import AppButton from '@/components/AppButton';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import TextSlider from '@/components/TextSlider';
 import IconButton from '@/components/IconButton';
-import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 import LoginRemainder from '@/components/LoginRemainder';
 import { useAuthContext } from '@/hooks/AuthContext';
+import { useGetCurrentUserQuery } from '@/redux/userApi';
+import { useGetAllUserBookingsQuery } from '@/redux/bookingApi';
 
 export default function HomeScreen() {
   const {
@@ -23,29 +23,15 @@ export default function HomeScreen() {
     refetch,
   } = useGetHotelsQuery();
 
-  // console.log('hotelsLoading', hotelsLoading);
-
-  // const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
-  // const user = data?.data;
-
-  // const [logout, { isLoading: logoutIsLoading }] = useLogoutMutation();
+  const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
+  const { firstName } = data?.data || {};
 
   const { logout, user, loading } = useAuthContext();
-  const { profilePicture, username } = user?.data || {};
-
-  const profilePictureUrl = useTransformImageUrl({ imageUrl: profilePicture! });
+  const { username } = user?.data || {};
 
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleMenu = () => setMenuVisible(!menuVisible);
   const closeMenu = () => setMenuVisible(false);
-
-  // const res = useGetCurrentUserQuery();
-  // console.log('user', user);
-
-  // console.log('currentUser', res);
-
-  // console.log('user', user);
-  // console.log('user id', user?._id);
 
   if (loading) {
     return <LoadingIndicator message='Signing out...' />;
@@ -54,9 +40,6 @@ export default function HomeScreen() {
   if (hotelsLoading) {
     return <LoadingIndicator message='Loading hotels...' />;
   }
-  // if (hotelsLoading) {
-  //   return <LoadingIndicator />;
-  // }
 
   const handleLogout = async () => {
     closeMenu();
@@ -108,22 +91,22 @@ export default function HomeScreen() {
             style={{
               color: colors.primaryLight,
               fontSize: 20,
+              fontWeight: 'bold',
             }}
           >
-            Welcome, {username}
+            Welcome, {firstName || username}
           </Text>
 
-          <ImageButton
+          <IconButton
             onPress={toggleMenu}
-            imageUrl={{ uri: profilePictureUrl }}
-            imageStyle={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-            }}
+            size={36}
+            icon={menuVisible ? 'close' : 'menu'}
             buttonStyle={{
+              top: -5,
+              width: 40,
               padding: 0,
-              margin: 0,
+              marginVertical: 5,
+              borderRadius: 0,
             }}
           />
           {menuVisible && (
@@ -131,12 +114,13 @@ export default function HomeScreen() {
               style={{
                 position: 'absolute',
                 top: 0,
-                right: 50,
+                right: 40,
                 borderColor: colors.greyLight,
                 borderWidth: 1,
                 borderRadius: 5,
                 backgroundColor: colors.white,
                 zIndex: 1,
+                padding: 10,
               }}
             >
               <IconButton
@@ -167,26 +151,6 @@ export default function HomeScreen() {
                 onPress={() => {
                   closeMenu();
                   router.push(routes.BOOKINGS);
-                }}
-                buttonStyle={{
-                  padding: 5,
-                  justifyContent: 'flex-start',
-                  borderBottomWidth: 2,
-                  borderBottomColor: colors.primaryLight,
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                  width: 150,
-                  marginVertical: 0,
-                }}
-                labelStyle={{ color: colors.primaryDark }}
-              />
-              <IconButton
-                icon='calendar'
-                color={colors.primaryDark}
-                label='Favorites'
-                onPress={() => {
-                  closeMenu();
-                  router.push(routes.FAVORITES);
                 }}
                 buttonStyle={{
                   padding: 5,

@@ -1,7 +1,8 @@
-import colors from '@/config/colors';
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Swiper from 'react-native-swiper';
+
+import colors from '@/config/colors';
 
 export default function TextSlider() {
   return (
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.primary,
     borderRadius: 10,
+    marginHorizontal: 5,
   },
   text: {
     color: '#fff',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { router, useGlobalSearchParams } from 'expo-router';
 
@@ -32,7 +32,7 @@ const BookScreen = () => {
       (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
     );
 
-  const { hotel_id, room_id } = useGlobalSearchParams();
+  const { room_id } = useGlobalSearchParams();
 
   const { user: userData } = useAuthContext();
 
@@ -47,7 +47,6 @@ const BookScreen = () => {
   const [createBooking, { isLoading: bookingIsLoading, error: bookingError }] =
     useCreateBookingMutation();
 
-  // console.log(data);
   const {
     roomNumber,
     roomType,
@@ -114,60 +113,32 @@ const BookScreen = () => {
             style={{ width: '100%', height: 200, borderRadius: 10 }}
           />
           <View style={{ marginTop: 5 }}>
-            <View style={{ flexDirection: 'row', gap: 5 }}>
-              <AppText
-                style={{ fontSize: 16, marginBottom: 0, fontWeight: '600' }}
-              >
-                Room number:
-              </AppText>
-              <Text style={{ fontSize: 16, color: colors.grey }}>
-                {roomNumber}
-              </Text>
+            <View style={styles.roomDetailsList}>
+              <AppText style={styles.roomDetailsTitle}>Room number:</AppText>
+              <Text style={styles.roomDetails}>{roomNumber}</Text>
             </View>
-            <View style={{ flexDirection: 'row', gap: 5 }}>
-              <AppText
-                style={{ fontSize: 16, marginBottom: 0, fontWeight: '600' }}
-              >
-                Room type:
-              </AppText>
-              <Text style={{ fontSize: 16, color: colors.grey }}>
-                {roomType}
-              </Text>
+            <View style={styles.roomDetailsList}>
+              <AppText style={styles.roomDetailsTitle}>Room type:</AppText>
+              <Text style={styles.roomDetails}>{roomType}</Text>
             </View>
-            <View style={{ flexDirection: 'row', gap: 5 }}>
-              <AppText
-                style={{ fontSize: 16, marginBottom: 0, fontWeight: '600' }}
-              >
-                Capacity:
-              </AppText>
-              <Text style={{ fontSize: 16, color: colors.grey }}>
+            <View style={styles.roomDetailsList}>
+              <AppText style={styles.roomDetailsTitle}>Capacity:</AppText>
+              <Text style={styles.roomDetails}>
                 {capacity} {Number(capacity)! > 0 ? 'persons' : 'person'}
               </Text>
             </View>
-            <View style={{ flexDirection: 'row', gap: 5 }}>
-              <AppText
-                style={{ fontSize: 16, marginBottom: 0, fontWeight: '600' }}
-              >
-                Price/night:
-              </AppText>
-              <Text style={{ fontSize: 16, color: colors.grey }}>
-                {pricePerNight}
-              </Text>
+            <View style={styles.roomDetailsList}>
+              <AppText style={styles.roomDetailsTitle}>Price/night:</AppText>
+              <Text style={styles.roomDetails}>{pricePerNight}</Text>
             </View>
-            <View style={{ flexDirection: 'row', gap: 5 }}>
-              <AppText
-                style={{ fontSize: 16, marginBottom: 0, fontWeight: '600' }}
-              >
-                Facilities:
-              </AppText>
-              <Text style={{ fontSize: 16, color: colors.grey }}>
+            <View style={styles.roomDetailsList}>
+              <AppText style={styles.roomDetailsTitle}>Facilities:</AppText>
+              <Text style={styles.roomDetails}>
                 {roomFacilities?.map((facility) => `${facility}, `)}
               </Text>
             </View>
             <View style={{ flexDirection: 'row', marginTop: 5 }}>
-              <Text style={{ fontSize: 16, color: colors.grey }}>
-                {description}
-              </Text>
+              <Text style={styles.roomDetails}>{description}</Text>
             </View>
           </View>
         </View>
@@ -185,11 +156,7 @@ const BookScreen = () => {
               gap: 5,
             }}
           >
-            <AppText
-              style={{ fontSize: 16, marginBottom: 0, color: colors.grey }}
-            >
-              Check-in Date
-            </AppText>
+            <AppText style={styles.checkInOutText}>Check-in Date</AppText>
             <IconButton
               icon='calendar-month'
               color={colors.primaryDark}
@@ -203,35 +170,15 @@ const BookScreen = () => {
                 marginLeft: 2,
                 color: colors.primary,
               }}
-              buttonStyle={{
-                // width: '50%',
-                padding: 10,
-                marginVertical: 0,
-                borderRadius: 10,
-                backgroundColor: 'transparent',
-                borderWidth: 1,
-                borderColor: colors.primaryDark,
-              }}
+              buttonStyle={styles.checkInOutButton}
             />
             <View>
-              <AppText
-                style={{ fontSize: 16, marginBottom: 0, color: colors.grey }}
-              >
-                Number of nights
-              </AppText>
+              <AppText style={styles.summaryText}>Number of nights</AppText>
               <AppText>{numOfNights} night</AppText>
             </View>
           </View>
           <View style={{ width: '50%', gap: 5 }}>
-            <AppText
-              style={{
-                fontSize: 16,
-                marginBottom: 0,
-                color: colors.grey,
-              }}
-            >
-              Check-out Date
-            </AppText>
+            <AppText style={styles.checkInOutText}>Check-out Date</AppText>
             <IconButton
               icon='calendar-month'
               color={colors.primaryDark}
@@ -245,15 +192,7 @@ const BookScreen = () => {
                 marginLeft: 2,
                 color: colors.primary,
               }}
-              buttonStyle={{
-                // width: '50%',
-                padding: 10,
-                marginVertical: 0,
-                borderRadius: 10,
-                backgroundColor: 'transparent',
-                borderWidth: 1,
-                borderColor: colors.primaryDark,
-              }}
+              buttonStyle={styles.checkInOutButton}
             />
 
             <View>
@@ -271,21 +210,8 @@ const BookScreen = () => {
           label='Book Room'
           disabled={!checkInDate || !checkOutDate}
           onPress={handleBooking}
-          buttonStyle={{
-            marginTop: 20,
-            width: 120,
-            padding: 10,
-            borderRadius: 10,
-            backgroundColor:
-              !checkInDate || !checkOutDate
-                ? colors.primary
-                : colors.primaryDark,
-          }}
+          buttonStyle={styles.bookButton}
         />
-
-        {/* {bookingError && bookingError?.data.message && (
-        <ErrorMessage error={error.data.message} visible={true} />
-      )} */}
 
         {showCheckInPicker && (
           <DateTimePicker
@@ -311,27 +237,15 @@ const BookScreen = () => {
         <View style={{ padding: 10 }}>
           <AppText style={{ fontSize: 20 }}>Booking Summary</AppText>
           <View style={{ flexDirection: 'row', gap: 20 }}>
-            <AppText
-              style={{ fontSize: 16, marginBottom: 0, color: colors.grey }}
-            >
-              Price per night
-            </AppText>
+            <AppText style={styles.summaryText}>Price per night</AppText>
             <AppText>${bookingSummary.pricePerNight!}</AppText>
           </View>
           <View style={{ flexDirection: 'row', gap: 20 }}>
-            <AppText
-              style={{ fontSize: 16, marginBottom: 0, color: colors.grey }}
-            >
-              Number of nights
-            </AppText>
+            <AppText style={styles.summaryText}>Number of nights</AppText>
             <AppText>{bookingSummary.numOfNights}</AppText>
           </View>
           <View style={{ flexDirection: 'row', gap: 20 }}>
-            <AppText
-              style={{ fontSize: 16, marginBottom: 0, color: colors.grey }}
-            >
-              Total price
-            </AppText>
+            <AppText style={styles.summaryText}>Total price</AppText>
             <AppText>${bookingSummary.totalPrice}</AppText>
           </View>
           <AppButton
@@ -350,3 +264,39 @@ const BookScreen = () => {
 };
 
 export default BookScreen;
+
+const styles = StyleSheet.create({
+  summaryText: { fontSize: 16, marginBottom: 0, color: colors.grey },
+  roomDetailsList: {
+    flexDirection: 'row',
+    gap: 5,
+  },
+  roomDetailsTitle: {
+    fontSize: 16,
+    marginBottom: 0,
+    fontWeight: '600',
+  },
+  roomDetails: {
+    fontSize: 16,
+    color: colors.grey,
+  },
+  checkInOutText: {
+    fontSize: 16,
+    marginBottom: 0,
+    color: colors.grey,
+  },
+  checkInOutButton: {
+    padding: 10,
+    marginVertical: 0,
+    borderRadius: 10,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: colors.primaryDark,
+  },
+  bookButton: {
+    marginTop: 20,
+    width: 120,
+    padding: 10,
+    borderRadius: 10,
+  },
+});

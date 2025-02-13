@@ -1,8 +1,9 @@
 import { Tabs } from 'expo-router';
-import colors from '@/config/colors';
-import { ThemeProvider } from '@react-navigation/native';
-import appTheme from '@/config/appTheme';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { ThemeProvider } from '@react-navigation/native';
+
+import colors from '@/config/colors';
+import appTheme from '@/config/appTheme';
 
 export default function TabsLayout() {
   return (

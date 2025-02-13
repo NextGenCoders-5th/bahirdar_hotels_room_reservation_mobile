@@ -6,8 +6,6 @@ export default function HotelLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name='index' />
       <Stack.Screen name='[hotel_id]' />
-      {/* <Stack.Screen name='[hotel_id]/rooms/[room_id]' />
-      <Stack.Screen name='[hotel_id]/rooms/[room_id]/book' /> */}
     </Stack>
   );
 }

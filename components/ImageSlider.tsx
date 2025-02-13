@@ -6,13 +6,17 @@ import colors from '@/config/colors';
 
 interface ImageSliderProps {
   images: string[];
+  showButtons?: boolean;
 }
 
-const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
+const ImageSlider: React.FC<ImageSliderProps> = ({
+  images,
+  showButtons = false,
+}) => {
   return (
     <View style={styles.container}>
       <Swiper
-        showsButtons
+        showsButtons={showButtons}
         showsPagination
         autoplay
         autoplayTimeout={3}

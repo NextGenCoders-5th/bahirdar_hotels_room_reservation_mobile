@@ -17,10 +17,12 @@ export default function GetStartedScreen() {
           fontWeight: 'bold',
           color: colors.primaryDark,
           textAlign: 'center',
+          marginTop: 50,
         }}
       >
         Let us get started
       </Text>
+
       <Image
         style={styles.image}
         source={require('@/assets/images/get-started.png')}

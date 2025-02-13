@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const signupInitialValues = {
-  email: 'admin@test.com',
+  email: 'user@test.com',
   password: 'password',
 };
 

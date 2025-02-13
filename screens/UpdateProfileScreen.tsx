@@ -5,24 +5,56 @@ import colors from '@/config/colors';
 import { AppForm, FormField, SubmitButton } from '@/components/forms';
 import * as Yup from 'yup';
 import IconButton from '@/components/IconButton';
+import { useGetCurrentUserQuery } from '@/redux/userApi';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import { useAuthContext } from '@/hooks/AuthContext';
 
 const validationSchema = Yup.object().shape({});
 
-const profileInitialValues = {
-  firstName: '',
-  lastName: '',
-  username: '',
-  email: '',
-  phoneNumber: '',
-  dateOfBirth: '',
-  gender: '',
-  addres: '',
-};
-
 export default function UpdateProfileScreen() {
-  const handleSubmit = (values: any) => {
-    console.log(values);
+  const { data, isLoading, error } = useGetCurrentUserQuery();
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    phoneNumber,
+    dateOfBirth,
+    gender,
+    address,
+  } = data?.data || {};
+
+  // console.log('current user', data);
+  // const { user } = useAuthContext();
+  // console.log('user', user);
+
+  const { country, city, subcity, woreda } = address || {};
+
+  const profileInitialValues = {
+    firstName,
+    lastName,
+    username,
+    email,
+    phoneNumber,
+    dateOfBirth,
+    gender,
+    country,
+    city,
+    subcity,
+    woreda,
   };
+
+  if (error) {
+    return <Text>Error try again</Text>;
+  }
+
+  const handleSubmit = (values: any) => {
+    console.log('values', values);
+  };
+
+  if (isLoading) {
+    return <LoadingIndicator message='Loading profile...' />;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -76,9 +108,10 @@ export default function UpdateProfileScreen() {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 5 }}>
             <Text style={styles.labelStyle}>First name</Text>
             <FormField
+              defaultValue={firstName}
               autoCapitalize='none'
               autoCorrect={false}
               name='firstName'
@@ -91,9 +124,10 @@ export default function UpdateProfileScreen() {
               }}
             />
           </View>
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 5 }}>
             <Text style={styles.labelStyle}>Last Name</Text>
             <FormField
+              defaultValue={lastName}
               autoCapitalize='none'
               autoCorrect={false}
               name='lastName'
@@ -106,9 +140,10 @@ export default function UpdateProfileScreen() {
               }}
             />
           </View>
-          <View style={{ marginBottom: 10 }}>
-            <Text style={styles.labelStyle}>User Name</Text>
+          <View style={{ marginBottom: 5 }}>
+            <Text style={styles.labelStyle}>Username</Text>
             <FormField
+              defaultValue={username}
               autoCapitalize='none'
               autoCorrect={false}
               name='username'
@@ -122,9 +157,10 @@ export default function UpdateProfileScreen() {
             />
           </View>
 
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 5 }}>
             <Text style={styles.labelStyle}>Email</Text>
             <FormField
+              defaultValue={email}
               autoCapitalize='none'
               keyboardType='email-address'
               autoCorrect={false}
@@ -138,9 +174,10 @@ export default function UpdateProfileScreen() {
               }}
             />
           </View>
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 5 }}>
             <Text style={styles.labelStyle}>Phone number</Text>
             <FormField
+              defaultValue={phoneNumber}
               autoCapitalize='none'
               autoCorrect={false}
               name='phoneNumber'
@@ -153,9 +190,10 @@ export default function UpdateProfileScreen() {
               }}
             />
           </View>
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 5 }}>
             <Text style={styles.labelStyle}>Date of birth</Text>
             <FormField
+              defaultValue={dateOfBirth}
               autoCapitalize='none'
               autoCorrect={false}
               name='phoneNumber'
@@ -168,9 +206,10 @@ export default function UpdateProfileScreen() {
               }}
             />
           </View>
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 5 }}>
             <Text style={styles.labelStyle}>Gender</Text>
             <FormField
+              defaultValue={gender}
               autoCapitalize='none'
               autoCorrect={false}
               name='gender'
@@ -182,6 +221,74 @@ export default function UpdateProfileScreen() {
                 borderRadius: 10,
               }}
             />
+          </View>
+          <View style={{ flexDirection: 'row', width: '50%', gap: '10%' }}>
+            <View style={{ marginBottom: 5 }}>
+              <Text style={styles.labelStyle}>Country</Text>
+              <FormField
+                defaultValue={country}
+                autoCapitalize='none'
+                autoCorrect={false}
+                name='country'
+                containerStyle={styles.containerStyle}
+                style={{
+                  backgroundColor: colors.primaryExtraLight2,
+                  width: '100%',
+                  fontSize: 16,
+                  borderRadius: 10,
+                }}
+              />
+            </View>
+            <View style={{ marginBottom: 5 }}>
+              <Text style={styles.labelStyle}>City</Text>
+              <FormField
+                defaultValue={city}
+                autoCapitalize='none'
+                autoCorrect={false}
+                name='city'
+                containerStyle={styles.containerStyle}
+                style={{
+                  backgroundColor: colors.primaryExtraLight2,
+                  width: '100%',
+                  fontSize: 16,
+                  borderRadius: 10,
+                }}
+              />
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row', width: '50%', gap: '10%' }}>
+            <View style={{ marginBottom: 5 }}>
+              <Text style={styles.labelStyle}>Subcity</Text>
+              <FormField
+                defaultValue={subcity}
+                autoCapitalize='none'
+                autoCorrect={false}
+                name='subcity'
+                containerStyle={styles.containerStyle}
+                style={{
+                  backgroundColor: colors.primaryExtraLight2,
+                  width: '100%',
+                  fontSize: 16,
+                  borderRadius: 10,
+                }}
+              />
+            </View>
+            <View style={{ marginBottom: 5 }}>
+              <Text style={styles.labelStyle}>Wereda</Text>
+              <FormField
+                defaultValue={woreda}
+                autoCapitalize='none'
+                autoCorrect={false}
+                name='woreda'
+                containerStyle={styles.containerStyle}
+                style={{
+                  backgroundColor: colors.primaryExtraLight2,
+                  width: '100%',
+                  fontSize: 16,
+                  borderRadius: 10,
+                }}
+              />
+            </View>
           </View>
 
           <SubmitButton label='Update' />

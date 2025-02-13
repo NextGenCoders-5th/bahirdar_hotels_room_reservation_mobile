@@ -1,4 +1,5 @@
 import React from 'react';
+
 import WelcomeScreen from '@/screens/WelcomeScreen';
 import Screen from '@/components/Screen';
 

@@ -1,10 +1,11 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import {
   ILoginRequest,
   ILoginResponse,
   ISignupRequest,
   ISignupResponse,
 } from '@/types/authTypes';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@/constants/env';
 
 const AUTH_BASE_URL = `${API_BASE_URL}/auth`;

@@ -11,12 +11,27 @@ export default function WelcomeScreen() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={[styles.title, { fontSize: 36, marginBottom: 10 }]}>
-          Welcome to Hotelify
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.white,
+        // justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 50,
+        paddingHorizontal: 20,
+        gap: 50,
+      }}
+    >
+      <View style={{ width: '100%', marginTop: 20 }}>
+        <Text
+          style={[
+            styles.title,
+            { fontSize: 36, marginBottom: 10, textAlign: 'left' },
+          ]}
+        >
+          Welcome,
         </Text>
-        <Text style={styles.title}>Find Your Hotel Easily!</Text>
+        <Text style={styles.title}>Find Your Stay Easily!</Text>
       </View>
       <Image
         style={styles.image}
@@ -49,11 +64,12 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.primary,
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 50,
     paddingHorizontal: 20,
+    gap: 20,
   },
   title: {
     fontSize: 20,
@@ -62,8 +78,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   image: {
-    width: 250,
-    height: 250,
+    // flex: 1,
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
     backgroundColor: colors.primary,
     borderRadius: 125,

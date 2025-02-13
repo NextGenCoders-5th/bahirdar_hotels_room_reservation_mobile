@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Screen from '@/components/Screen';
 import FavoritesScreen from '@/screens/FavoritesScreen';
 
