@@ -1,57 +1,32 @@
-import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 
 import colors from '@/config/colors';
-import {
-  useGetCurrentUserQuery,
-  useGetUserWithBookingDetailsQuery,
-} from '@/redux/userApi';
 import AppText from '@/components/AppText';
-
-const bookings = [
-  {
-    checkIn: '2/13/2025',
-    checkOut: '2/15/2025',
-    nights: '2 nights',
-    totalPrice: '$2000',
-    status: 'Pending',
-  },
-  {
-    checkIn: '2/13/2025',
-    checkOut: '2/15/2025',
-    nights: '2 nights',
-    totalPrice: '$6600',
-    status: 'Pending',
-  },
-  {
-    checkIn: '2/13/2025',
-    checkOut: '2/15/2025',
-    nights: '2 nights',
-    totalPrice: '$6600',
-    status: 'Pending',
-  },
-  {
-    checkIn: '2/14/2025',
-    checkOut: '2/15/2025',
-    nights: '1 night',
-    totalPrice: '$2800',
-    status: 'Pending',
-  },
-];
+import { useAuthContext } from '@/hooks/AuthContext';
+import { useGetAllUserBookingsQuery } from '@/redux/bookingApi';
+import { formatDate } from '@/utils/formatDate';
+import LoadingIndicator from '@/components/LoadingIndicator';
 
 export default function BookingTable() {
-  const { data: userData } = useGetCurrentUserQuery();
-  const { _id } = userData?.data || {};
-
-  // console.log('userData', userData);
-  // console.log('_id', _id);
+  const { user } = useAuthContext();
+  const { _id } = user?.data || {};
 
   const {
     data: bookingData,
     isLoading,
     error,
-  } = useGetUserWithBookingDetailsQuery(_id);
-  // console.log('bookingData', bookingData)
+  } = useGetAllUserBookingsQuery(_id as string);
+
+  if (isLoading)
+    return <LoadingIndicator message='Loading booking history...' />;
+
+  if (error)
+    return (
+      <AppText style={{ alignItems: 'center', justifyContent: 'center' }}>
+        Error loading booking history
+      </AppText>
+    );
 
   return (
     <View style={{ paddingHorizontal: 5 }}>
@@ -60,23 +35,27 @@ export default function BookingTable() {
         <View style={styles.container}>
           {/* Table Header */}
           <View style={styles.headerRow}>
-            <Text style={styles.headerText}>Check-In</Text>
-            <Text style={styles.headerText}>Check-Out</Text>
+            <Text style={[styles.headerText, { width: 150 }]}>Check-In</Text>
+            <Text style={[styles.headerText, { width: 150 }]}>Check-Out</Text>
             <Text style={styles.headerText}>Nights</Text>
             <Text style={styles.headerText}>Total Price</Text>
             <Text style={styles.headerText}>Status</Text>
           </View>
-
           {/* Table Rows */}
-          {bookings.map((item, index) => (
-            <View key={index} style={styles.row}>
-              <Text style={styles.cell}>{item.checkIn}</Text>
-              <Text style={styles.cell}>{item.checkOut}</Text>
-              <Text style={styles.cell}>{item.nights}</Text>
-              <Text style={styles.cell}>{item.totalPrice}</Text>
-              <Text style={[styles.cell, styles.status]}>{item.status}</Text>
-            </View>
-          ))}
+          {bookingData &&
+            bookingData.data.map((item) => (
+              <View key={item._id} style={styles.row}>
+                <Text style={[styles.cell, { width: 150 }]}>
+                  {formatDate(item.checkIn)}
+                </Text>
+                <Text style={[styles.cell, { width: 150 }]}>
+                  {formatDate(item.checkOut)}
+                </Text>
+                <Text style={styles.cell}>{item.numOfNights}</Text>
+                <Text style={styles.cell}>{item.totalPrice}</Text>
+                <Text style={[styles.cell, styles.status]}>{item.status}</Text>
+              </View>
+            ))}
         </View>
       </ScrollView>
     </View>

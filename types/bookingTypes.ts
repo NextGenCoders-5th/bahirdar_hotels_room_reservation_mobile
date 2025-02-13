@@ -4,8 +4,8 @@ export interface IBooking {
   _id?: string;
   user: string;
   room: string;
-  checkIn: Date;
-  checkOut: Date;
+  checkIn: string;
+  checkOut: string;
   status?: BookingStatus;
   isPaid?: boolean;
   paymentDate: string;
@@ -32,6 +32,16 @@ export interface BookingPayment {
 export interface IBookingResponse {
   data: IBooking;
   status: string;
+}
+
+export interface AllUserBookingsResponse {
+  data: IBooking[];
+  status: string;
+  pagination: {
+    limit: number;
+    page: number;
+    totalPages: number;
+  };
 }
 export interface IBookingRequest {
   user: string;

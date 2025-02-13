@@ -1,6 +1,11 @@
-import { API_BASE_URL } from '@/constants/env';
-import { IBookingRequest, IBookingResponse } from '@/types/bookingTypes';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+import { API_BASE_URL } from '@/constants/env';
+import {
+  AllUserBookingsResponse,
+  IBookingRequest,
+  IBookingResponse,
+} from '@/types/bookingTypes';
 
 const BOOKING_BASE_URL = `${API_BASE_URL}/bookings`;
 
@@ -24,9 +29,16 @@ const bookingApi = createApi({
         body: bookingData,
       }),
     }),
+    getAllUserBookings: builder.query<AllUserBookingsResponse, string>({
+      query: (id) => `/all-bookings-of-a-user/${id}`,
+    }),
   }),
 });
 
-export const { useGetAllBookingsQuery, useCreateBookingMutation } = bookingApi;
+export const {
+  useGetAllBookingsQuery,
+  useCreateBookingMutation,
+  useGetAllUserBookingsQuery,
+} = bookingApi;
 
 export default bookingApi;

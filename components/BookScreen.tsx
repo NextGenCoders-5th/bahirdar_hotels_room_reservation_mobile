@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { router, useGlobalSearchParams } from 'expo-router';
+
 import colors from '@/config/colors';
 import IconButton from './IconButton';
 import AppText from './AppText';
 import AppButton from './AppButton';
-import { useGlobalSearchParams } from 'expo-router';
 import { useGetRoomQuery } from '@/redux/roomApi';
 import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 import LoadingIndicator from './LoadingIndicator';
 import { useCreateBookingMutation } from '@/redux/bookingApi';
-import { useGetCurrentUserQuery } from '@/redux/userApi';
 import { IBookingRequest, IBookingSummary } from '@/types/bookingTypes';
+import { routes } from '@/routes';
+import { useAuthContext } from '@/hooks/AuthContext';
 
 const BookScreen = () => {
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);
@@ -31,9 +33,8 @@ const BookScreen = () => {
     );
 
   const { hotel_id, room_id } = useGlobalSearchParams();
-  // console.log('in Book', hotel_id, room_id);
 
-  const { data: userData } = useGetCurrentUserQuery();
+  const { user: userData } = useAuthContext();
 
   const user = userData?.data;
 
@@ -66,17 +67,16 @@ const BookScreen = () => {
         checkOut: checkOutDate?.toISOString(),
       } as IBookingRequest;
 
-      // console.log('bookingData', bookingData);
       const response = await createBooking(bookingData).unwrap();
-      const { numOfNights, pricePerNight, totalPrice } = response.data;
+      const { numOfNights, pricePerNight, totalPrice } = response?.data;
       setBookingSummary({
         numOfNights,
         pricePerNight,
         totalPrice,
       } as IBookingSummary);
-      // console.log(response);
+      router.push(routes.HOME);
     } catch (error) {
-      console.log('booking error', error);
+      // console.log('booking error', error);
     }
   };
 
@@ -290,6 +290,7 @@ const BookScreen = () => {
         {showCheckInPicker && (
           <DateTimePicker
             value={checkInDate || new Date()}
+            minimumDate={new Date()}
             mode='date'
             display='default'
             onChange={(event, date) => handleConfirmDate(event, date, true)}
@@ -299,6 +300,7 @@ const BookScreen = () => {
         {showCheckOutPicker && (
           <DateTimePicker
             value={checkOutDate || new Date()}
+            minimumDate={new Date()}
             mode='date'
             display='default'
             onChange={(event, date) => handleConfirmDate(event, date, false)}
@@ -337,7 +339,7 @@ const BookScreen = () => {
             label='Continue Payment with Chapa'
             buttonStyle={{
               borderRadius: 10,
-              width: 240,
+              width: 280,
               padding: 10,
             }}
           />
