@@ -14,39 +14,21 @@ export default function FavoritesScreen() {
   if (favoriteHotels.length === 0) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <AppText
-          style={{
-            fontSize: 20,
-            textTransform: 'capitalize',
-          }}
-        >
-          No favorite hotels.
-        </AppText>
+        <AppText style={styles.title}>No favorite hotels.</AppText>
         <AppButton
           label='Go to Home'
           onPress={() => {
             router.push(routes.HOME);
           }}
-          buttonStyle={{
-            width: 'auto',
-            padding: 12,
-            borderRadius: 10,
-          }}
-          labelStyle={{
-            fontSize: 16,
-            color: colors.white,
-          }}
+          buttonStyle={styles.buttonStyle}
+          labelStyle={styles.labelStyle}
         />
       </View>
     );
   }
   return (
     <ScrollView style={styles.container}>
-      <AppText
-        style={{ fontSize: 20, marginBottom: 20, textTransform: 'capitalize' }}
-      >
-        Your favorite hotels
-      </AppText>
+      <AppText style={styles.title}>Your favorite hotels</AppText>
 
       {favoriteHotels.map((hotel) => (
         <FavoriteCard
@@ -66,5 +48,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 20,
+    textTransform: 'capitalize',
+  },
+  buttonStyle: {
+    width: 'auto',
+    padding: 12,
+    borderRadius: 10,
+  },
+  labelStyle: {
+    fontSize: 16,
+    color: colors.white,
   },
 });

@@ -11,17 +11,7 @@ export default function GetStartedScreen() {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: 30,
-          fontWeight: 'bold',
-          color: colors.primaryDark,
-          textAlign: 'center',
-          marginTop: 50,
-        }}
-      >
-        Let us get started
-      </Text>
+      <Text style={styles.title}>Let us get started</Text>
 
       <Image
         style={styles.image}
@@ -37,28 +27,19 @@ export default function GetStartedScreen() {
           <AppButton
             label='Sign up'
             onPress={() => router.push(routes.SIGN_UP)}
-            buttonStyle={{
-              backgroundColor: colors.primaryDark,
-            }}
-            labelStyle={{
-              color: colors.white,
-            }}
+            buttonStyle={styles.buttonStyle}
+            labelStyle={styles.buttonLabel}
           />
           <AppButton
             label='Sign in'
             onPress={() => router.push(routes.SIGN_IN)}
-            buttonStyle={{
-              backgroundColor: colors.primaryDark,
-            }}
-            labelStyle={{
-              color: colors.white,
-            }}
+            buttonStyle={styles.buttonStyle}
+            labelStyle={styles.buttonLabel}
           />
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              // flexWrap: 'wrap',
             }}
           >
             <Text
@@ -71,16 +52,7 @@ export default function GetStartedScreen() {
               Or
             </Text>
             <Pressable onPress={() => router.push(routes.HOME)}>
-              <Text
-                style={{
-                  textDecorationLine: 'underline',
-                  color: colors.primaryDark,
-                  paddingHorizontal: 5,
-                  fontSize: 18,
-                }}
-              >
-                Continue
-              </Text>
+              <Text style={styles.continueButton}>Continue</Text>
             </Pressable>
           </View>
         </View>
@@ -93,11 +65,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    // justifyContent: 'space-between',
     gap: 15,
     alignItems: 'center',
     paddingVertical: 50,
     paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: colors.primaryDark,
+    textAlign: 'center',
+    marginTop: 50,
   },
   image: {
     width: 200,
@@ -105,6 +83,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     backgroundColor: colors.primary,
     borderRadius: 100,
+  },
+  buttonStyle: {
+    backgroundColor: colors.primaryDark,
+  },
+  buttonLabel: {
+    color: colors.white,
   },
   button: {
     backgroundColor: colors.yellow,
@@ -117,5 +101,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  continueButton: {
+    textDecorationLine: 'underline',
+    color: colors.primaryDark,
+    paddingHorizontal: 5,
+    fontSize: 18,
   },
 });
