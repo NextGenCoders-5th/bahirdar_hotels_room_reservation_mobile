@@ -12,7 +12,7 @@ import LoadingIndicator from '@/components/LoadingIndicator';
 import TextSlider from '@/components/TextSlider';
 import IconButton from '@/components/IconButton';
 import LoginRemainder from '@/components/LoginRemainder';
-import { useAuthContext } from '@/hooks/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { useGetCurrentUserQuery } from '@/redux/userApi';
 import { useGetAllUserBookingsQuery } from '@/redux/bookingApi';
 
@@ -32,6 +32,8 @@ export default function HomeScreen() {
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleMenu = () => setMenuVisible(!menuVisible);
   const closeMenu = () => setMenuVisible(false);
+
+  // console.log('user', user);
 
   if (loading) {
     return <LoadingIndicator message='Signing out...' />;
@@ -80,11 +82,13 @@ export default function HomeScreen() {
       ) : (
         <View
           style={{
+            position: 'relative',
             backgroundColor: colors.primaryDark,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: 5,
+            zIndex: 1,
           }}
         >
           <Text
@@ -119,7 +123,7 @@ export default function HomeScreen() {
                 borderWidth: 1,
                 borderRadius: 5,
                 backgroundColor: colors.white,
-                zIndex: 1,
+                zIndex: 10,
                 padding: 10,
               }}
             >

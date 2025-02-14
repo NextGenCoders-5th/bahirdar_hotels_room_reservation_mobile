@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import IconButton from '@/components/IconButton';
 import { useGetCurrentUserQuery } from '@/redux/userApi';
 import LoadingIndicator from '@/components/LoadingIndicator';
-import { useAuthContext } from '@/hooks/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 const validationSchema = Yup.object().shape({});
 

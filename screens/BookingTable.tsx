@@ -3,7 +3,7 @@ import React from 'react';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import { useAuthContext } from '@/hooks/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { useGetAllUserBookingsQuery } from '@/redux/bookingApi';
 import { formatDate } from '@/utils/formatDate';
 import LoadingIndicator from '@/components/LoadingIndicator';
@@ -23,9 +23,11 @@ export default function BookingTable() {
 
   if (error)
     return (
-      <AppText style={{ alignItems: 'center', justifyContent: 'center' }}>
-        Error loading booking history
-      </AppText>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ fontSize: 16, fontWeight: '500' }}>
+          Error loading booking history 😞
+        </Text>
+      </View>
     );
 
   return (

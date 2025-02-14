@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack } from 'expo-router';
 import SignInScreen from '@/screens/SignInScreen';
-import { useAuthContext } from '@/hooks/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 import LoadingIndicator from '@/components/LoadingIndicator';
 
 export default function ProfileLayout() {

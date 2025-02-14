@@ -63,16 +63,15 @@ export default function SignUpScreen() {
   }) => {
     const { username, email, password, passwordConfirm } = values;
     try {
-      const response = await signup({
+      await signup({
         username,
         email,
         password,
         passwordConfirm,
       }).unwrap();
-      // console.log('sign up response', response);
       router.push(routes.SIGN_IN);
     } catch (err: any) {
-      // console.log('catched signup error', err);
+      console.log('catched signup error', err);
       setError(err);
     }
   };
@@ -200,7 +199,7 @@ export default function SignUpScreen() {
           <SubmitButton label='Sign Up' />
         </AppForm>
 
-        {/* <Text
+        <Text
           style={{
             textAlign: 'center',
             fontSize: 16,
@@ -230,7 +229,7 @@ export default function SignUpScreen() {
             imageUrl={require('@/assets/images/facebook.jpg')}
             onPress={() => {}}
           />
-        </View> */}
+        </View>
 
         <View
           style={{

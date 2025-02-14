@@ -16,7 +16,7 @@ import AppButton from '@/components/AppButton';
 import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 import { useTransformedImageUrls } from '@/hooks/useTransformImageUrls';
 import { useGetHotelWithRoomsQuery } from '@/redux/hotelApi';
-import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
+import { useFavoriteHotelContext } from '@/contexts/FavoriteHotelsContext';
 import ImageSlider from '@/components/ImageSlider';
 import MapComponent from '@/components/MapComponent';
 import Screen from '@/components/Screen';
@@ -60,7 +60,7 @@ const HotelDetailsScreen: React.FC = () => {
   });
 
   const { isFavorite, removeFavoriteHotel, addFavoriteHotel } =
-    useFavoriteHotels();
+    useFavoriteHotelContext();
 
   function handleToggleFavorite() {
     if (!data?.data) return;

@@ -13,7 +13,7 @@ import LoadingIndicator from './LoadingIndicator';
 import { useCreateBookingMutation } from '@/redux/bookingApi';
 import { IBookingRequest, IBookingSummary } from '@/types/bookingTypes';
 import { routes } from '@/routes';
-import { useAuthContext } from '@/hooks/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 const BookScreen = () => {
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);

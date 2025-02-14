@@ -15,7 +15,8 @@ import { routes } from '@/routes';
 import { useLoginMutation } from '@/redux/authApi';
 import { ErrorResponse } from '@/types/general';
 import LoadingIndicator from '@/components/LoadingIndicator';
-import { useAuthContext } from '@/hooks/AuthContext';
+import { useAuthContext } from '@/contexts/AuthContext';
+import ImageButton from '@/components/ImageButton';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -32,17 +33,12 @@ export default function SignInScreen() {
   const [error, setError] = useState<ErrorResponse | null>(null);
 
   const [_, { isLoading }] = useLoginMutation();
-  // console.log('loginError', loginError);
 
   const { login, loading } = useAuthContext();
-  // console.log('logged in user', user);
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     try {
-      const response = await login(values);
-      // console.log('login response', response);
-      // console.log('isLoding', isLoading);
-      // console.log('loginError', loginError);
+      await login(values);
       router.push(routes.HOME);
     } catch (error: any) {
       setError(error);
@@ -130,8 +126,8 @@ export default function SignInScreen() {
           )}
           <SubmitButton label='Sign in' />
         </AppForm>
-        {/* <Text
-          style={{j
+        <Text
+          style={{
             textAlign: 'center',
             fontSize: 16,
             color: colors.greyMediumDark,
@@ -160,7 +156,7 @@ export default function SignInScreen() {
             imageUrl={require('@/assets/images/facebook.jpg')}
             onPress={() => {}}
           />
-        </View> */}
+        </View>
 
         <View
           style={{
