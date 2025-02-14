@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import { useGetCurrentUserQuery } from '@/redux/userApi';
+import { useGetCurrentUserQuery } from '@/redux/api/userApi';
 import { formatDate } from '@/utils/formatDate';
 
 export default function ProfileDetailsScreen() {

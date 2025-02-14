@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useGetHotelQuery } from '@/redux/hotelApi';
+import { useGetHotelQuery } from '@/redux/api/hotelApi';
 import { IHotel } from '@/types/hotelTypes';
 
 interface HotelContextValue {

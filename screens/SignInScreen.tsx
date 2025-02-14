@@ -12,7 +12,7 @@ import {
   SubmitButton,
 } from '@/components/forms';
 import { routes } from '@/routes';
-import { useLoginMutation } from '@/redux/authApi';
+import { useLoginMutation } from '@/redux/api/authApi';
 import { ErrorResponse } from '@/types/general';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import { useAuthContext } from '@/contexts/AuthContext';

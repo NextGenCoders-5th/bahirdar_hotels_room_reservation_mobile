@@ -21,7 +21,7 @@ import {
   ErrorMessage,
 } from '@/components/forms';
 import { routes } from '@/routes';
-import { useSignupMutation } from '@/redux/authApi';
+import { useSignupMutation } from '@/redux/api/authApi';
 import { ErrorResponse } from '@/types/general';
 import LoadingIndicator from '@/components/LoadingIndicator';
 

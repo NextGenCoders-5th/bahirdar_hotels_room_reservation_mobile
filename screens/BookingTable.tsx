@@ -4,7 +4,7 @@ import React from 'react';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { useGetAllUserBookingsQuery } from '@/redux/bookingApi';
+import { useGetAllUserBookingsQuery } from '@/redux/api/bookingApi';
 import { formatDate } from '@/utils/formatDate';
 import LoadingIndicator from '@/components/LoadingIndicator';
 

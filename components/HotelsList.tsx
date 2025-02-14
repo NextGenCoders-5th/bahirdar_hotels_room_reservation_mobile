@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
 import HotelCard from '@/components/HotelCard';
-import { useGetHotelsQuery } from '@/redux/hotelApi';
+import { useGetHotelsQuery } from '@/redux/api/hotelApi';
 
 const HotelsList: React.FC = () => {
   const { data: fetchedHotels, error: hotelsError } = useGetHotelsQuery();

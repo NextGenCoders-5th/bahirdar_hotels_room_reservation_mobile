@@ -8,7 +8,7 @@ import {
 
 import colors from '@/config/colors';
 import AppButton from '@/components/AppButton';
-import { useGetRoomQuery } from '@/redux/roomApi';
+import { useGetRoomQuery } from '@/redux/api/roomApi';
 import AppText from '@/components/AppText';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import ImageSlider from '@/components/ImageSlider';

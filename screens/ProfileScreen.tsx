@@ -6,7 +6,7 @@ import colors from '@/config/colors';
 import IconButton from '@/components/IconButton';
 import { router } from 'expo-router';
 import { routes } from '@/routes';
-import { useGetCurrentUserQuery } from '@/redux/userApi';
+import { useGetCurrentUserQuery } from '@/redux/api/userApi';
 
 export default function ProfileScreen() {
   const { data } = useGetCurrentUserQuery();

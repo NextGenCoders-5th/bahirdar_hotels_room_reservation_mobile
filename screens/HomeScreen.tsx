@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import HotelsList from '@/components/HotelsList';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import { useGetHotelsQuery } from '@/redux/hotelApi';
+import { useGetHotelsQuery } from '@/redux/api/hotelApi';
 import { routes } from '@/routes';
 import AppButton from '@/components/AppButton';
 import LoadingIndicator from '@/components/LoadingIndicator';
@@ -13,8 +13,8 @@ import TextSlider from '@/components/TextSlider';
 import IconButton from '@/components/IconButton';
 import LoginRemainder from '@/components/LoginRemainder';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { useGetCurrentUserQuery } from '@/redux/userApi';
-import { useGetAllUserBookingsQuery } from '@/redux/bookingApi';
+import { useGetCurrentUserQuery } from '@/redux/api/userApi';
+import { useGetAllUserBookingsQuery } from '@/redux/api/bookingApi';
 
 export default function HomeScreen() {
   const {

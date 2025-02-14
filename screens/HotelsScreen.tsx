@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
 import colors from '@/config/colors';
-import { useLazyGetHotelsQuery } from '@/redux/hotelApi';
+import { useLazyGetHotelsQuery } from '@/redux/api/hotelApi';
 import HotelsList from '@/components/HotelsList';
 import HotelCard from '@/components/HotelCard';
 import LoadingIndicator from '@/components/LoadingIndicator';

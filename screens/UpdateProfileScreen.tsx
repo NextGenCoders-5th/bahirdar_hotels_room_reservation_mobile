@@ -5,7 +5,7 @@ import colors from '@/config/colors';
 import { AppForm, FormField, SubmitButton } from '@/components/forms';
 import * as Yup from 'yup';
 import IconButton from '@/components/IconButton';
-import { useGetCurrentUserQuery } from '@/redux/userApi';
+import { useGetCurrentUserQuery } from '@/redux/api/userApi';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import { useAuthContext } from '@/contexts/AuthContext';
 

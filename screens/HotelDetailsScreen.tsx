@@ -15,7 +15,7 @@ import LoadingIndicator from '@/components/LoadingIndicator';
 import AppButton from '@/components/AppButton';
 import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 import { useTransformedImageUrls } from '@/hooks/useTransformImageUrls';
-import { useGetHotelWithRoomsQuery } from '@/redux/hotelApi';
+import { useGetHotelWithRoomsQuery } from '@/redux/api/hotelApi';
 import { useFavoriteHotelContext } from '@/contexts/FavoriteHotelsContext';
 import ImageSlider from '@/components/ImageSlider';
 import MapComponent from '@/components/MapComponent';
