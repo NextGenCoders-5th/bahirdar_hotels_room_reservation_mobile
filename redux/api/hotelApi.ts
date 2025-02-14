@@ -15,12 +15,18 @@ export const hotelApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getHotels: builder.query<IHotelsResponse, string | void>({
-      query: (searchQuery) =>
-        `/?${searchQuery ? `search=${encodeURIComponent(searchQuery)}` : ''}`,
+    getHotels: builder.query<
+      IHotelsResponse,
+      { searchQuery?: string; avgRating?: number } | void
+    >({
+      query: ({ searchQuery, avgRating } = {}) => {
+        const params = new URLSearchParams();
+        if (searchQuery) params.append('search', searchQuery);
+        if (avgRating) params.append('avgRating', avgRating.toString());
+        return `/?${params.toString()}`;
+      },
       providesTags: [HOTELS_TAG],
     }),
-
     getHotel: builder.query<IHotelResponse, string>({
       query: (id) => `/${id}`,
     }),

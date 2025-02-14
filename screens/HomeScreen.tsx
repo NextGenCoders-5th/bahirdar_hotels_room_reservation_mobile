@@ -25,7 +25,6 @@ export default function HomeScreen() {
     error: popularHotelsError,
     refetch,
   } = useGetPopularHotelsQuery();
-  // console.log('Popular Hotels', popularHotels);
 
   const { logout, user } = useAuthContext();
   const { username } = user?.data || {};

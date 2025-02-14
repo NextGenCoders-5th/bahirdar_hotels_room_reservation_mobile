@@ -18,8 +18,6 @@ const HotelCard: React.FC<IHotel> = ({
   avgRating: rating,
   hotelStar,
 }) => {
-  // console.log('favoriteHotels', favoriteHotels);
-
   const imageUrl = useTransformImageUrl({ imageUrl: imageCover });
 
   const { addFavoriteHotel, removeFavoriteHotel, isFavorite } =

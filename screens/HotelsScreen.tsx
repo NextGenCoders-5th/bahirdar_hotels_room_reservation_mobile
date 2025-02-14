@@ -26,10 +26,9 @@ export default function HotelsScreen() {
     },
   ] = useLazyGetHotelsQuery();
 
-  // Fetch hotels based on search text when it changes
   useEffect(() => {
     if (searchText) {
-      triggerSearch(searchText);
+      triggerSearch({ searchQuery: searchText });
     }
   }, [searchText]);
 
@@ -54,15 +53,7 @@ export default function HotelsScreen() {
       >
         <ImageBackground
           source={require('@/assets/images/hotels/hotel-2.jpg')}
-          style={{
-            width: '100%',
-            height: 120,
-            justifyContent: 'flex-end',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            padding: 5,
-            borderRadius: 5,
-          }}
+          style={styles.image}
         >
           <View style={styles.searchContainer}>
             <Ionicons
@@ -88,21 +79,8 @@ export default function HotelsScreen() {
                 <HotelCard key={hotel._id} {...hotel} />
               ))
             ) : (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 20,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: colors.primaryDark,
-                    fontWeight: 'bold',
-                  }}
-                >
+              <View style={styles.noHotelFoundContainer}>
+                <Text style={styles.noHotelFound}>
                   No hotel found. try another!
                 </Text>
               </View>
@@ -117,6 +95,15 @@ export default function HotelsScreen() {
 }
 
 const styles = StyleSheet.create({
+  image: {
+    width: '100%',
+    height: 120,
+    justifyContent: 'flex-end',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    padding: 5,
+    borderRadius: 5,
+  },
   searchContainer: {
     flexDirection: 'row',
     width: '100%',
@@ -146,5 +133,16 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     fontSize: 16,
     color: colors.greyDark,
+  },
+  noHotelFoundContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  noHotelFound: {
+    fontSize: 18,
+    color: colors.primaryDark,
+    fontWeight: 'bold',
   },
 });

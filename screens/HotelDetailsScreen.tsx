@@ -6,7 +6,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
@@ -23,16 +23,10 @@ import Screen from '@/components/Screen';
 
 const HotelDetailsScreen: React.FC = () => {
   const { hotel_id } = useLocalSearchParams();
-  // const { hotel_id: global_hotel_id } = useGlobalSearchParams();
-  // const params = useLocalSearchParams();
-  // console.log('params', params);
-  // console.log('global_hotel_id', global_hotel_id);
 
   const { data, isLoading, error } = useGetHotelWithRoomsQuery(
     hotel_id as string
   );
-
-  // console.log('Hotel with rooms', data?.data);
 
   const {
     _id,
@@ -52,7 +46,6 @@ const HotelDetailsScreen: React.FC = () => {
   } = data?.data || {};
 
   const [latitude, longitude] = location?.coordinates || [];
-  // console.log(latitude, longitude);
 
   const newImageCoverUrl = useTransformImageUrl({ imageUrl: imageCover! });
   const newHotelImageUrls = useTransformedImageUrls({
@@ -87,12 +80,7 @@ const HotelDetailsScreen: React.FC = () => {
       <AppButton
         label='Retry'
         onPress={() => {}}
-        buttonStyle={{
-          backgroundColor: colors.primaryDark,
-          width: 100,
-          padding: 10,
-          borderRadius: 10,
-        }}
+        buttonStyle={styles.errorButtonStyle}
         labelStyle={{
           color: colors.white,
         }}
@@ -103,16 +91,12 @@ const HotelDetailsScreen: React.FC = () => {
   return (
     <Screen>
       <ScrollView style={styles.card}>
-        <View style={styles.imageContainer}>
+        <View style={{ position: 'relative' }}>
           <ImageSlider images={newHotelImageUrls} showButtons={true} />
 
           <TouchableOpacity
             onPress={handleToggleFavorite}
-            style={{
-              position: 'absolute',
-              top: 10,
-              right: 10,
-            }}
+            style={styles.favoriteButton}
           >
             <Ionicons
               name={isFavorite(_id!) ? 'heart' : 'heart-outline'}
@@ -124,54 +108,27 @@ const HotelDetailsScreen: React.FC = () => {
 
         <View
           style={{
-            // flex: 1,
             padding: 10,
             marginTop: 15,
           }}
         >
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingRight: 10,
-              marginVertical: 5,
-            }}
-          >
+          <View style={styles.nameStarContainer}>
             <AppText style={{ fontSize: 22 }}>{name}</AppText>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 5,
-                bottom: 6,
-              }}
-            >
+            <View style={styles.starContainer}>
               {Array.from({ length: Number(hotelStar) }).map((_, index) => (
                 <Ionicons
                   key={index}
                   name='star'
                   size={20}
                   color={colors.primaryDark}
-                  style={{
-                    textShadowColor: colors.primaryDark,
-                    textShadowOffset: { width: 1, height: 1 },
-                    textShadowRadius: 3,
-                  }}
+                  style={styles.star}
                 />
               ))}
             </View>
           </View>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 10,
-              gap: 5,
-            }}
-          >
+          <View style={styles.addressContainer}>
             <Ionicons name='location' size={18} color={colors.primaryDark} />
             {address && (
               <Text style={styles.text}>
@@ -180,22 +137,9 @@ const HotelDetailsScreen: React.FC = () => {
             )}
           </View>
 
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 10,
-            }}
-          >
+          <View style={styles.ratingContainer}>
             <Ionicons name='star' size={16} color={colors.yellow} />
-            <AppText
-              style={{
-                fontSize: 16,
-                marginLeft: 5,
-                marginBottom: 0,
-              }}
-            >
+            <AppText style={styles.rating}>
               {rating && rating.toFixed(1)}
             </AppText>
             <Text style={styles.text}> ({numOfRatings} reviews)</Text>
@@ -209,7 +153,7 @@ const HotelDetailsScreen: React.FC = () => {
               flexWrap: 'wrap',
             }}
           >
-            <View style={styles.roomContainer}>
+            <View style={styles.numRoomsContainer}>
               <FontAwesome5 name='hotel' size={18} color={colors.primaryDark} />
               <Text style={styles.text}>{numOfRooms} Rooms</Text>
             </View>
@@ -256,11 +200,7 @@ const HotelDetailsScreen: React.FC = () => {
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              style={{
-                backgroundColor: colors.primaryExtraLight,
-                padding: 20,
-                borderRadius: 10,
-              }}
+              style={styles.roomsContainer}
             >
               {rooms &&
                 rooms.map((room) => <RoomCard key={room._id} {...room} />)}
@@ -273,35 +213,55 @@ const HotelDetailsScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  swiper: {
-    height: 200,
-    width: '100%',
-  },
-  dot: {
-    backgroundColor: colors.white,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    top: 25,
-  },
-  activeDot: {
-    backgroundColor: colors.primaryDark,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    top: 25,
-  },
   card: {
     flex: 1,
     backgroundColor: colors.white,
-    // borderRadius: 10,
-    // overflow: 'hidden',
     marginVertical: 10,
-    // shadowColor: colors.black,
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 6,
-    // elevation: 3,
+  },
+  favoriteButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  nameStarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingRight: 10,
+    marginVertical: 5,
+  },
+  starContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    bottom: 6,
+  },
+  star: {
+    textShadowColor: colors.primaryDark,
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  addressContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    gap: 5,
+  },
+  ratingContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  rating: {
+    fontSize: 16,
+    marginLeft: 5,
+    marginBottom: 0,
+  },
+  roomsContainer: {
+    backgroundColor: colors.primaryExtraLight,
+    padding: 20,
+    borderRadius: 10,
   },
   facilityContainer: {
     flexDirection: 'row',
@@ -318,10 +278,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.primary,
   },
-  imageContainer: {
-    position: 'relative',
-  },
-  roomContainer: {
+  numRoomsContainer: {
     flexDirection: 'row',
     gap: 4,
     alignItems: 'center',
@@ -329,43 +286,16 @@ const styles = StyleSheet.create({
   bottomMargin: {
     marginBottom: 30,
   },
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 10,
-  },
-  heartIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    backgroundColor: colors.white,
-    borderRadius: 50,
-    padding: 5,
-  },
 
-  hotelName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.greyDark,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 20,
-    flexWrap: 'wrap',
-  },
   text: {
     fontSize: 14,
     color: colors.grey,
   },
-
-  price: {
-    fontSize: 16,
-    fontWeight: 'bold',
+  errorButtonStyle: {
     backgroundColor: colors.primaryDark,
-    color: colors.white,
+    width: 100,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
 });
 
