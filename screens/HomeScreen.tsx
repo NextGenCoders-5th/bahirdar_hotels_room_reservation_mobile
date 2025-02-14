@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 
-import HotelsList from '@/components/HotelsList';
 import colors from '@/config/colors';
 import AppText from '@/components/AppText';
-import { useGetHotelsQuery } from '@/redux/api/hotelApi';
 import { routes } from '@/routes';
 import AppButton from '@/components/AppButton';
 import LoadingIndicator from '@/components/LoadingIndicator';
@@ -14,32 +12,29 @@ import IconButton from '@/components/IconButton';
 import LoginRemainder from '@/components/LoginRemainder';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { useGetCurrentUserQuery } from '@/redux/api/userApi';
-import { useGetAllUserBookingsQuery } from '@/redux/api/bookingApi';
+import { useGetPopularHotelsQuery } from '@/redux/api/recommendationsApi';
+import HotelCard from '@/components/HotelCard';
 
 export default function HomeScreen() {
-  const {
-    isLoading: hotelsLoading,
-    error: hotelsFetchingError,
-    refetch,
-  } = useGetHotelsQuery();
-
   const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
   const { firstName } = data?.data || {};
 
-  const { logout, user, loading } = useAuthContext();
+  const {
+    data: popularHotels,
+    isLoading: popularHotelsIsLoading,
+    error: popularHotelsError,
+    refetch,
+  } = useGetPopularHotelsQuery();
+  // console.log('Popular Hotels', popularHotels);
+
+  const { logout, user } = useAuthContext();
   const { username } = user?.data || {};
 
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleMenu = () => setMenuVisible(!menuVisible);
   const closeMenu = () => setMenuVisible(false);
 
-  // console.log('user', user);
-
-  if (loading) {
-    return <LoadingIndicator message='Signing out...' />;
-  }
-
-  if (hotelsLoading) {
+  if (popularHotelsIsLoading) {
     return <LoadingIndicator message='Loading hotels...' />;
   }
 
@@ -48,19 +43,14 @@ export default function HomeScreen() {
     logout();
   };
 
-  if (hotelsFetchingError) {
+  if (popularHotelsError) {
     return (
-      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+      <View style={styles.errorContainer}>
         <Text style={{ fontSize: 18 }}>Error fetching hotels</Text>
         <AppButton
           label='Retry'
           onPress={() => refetch()}
-          buttonStyle={{
-            backgroundColor: colors.primaryDark,
-            width: 100,
-            padding: 10,
-            borderRadius: 10,
-          }}
+          buttonStyle={styles.errorButtonStyle}
           labelStyle={{
             color: colors.white,
           }}
@@ -70,34 +60,12 @@ export default function HomeScreen() {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        height: 200,
-        width: '100%',
-      }}
-    >
+    <View style={styles.container}>
       {!user ? (
         <LoginRemainder />
       ) : (
-        <View
-          style={{
-            position: 'relative',
-            backgroundColor: colors.primaryDark,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: 5,
-            zIndex: 1,
-          }}
-        >
-          <Text
-            style={{
-              color: colors.primaryLight,
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}
-          >
+        <View style={styles.headerContainer}>
+          <Text style={styles.welcomeText}>
             Welcome, {firstName || username}
           </Text>
 
@@ -105,28 +73,10 @@ export default function HomeScreen() {
             onPress={toggleMenu}
             size={36}
             icon={menuVisible ? 'close' : 'menu'}
-            buttonStyle={{
-              top: -5,
-              width: 40,
-              padding: 0,
-              marginVertical: 5,
-              borderRadius: 0,
-            }}
+            buttonStyle={styles.toggleMenu}
           />
           {menuVisible && (
-            <View
-              style={{
-                position: 'absolute',
-                top: 0,
-                right: 40,
-                borderColor: colors.greyLight,
-                borderWidth: 1,
-                borderRadius: 5,
-                backgroundColor: colors.white,
-                zIndex: 10,
-                padding: 10,
-              }}
-            >
+            <View style={styles.menus}>
               <IconButton
                 icon='account'
                 color={colors.primaryDark}
@@ -135,17 +85,8 @@ export default function HomeScreen() {
                   closeMenu();
                   router.push(routes.PROFILE_DETAILS);
                 }}
-                buttonStyle={{
-                  padding: 5,
-                  justifyContent: 'flex-start',
-                  borderBottomWidth: 2,
-                  borderBottomColor: colors.primaryLight,
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                  width: 150,
-                  marginVertical: 0,
-                }}
-                labelStyle={{ color: colors.primaryDark }}
+                buttonStyle={styles.buttonStyle}
+                labelStyle={styles.labelStyle}
               />
 
               <IconButton
@@ -156,17 +97,8 @@ export default function HomeScreen() {
                   closeMenu();
                   router.push(routes.BOOKINGS);
                 }}
-                buttonStyle={{
-                  padding: 5,
-                  justifyContent: 'flex-start',
-                  borderBottomWidth: 2,
-                  borderBottomColor: colors.primaryLight,
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                  width: 150,
-                  marginVertical: 0,
-                }}
-                labelStyle={{ color: colors.primaryDark }}
+                buttonStyle={styles.buttonStyle}
+                labelStyle={styles.labelStyle}
               />
               <IconButton
                 icon='logout'
@@ -175,17 +107,8 @@ export default function HomeScreen() {
                 onPress={() => {
                   handleLogout();
                 }}
-                buttonStyle={{
-                  padding: 5,
-                  justifyContent: 'flex-start',
-                  borderBottomWidth: 2,
-                  borderBottomColor: colors.primaryLight,
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                  width: 150,
-                  marginVertical: 0,
-                }}
-                labelStyle={{ color: colors.primaryDark }}
+                buttonStyle={styles.buttonStyle}
+                labelStyle={styles.labelStyle}
               />
             </View>
           )}
@@ -195,16 +118,12 @@ export default function HomeScreen() {
         <TextSlider />
 
         <View style={{ padding: 10 }}>
-          <AppText
-            style={{
-              fontSize: 24,
-              marginBottom: 10,
-              color: colors.black,
-            }}
-          >
-            Featured Hotels
-          </AppText>
-          <HotelsList />
+          <AppText style={styles.categoryTitle}>Popular Hotels</AppText>
+          {popularHotels &&
+            popularHotels.data.length > 0 &&
+            popularHotels.data
+              .slice(0, 4)
+              .map((hotel) => <HotelCard key={hotel._id} {...hotel} />)}
         </View>
       </ScrollView>
     </View>
@@ -214,45 +133,68 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    height: 200,
     width: '100%',
   },
-  title: {
-    fontSize: 24,
+  headerContainer: {
+    position: 'relative',
+    backgroundColor: colors.primaryDark,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 5,
+    zIndex: 1,
+  },
+  welcomeText: {
+    color: colors.primaryLight,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20,
+  },
+  toggleMenu: {
+    top: -5,
+    width: 40,
+    padding: 0,
+    marginVertical: 5,
+    borderRadius: 0,
+  },
+  menus: {
+    position: 'absolute',
+    top: 0,
+    right: 40,
+    borderColor: colors.greyLight,
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: colors.white,
+    zIndex: 10,
+    padding: 10,
+  },
+  buttonStyle: {
+    padding: 5,
+    justifyContent: 'flex-start',
+    borderBottomWidth: 2,
+    borderBottomColor: colors.primaryLight,
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+    width: 150,
+    marginVertical: 0,
+  },
+  labelStyle: {
+    color: colors.primaryDark,
+  },
+  categoryTitle: {
+    fontSize: 24,
+    marginBottom: 10,
     color: colors.black,
   },
-  searchContainer: {
-    flexDirection: 'row',
-    width: '100%',
-    height: 50,
-    borderColor: colors.primary,
-    borderWidth: 1,
-    borderRadius: 15,
-    marginBottom: 20,
-    backgroundColor: colors.white,
-  },
-  icon: {
-    width: 60,
-    height: '100%',
-    textAlign: 'center',
-    backgroundColor: colors.primary,
-    padding: 10,
-    color: colors.white,
-    borderRadius: 15,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-  },
-  input: {
+  errorContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     flex: 1,
-    height: '100%',
-    padding: 15,
-    borderRadius: 15,
-    borderRightWidth: 0,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    fontSize: 16,
-    color: colors.greyDark,
+  },
+  errorButtonStyle: {
+    backgroundColor: colors.primaryDark,
+    width: 100,
+    padding: 10,
+    borderRadius: 10,
   },
 });
