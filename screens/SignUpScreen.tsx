@@ -52,8 +52,6 @@ export default function SignUpScreen() {
 
   const [signup, { isLoading, error: signUpError }] = useSignupMutation();
 
-  // console.log('signUpError', signUpError);
-
   const handleSubmit = async (values: {
     username: string;
     email: string;
@@ -81,52 +79,20 @@ export default function SignUpScreen() {
   }
 
   return (
-    <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor: colors.primaryDark,
-      }}
-    >
+    <ScrollView style={styles.container}>
       <Image
-        style={{
-          width: 150,
-          height: 150,
-          borderRadius: 75,
-          resizeMode: 'cover',
-          alignSelf: 'center',
-          marginVertical: 20,
-        }}
+        style={styles.image}
         source={require('@/assets/images/get-started.png')}
       />
-      <AppText
-        style={{
-          color: colors.white,
-          textAlign: 'center',
-          fontSize: 24,
-          marginBottom: 20,
-        }}
-      >
-        Create New Account
-      </AppText>
-      <View
-        style={{
-          backgroundColor: colors.white,
-          flex: 1,
-          borderTopRightRadius: 30,
-          borderTopLeftRadius: 30,
-          padding: 20,
-          // marginBottom: 20,
-        }}
-      >
+      <AppText style={styles.title}>Create New Account</AppText>
+      <View style={styles.formContainer}>
         <AppForm
           initialValues={signupInitialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <View style={{ marginBottom: 10 }}>
-            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-              User Name
-            </AppText>
+          <View style={styles.fieldContainer}>
+            <AppText style={styles.fieldTitle}>User Name</AppText>
             <FormField
               autoCapitalize='none'
               autoCorrect={false}
@@ -135,10 +101,8 @@ export default function SignUpScreen() {
             />
           </View>
 
-          <View style={{ marginBottom: 10 }}>
-            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-              Email
-            </AppText>
+          <View style={styles.fieldContainer}>
+            <AppText style={styles.fieldTitle}>Email</AppText>
             <FormField
               autoCapitalize='none'
               keyboardType='email-address'
@@ -148,10 +112,8 @@ export default function SignUpScreen() {
             />
           </View>
 
-          <View style={{ marginBottom: 10 }}>
-            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-              Password
-            </AppText>
+          <View style={styles.fieldContainer}>
+            <AppText style={styles.fieldTitle}>Password</AppText>
             <FormField
               autoCapitalize='none'
               secureTextEntry
@@ -160,10 +122,8 @@ export default function SignUpScreen() {
               placeholder='Password'
             />
           </View>
-          <View style={{ marginBottom: 10 }}>
-            <AppText style={{ marginBottom: 0, fontWeight: '600' }}>
-              Password Confirm
-            </AppText>
+          <View style={styles.fieldContainer}>
+            <AppText style={styles.fieldTitle}>Password Confirm</AppText>
             <FormField
               autoCapitalize='none'
               autoCorrect={false}
@@ -199,28 +159,8 @@ export default function SignUpScreen() {
           <SubmitButton label='Sign Up' />
         </AppForm>
 
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 16,
-            color: colors.greyMediumDark,
-            marginVertical: 10,
-          }}
-        >
-          Or continue with
-        </Text>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 5,
-            marginBottom: 20,
-            justifyContent: 'center',
-            width: '100%',
-            overflow: 'hidden',
-          }}
-        >
+        <Text style={styles.continueWithText}>Or continue with</Text>
+        <View style={styles.imageButtonsContainer}>
           <ImageButton
             imageUrl={require('@/assets/images/google.jpeg')}
             onPress={() => {}}
@@ -231,30 +171,10 @@ export default function SignUpScreen() {
           />
         </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <Text
-            style={{
-              color: colors.greyMediumDark,
-              fontSize: 14,
-              marginRight: 2,
-            }}
-          >
-            Already have an account?
-          </Text>
+        <View style={styles.noAccountContainer}>
+          <Text style={styles.noAccountText}>Already have an account?</Text>
           <Pressable onPress={() => router.push(routes.SIGN_IN)}>
-            <Text
-              style={{
-                textDecorationLine: 'underline',
-                color: colors.primaryDark,
-              }}
-            >
-              Sign in
-            </Text>
+            <Text style={styles.signInText}>Sign in</Text>
           </Pressable>
         </View>
       </View>
@@ -262,4 +182,67 @@ export default function SignUpScreen() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.primaryDark,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    resizeMode: 'cover',
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  title: {
+    color: colors.white,
+    textAlign: 'center',
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  formContainer: {
+    backgroundColor: colors.white,
+    flex: 1,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    padding: 20,
+  },
+  fieldContainer: {
+    marginBottom: 10,
+  },
+  fieldTitle: {
+    marginBottom: 0,
+    fontWeight: '600',
+  },
+
+  continueWithText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: colors.greyMediumDark,
+    marginVertical: 10,
+  },
+  imageButtonsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    marginBottom: 20,
+    justifyContent: 'center',
+    width: '100%',
+    overflow: 'hidden',
+  },
+  noAccountContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  noAccountText: {
+    color: colors.greyMediumDark,
+    fontSize: 14,
+    marginRight: 2,
+  },
+  signInText: {
+    textDecorationLine: 'underline',
+    color: colors.primaryDark,
+  },
+});

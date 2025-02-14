@@ -14,9 +14,18 @@ import { useLazyGetHotelsQuery } from '@/redux/api/hotelApi';
 import HotelsList from '@/components/HotelsList';
 import HotelCard from '@/components/HotelCard';
 import LoadingIndicator from '@/components/LoadingIndicator';
+import LoadingError from '@/components/LoadingError';
+import { useLocalSearchParams } from 'expo-router';
+import { useRouter } from 'expo-router';
 
 export default function HotelsScreen() {
-  const [searchText, setSearchText] = useState<string>('');
+  // const [searchText, setSearchText] = useState<string>('');
+  const router = useRouter();
+  const { search } = useLocalSearchParams();
+  const [searchText, setSearchText] = useState<string>(
+    search?.toString() || ''
+  );
+
   const [
     triggerSearch,
     {
@@ -26,18 +35,20 @@ export default function HotelsScreen() {
     },
   ] = useLazyGetHotelsQuery();
 
+  // Trigger search when searchText changes
   useEffect(() => {
     if (searchText) {
       triggerSearch({ searchQuery: searchText });
     }
   }, [searchText]);
 
+  // Update URL when searchText changes
+  useEffect(() => {
+    router.setParams({ search: searchText });
+  }, [searchText]);
+
   if (searchHotelsError) {
-    return (
-      <View>
-        <Text>Error loading hotels</Text>
-      </View>
-    );
+    return <LoadingError message='Error loading hotels' />;
   }
 
   if (searchIsLoading) {
@@ -57,7 +68,7 @@ export default function HotelsScreen() {
         >
           <View style={styles.searchContainer}>
             <Ionicons
-              style={{ alignSelf: 'center', paddingLeft: 10 }}
+              style={styles.searchIcon}
               name='search'
               size={24}
               color={colors.grey}
@@ -72,7 +83,7 @@ export default function HotelsScreen() {
         </ImageBackground>
       </View>
       <ScrollView style={{ flex: 1 }}>
-        <View style={{ flex: 1, padding: 20 }}>
+        <View style={styles.searchedHotelsContainer}>
           {searchText ? (
             searchedHotels && searchedHotels?.data?.length > 0 ? (
               searchedHotels.data.map((hotel) => (
@@ -115,16 +126,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginBottom: 20,
   },
-  icon: {
-    width: 60,
-    height: '100%',
-    textAlign: 'center',
-    backgroundColor: colors.primary,
-    padding: 10,
-    color: colors.white,
-    borderRadius: 30,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
+  searchIcon: {
+    alignSelf: 'center',
+    paddingLeft: 10,
   },
   input: {
     flex: 1,
@@ -133,6 +137,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     fontSize: 16,
     color: colors.greyDark,
+  },
+  searchedHotelsContainer: {
+    flex: 1,
+    padding: 20,
   },
   noHotelFoundContainer: {
     flex: 1,

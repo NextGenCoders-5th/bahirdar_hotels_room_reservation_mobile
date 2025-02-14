@@ -1,10 +1,6 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import React from 'react';
-import {
-  router,
-  useGlobalSearchParams,
-  useLocalSearchParams,
-} from 'expo-router';
+import { router, useGlobalSearchParams } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppButton from '@/components/AppButton';
@@ -13,22 +9,19 @@ import AppText from '@/components/AppText';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import ImageSlider from '@/components/ImageSlider';
 import { useTransformedImageUrls } from '@/hooks/useTransformImageUrls';
+import LoadingError from '@/components/LoadingError';
 
 export default function RoomDetailsScreen() {
-  // const { room_id } = useLocalSearchParams();
   const { hotel_id, room_id } = useGlobalSearchParams();
-  // console.log('hotel_id', hotel_id);
-  // console.log('room_id', room_id);
 
   const { data, isLoading, error } = useGetRoomQuery(room_id as string);
-  // console.log('Room data', data);
 
   if (isLoading) {
     return <LoadingIndicator />;
   }
 
   if (error) {
-    return <Text>Error loading rooms...</Text>;
+    return <LoadingError message='Error loading room' />;
   }
 
   const {
@@ -48,7 +41,6 @@ export default function RoomDetailsScreen() {
   return (
     <ScrollView style={{ padding: 10 }}>
       <Image
-        // source={{ uri: roomImageUrls[0] }}
         source={{
           uri: roomImageUrls && roomImageUrls[0] ? roomImageUrls[0] : undefined,
         }}

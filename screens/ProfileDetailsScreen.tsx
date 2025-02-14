@@ -5,171 +5,83 @@ import colors from '@/config/colors';
 import AppText from '@/components/AppText';
 import { useGetCurrentUserQuery } from '@/redux/api/userApi';
 import { formatDate } from '@/utils/formatDate';
+import LoadingIndicator from '@/components/LoadingIndicator';
+import LoadingError from '@/components/LoadingError';
 
 export default function ProfileDetailsScreen() {
   const { data, isLoading, error } = useGetCurrentUserQuery();
   const user = data?.data;
+
+  if (isLoading) {
+    return <LoadingIndicator message='Loading your profile...' />;
+  }
+
+  if (error) {
+    return <LoadingError message='Error loading profile' />;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{ flex: 1, padding: 20 }}>
         <AppText style={{ fontSize: 20 }}>Your Personal Information</AppText>
         <View style={{ marginBottom: 10 }}>
-          <AppText style={{ fontWeight: '500' }}>Full name</AppText>
-          <Text
-            style={{
-              fontSize: 16,
-              backgroundColor: colors.primaryExtraLight2,
-              padding: 10,
-              borderRadius: 5,
-              color: colors.greyMediumDark,
-            }}
-          >
+          <AppText style={styles.profileFieldTitle}>Full name</AppText>
+          <Text style={styles.profileFieldValue}>
             {user?.firstName
               ? `${user?.firstName} ${user?.lastName}`
               : '_______'}
           </Text>
         </View>
         <View style={{ marginBottom: 10 }}>
-          <AppText style={{ fontWeight: '500' }}>Email</AppText>
-          <Text
-            style={{
-              fontSize: 16,
-              backgroundColor: colors.primaryExtraLight2,
-              padding: 10,
-              borderRadius: 5,
-              color: colors.greyMediumDark,
-            }}
-          >
-            {user?.email}
-          </Text>
+          <AppText style={styles.profileFieldTitle}>Email</AppText>
+          <Text style={styles.profileFieldValue}>{user?.email}</Text>
         </View>
         <View style={{ marginBottom: 10 }}>
-          <AppText style={{ fontWeight: '500' }}>Username</AppText>
-          <Text
-            style={{
-              fontSize: 16,
-              backgroundColor: colors.primaryExtraLight2,
-              padding: 10,
-              borderRadius: 5,
-              color: colors.greyMediumDark,
-            }}
-          >
-            {user?.username}
-          </Text>
+          <AppText style={styles.profileFieldTitle}>Username</AppText>
+          <Text style={styles.profileFieldValue}>{user?.username}</Text>
         </View>
         <View style={{ marginBottom: 10 }}>
-          <AppText style={{ fontWeight: '500' }}>Phone number</AppText>
-          <Text
-            style={{
-              fontSize: 16,
-              backgroundColor: colors.primaryExtraLight2,
-              padding: 10,
-              borderRadius: 5,
-              color: colors.greyMediumDark,
-            }}
-          >
+          <AppText style={styles.profileFieldTitle}>Phone number</AppText>
+          <Text style={styles.profileFieldValue}>
             {user?.phoneNumber ? user?.phoneNumber : '_______'}
           </Text>
         </View>
         <View style={{ marginBottom: 10 }}>
-          <AppText style={{ fontWeight: '500' }}>Date of birth</AppText>
-          <Text
-            style={{
-              fontSize: 16,
-              backgroundColor: colors.primaryExtraLight2,
-              padding: 10,
-              borderRadius: 5,
-              color: colors.greyMediumDark,
-            }}
-          >
+          <AppText style={styles.profileFieldTitle}>Date of birth</AppText>
+          <Text style={styles.profileFieldValue}>
             {user?.dateOfBirth ? formatDate(user?.dateOfBirth) : '_______'}
           </Text>
         </View>
         <View style={{ marginBottom: 10 }}>
-          <AppText style={{ fontWeight: '500' }}>Gender</AppText>
-          <Text
-            style={{
-              fontSize: 16,
-              backgroundColor: colors.primaryExtraLight2,
-              padding: 10,
-              borderRadius: 5,
-              color: colors.greyMediumDark,
-            }}
-          >
+          <AppText style={styles.profileFieldTitle}>Gender</AppText>
+          <Text style={styles.profileFieldValue}>
             {user?.gender ? `${user.gender}` : '_______'}
           </Text>
         </View>
-        <View
-          style={{
-            marginBottom: 10,
-            flexDirection: 'row',
-            gap: '10%',
-            // paddingHorizontal: 10,
-          }}
-        >
+        <View style={styles.addressContainer}>
           <View style={{ width: '45%' }}>
-            <AppText style={{ fontWeight: '500' }}>Country</AppText>
-            <Text
-              style={{
-                fontSize: 16,
-                backgroundColor: colors.primaryExtraLight2,
-                padding: 10,
-                borderRadius: 5,
-                color: colors.greyMediumDark,
-              }}
-            >
+            <AppText style={styles.profileFieldTitle}>Country</AppText>
+            <Text style={styles.profileFieldValue}>
               {user?.address ? `${user.address.country}` : '_______'}
             </Text>
           </View>
           <View style={{ width: '45%' }}>
-            <AppText style={{ fontWeight: '500' }}>City</AppText>
-            <Text
-              style={{
-                fontSize: 16,
-                backgroundColor: colors.primaryExtraLight2,
-                padding: 10,
-                borderRadius: 5,
-                color: colors.greyMediumDark,
-              }}
-            >
+            <AppText style={styles.profileFieldTitle}>City</AppText>
+            <Text style={styles.profileFieldValue}>
               {user?.address ? `${user.address.city}` : '_______'}
             </Text>
           </View>
         </View>
-        <View
-          style={{
-            marginBottom: 10,
-            flexDirection: 'row',
-            gap: '10%',
-            // paddingHorizontal: 10,
-          }}
-        >
+        <View style={styles.addressContainer}>
           <View style={{ width: '45%' }}>
-            <AppText style={{ fontWeight: '500' }}>Subcity</AppText>
-            <Text
-              style={{
-                fontSize: 16,
-                backgroundColor: colors.primaryExtraLight2,
-                padding: 10,
-                borderRadius: 5,
-                color: colors.greyMediumDark,
-              }}
-            >
+            <AppText style={styles.profileFieldTitle}>Subcity</AppText>
+            <Text style={styles.profileFieldValue}>
               {user?.address ? `${user.address.subcity}` : '_______'}
             </Text>
           </View>
           <View style={{ width: '45%' }}>
-            <AppText style={{ fontWeight: '500' }}>Woreda</AppText>
-            <Text
-              style={{
-                fontSize: 16,
-                backgroundColor: colors.primaryExtraLight2,
-                padding: 10,
-                borderRadius: 5,
-                color: colors.greyMediumDark,
-              }}
-            >
+            <AppText style={styles.profileFieldTitle}>Woreda</AppText>
+            <Text style={styles.profileFieldValue}>
               {user?.address ? `${user.address.woreda}` : '_______'}
             </Text>
           </View>
@@ -195,12 +107,21 @@ const styles = StyleSheet.create({
   marginBottom: {
     marginBottom: 10,
   },
-  button: {
-    backgroundColor: colors.primary,
+  profileFieldValue: {
+    fontSize: 16,
+    backgroundColor: colors.primaryExtraLight2,
     padding: 10,
-    borderRadius: 10,
-    width: 150,
-    marginVertical: 10,
-    alignSelf: 'flex-end',
+    borderRadius: 5,
+    color: colors.greyMediumDark,
+  },
+  profileFieldTitle: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    gap: '10%',
+  },
+  addressContainer: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    gap: '10%',
   },
 });

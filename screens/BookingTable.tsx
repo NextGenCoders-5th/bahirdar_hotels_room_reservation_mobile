@@ -7,6 +7,7 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import { useGetAllUserBookingsQuery } from '@/redux/api/bookingApi';
 import { formatDate } from '@/utils/formatDate';
 import LoadingIndicator from '@/components/LoadingIndicator';
+import LoadingError from '@/components/LoadingError';
 
 export default function BookingTable() {
   const { user } = useAuthContext();
@@ -21,14 +22,7 @@ export default function BookingTable() {
   if (isLoading)
     return <LoadingIndicator message='Loading booking history...' />;
 
-  if (error)
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ fontSize: 16, fontWeight: '500' }}>
-          Error loading booking history 😞
-        </Text>
-      </View>
-    );
+  if (error) return <LoadingError message='Error loading booking history' />;
 
   return (
     <View style={{ paddingHorizontal: 5 }}>
@@ -75,7 +69,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: colors.primaryDark,
     paddingVertical: 10,
-    // paddingHorizontal: 5,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
@@ -90,10 +83,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.greyLight,
     paddingVertical: 8,
-    // paddingHorizontal: 5,
   },
   cell: {
-    width: 100, // Same width as header for alignment
+    width: 100,
     textAlign: 'center',
     color: colors.black,
   },

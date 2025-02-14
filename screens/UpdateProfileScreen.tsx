@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import IconButton from '@/components/IconButton';
 import { useGetCurrentUserQuery } from '@/redux/api/userApi';
 import LoadingIndicator from '@/components/LoadingIndicator';
-import { useAuthContext } from '@/contexts/AuthContext';
+import LoadingError from '@/components/LoadingError';
 
 const validationSchema = Yup.object().shape({});
 
@@ -23,10 +23,6 @@ export default function UpdateProfileScreen() {
     gender,
     address,
   } = data?.data || {};
-
-  // console.log('current user', data);
-  // const { user } = useAuthContext();
-  // console.log('user', user);
 
   const { country, city, subcity, woreda } = address || {};
 
@@ -44,71 +40,43 @@ export default function UpdateProfileScreen() {
     woreda,
   };
 
-  if (error) {
-    return <Text>Error try again</Text>;
-  }
-
   const handleSubmit = (values: any) => {
-    console.log('values', values);
+    // console.log('values', values);
   };
 
   if (isLoading) {
     return <LoadingIndicator message='Loading profile...' />;
   }
 
+  if (error) {
+    return <LoadingError message='Error loading profile update' />;
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <View
-          style={{
-            zIndex: 1,
-            position: 'absolute',
-            bottom: -50,
-            left: '38%',
-          }}
-        >
+        <View style={styles.imageContainer}>
           <Image
             source={require('@/assets/images/profile/profile-1.jpg')}
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 50,
-              borderWidth: 5,
-              borderColor: colors.white,
-            }}
+            style={styles.image}
           />
 
           <IconButton
             icon='camera'
             onPress={() => {}}
             color={colors.white}
-            buttonStyle={{
-              position: 'absolute',
-              bottom: 0,
-              right: -5,
-              width: 40,
-              height: 40,
-              padding: 5,
-              margin: 0,
-              borderRadius: 25,
-              backgroundColor: colors.grey,
-            }}
+            buttonStyle={styles.buttonStyle}
           />
         </View>
       </View>
 
-      <View
-        style={{
-          flex: 1,
-          padding: 20,
-        }}
-      >
+      <View style={styles.formContainer}>
         <AppForm
           initialValues={profileInitialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <View style={{ marginBottom: 5 }}>
+          <View style={styles.marginBottom}>
             <Text style={styles.labelStyle}>First name</Text>
             <FormField
               defaultValue={firstName}
@@ -116,15 +84,10 @@ export default function UpdateProfileScreen() {
               autoCorrect={false}
               name='firstName'
               containerStyle={styles.containerStyle}
-              style={{
-                backgroundColor: colors.primaryExtraLight2,
-                width: '100%',
-                fontSize: 16,
-                borderRadius: 10,
-              }}
+              style={styles.formFieldStyle}
             />
           </View>
-          <View style={{ marginBottom: 5 }}>
+          <View style={styles.marginBottom}>
             <Text style={styles.labelStyle}>Last Name</Text>
             <FormField
               defaultValue={lastName}
@@ -132,15 +95,10 @@ export default function UpdateProfileScreen() {
               autoCorrect={false}
               name='lastName'
               containerStyle={styles.containerStyle}
-              style={{
-                backgroundColor: colors.primaryExtraLight2,
-                width: '100%',
-                fontSize: 16,
-                borderRadius: 10,
-              }}
+              style={styles.formFieldStyle}
             />
           </View>
-          <View style={{ marginBottom: 5 }}>
+          <View style={styles.marginBottom}>
             <Text style={styles.labelStyle}>Username</Text>
             <FormField
               defaultValue={username}
@@ -148,16 +106,11 @@ export default function UpdateProfileScreen() {
               autoCorrect={false}
               name='username'
               containerStyle={styles.containerStyle}
-              style={{
-                backgroundColor: colors.primaryExtraLight2,
-                width: '100%',
-                fontSize: 16,
-                borderRadius: 10,
-              }}
+              style={styles.formFieldStyle}
             />
           </View>
 
-          <View style={{ marginBottom: 5 }}>
+          <View style={styles.marginBottom}>
             <Text style={styles.labelStyle}>Email</Text>
             <FormField
               defaultValue={email}
@@ -166,15 +119,10 @@ export default function UpdateProfileScreen() {
               autoCorrect={false}
               name='email'
               containerStyle={styles.containerStyle}
-              style={{
-                backgroundColor: colors.primaryExtraLight2,
-                width: '100%',
-                fontSize: 16,
-                borderRadius: 10,
-              }}
+              style={styles.formFieldStyle}
             />
           </View>
-          <View style={{ marginBottom: 5 }}>
+          <View style={styles.marginBottom}>
             <Text style={styles.labelStyle}>Phone number</Text>
             <FormField
               defaultValue={phoneNumber}
@@ -182,15 +130,10 @@ export default function UpdateProfileScreen() {
               autoCorrect={false}
               name='phoneNumber'
               containerStyle={styles.containerStyle}
-              style={{
-                backgroundColor: colors.primaryExtraLight2,
-                width: '100%',
-                fontSize: 16,
-                borderRadius: 10,
-              }}
+              style={styles.formFieldStyle}
             />
           </View>
-          <View style={{ marginBottom: 5 }}>
+          <View style={styles.marginBottom}>
             <Text style={styles.labelStyle}>Date of birth</Text>
             <FormField
               defaultValue={dateOfBirth}
@@ -198,15 +141,10 @@ export default function UpdateProfileScreen() {
               autoCorrect={false}
               name='phoneNumber'
               containerStyle={styles.containerStyle}
-              style={{
-                backgroundColor: colors.primaryExtraLight2,
-                width: '100%',
-                fontSize: 16,
-                borderRadius: 10,
-              }}
+              style={styles.formFieldStyle}
             />
           </View>
-          <View style={{ marginBottom: 5 }}>
+          <View style={styles.marginBottom}>
             <Text style={styles.labelStyle}>Gender</Text>
             <FormField
               defaultValue={gender}
@@ -214,16 +152,11 @@ export default function UpdateProfileScreen() {
               autoCorrect={false}
               name='gender'
               containerStyle={styles.containerStyle}
-              style={{
-                backgroundColor: colors.primaryExtraLight2,
-                width: '100%',
-                fontSize: 16,
-                borderRadius: 10,
-              }}
+              style={styles.formFieldStyle}
             />
           </View>
-          <View style={{ flexDirection: 'row', width: '50%', gap: '10%' }}>
-            <View style={{ marginBottom: 5 }}>
+          <View style={styles.formFieldStyle}>
+            <View style={styles.marginBottom}>
               <Text style={styles.labelStyle}>Country</Text>
               <FormField
                 defaultValue={country}
@@ -231,15 +164,10 @@ export default function UpdateProfileScreen() {
                 autoCorrect={false}
                 name='country'
                 containerStyle={styles.containerStyle}
-                style={{
-                  backgroundColor: colors.primaryExtraLight2,
-                  width: '100%',
-                  fontSize: 16,
-                  borderRadius: 10,
-                }}
+                style={styles.formFieldStyle}
               />
             </View>
-            <View style={{ marginBottom: 5 }}>
+            <View style={styles.marginBottom}>
               <Text style={styles.labelStyle}>City</Text>
               <FormField
                 defaultValue={city}
@@ -247,17 +175,12 @@ export default function UpdateProfileScreen() {
                 autoCorrect={false}
                 name='city'
                 containerStyle={styles.containerStyle}
-                style={{
-                  backgroundColor: colors.primaryExtraLight2,
-                  width: '100%',
-                  fontSize: 16,
-                  borderRadius: 10,
-                }}
+                style={styles.formFieldStyle}
               />
             </View>
           </View>
-          <View style={{ flexDirection: 'row', width: '50%', gap: '10%' }}>
-            <View style={{ marginBottom: 5 }}>
+          <View style={styles.formFieldStyle}>
+            <View style={styles.marginBottom}>
               <Text style={styles.labelStyle}>Subcity</Text>
               <FormField
                 defaultValue={subcity}
@@ -265,15 +188,10 @@ export default function UpdateProfileScreen() {
                 autoCorrect={false}
                 name='subcity'
                 containerStyle={styles.containerStyle}
-                style={{
-                  backgroundColor: colors.primaryExtraLight2,
-                  width: '100%',
-                  fontSize: 16,
-                  borderRadius: 10,
-                }}
+                style={styles.formFieldStyle}
               />
             </View>
-            <View style={{ marginBottom: 5 }}>
+            <View style={styles.marginBottom}>
               <Text style={styles.labelStyle}>Wereda</Text>
               <FormField
                 defaultValue={woreda}
@@ -281,12 +199,7 @@ export default function UpdateProfileScreen() {
                 autoCorrect={false}
                 name='woreda'
                 containerStyle={styles.containerStyle}
-                style={{
-                  backgroundColor: colors.primaryExtraLight2,
-                  width: '100%',
-                  fontSize: 16,
-                  borderRadius: 10,
-                }}
+                style={styles.formFieldStyle}
               />
             </View>
           </View>
@@ -310,18 +223,44 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 50,
   },
+  imageContainer: {
+    zIndex: 1,
+    position: 'absolute',
+    bottom: -50,
+    left: '38%',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 5,
+    borderColor: colors.white,
+  },
+  buttonStyle: {
+    position: 'absolute',
+    bottom: 0,
+    right: -5,
+    width: 40,
+    height: 40,
+    padding: 5,
+    margin: 0,
+    borderRadius: 25,
+    backgroundColor: colors.grey,
+  },
+  formContainer: {
+    flex: 1,
+    padding: 20,
+  },
   marginBottom: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
-  inputLabel: { marginBottom: 0, fontWeight: '600' },
-  button: {
-    backgroundColor: colors.primary,
-    padding: 10,
+  formFieldStyle: {
+    backgroundColor: colors.primaryExtraLight2,
+    width: '100%',
+    fontSize: 16,
     borderRadius: 10,
-    width: 150,
-    marginVertical: 10,
-    alignSelf: 'flex-end',
   },
+
   labelStyle: { fontSize: 18, fontWeight: '500' },
   containerStyle: {
     marginVertical: 5,

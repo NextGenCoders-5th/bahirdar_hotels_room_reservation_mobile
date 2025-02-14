@@ -7,7 +7,7 @@ export interface CreateResponse {
 }
 
 export interface ErrorResponse {
-  status:
+  status?:
     | number
     | 'FETCH_ERROR'
     | 'PARSING_ERROR'

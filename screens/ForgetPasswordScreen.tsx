@@ -13,8 +13,11 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function ForgetPasswordScreen() {
-  const handleSubmit = () => {
-    router.push(routes.SUCCESS_EMAIL);
+  const handleSubmit = (values: { email: string }) => {
+    router.push({
+      pathname: routes.SUCCESS_EMAIL,
+      params: { email: values.email },
+    });
   };
 
   return (
