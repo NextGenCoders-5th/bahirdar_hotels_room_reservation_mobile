@@ -4,13 +4,13 @@ import { router } from 'expo-router';
 
 import AppText from '@/components/AppText';
 import FavoriteCard from '@/components/FavoriteCard';
-import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
+import { useFavoriteHotelContext } from '@/contexts/FavoriteHotelsContext';
 import AppButton from '@/components/AppButton';
 import { routes } from '@/routes';
 import colors from '@/config/colors';
 
 export default function FavoritesScreen() {
-  const { favoriteHotels } = useFavoriteHotels();
+  const { favoriteHotels } = useFavoriteHotelContext();
   if (favoriteHotels.length === 0) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

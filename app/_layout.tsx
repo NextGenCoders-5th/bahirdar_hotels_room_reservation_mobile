@@ -4,14 +4,14 @@ import { ThemeProvider } from '@react-navigation/native';
 
 import appTheme from '@/config/appTheme';
 import { store } from '@/redux/store';
-import { FavoriteHotelsProvider } from '@/hooks/useFavoriteHotels';
-import { AuthProvider } from '@/hooks/AuthContext';
+import { FavoriteHotelsContextProvider } from '@/contexts/FavoriteHotelsContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 export default function RootLayout() {
   return (
     <ThemeProvider value={appTheme}>
       <Provider store={store}>
-        <FavoriteHotelsProvider>
+        <FavoriteHotelsContextProvider>
           <AuthProvider>
             <Stack screenOptions={{ headerShown: false }}>
               <Stack.Screen name='(tabs)' />
@@ -20,7 +20,7 @@ export default function RootLayout() {
               <Stack.Screen name='hotels' />
             </Stack>
           </AuthProvider>
-        </FavoriteHotelsProvider>
+        </FavoriteHotelsContextProvider>
       </Provider>
     </ThemeProvider>
   );

@@ -7,7 +7,7 @@ import AppText from '@/components/AppText';
 import colors from '@/config/colors';
 import IconButton from './IconButton';
 import { IFavoriteHotel } from '@/types/hotelTypes';
-import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
+import { useFavoriteHotelContext } from '@/contexts/FavoriteHotelsContext';
 
 export default function FavoriteCard({
   _id,
@@ -17,7 +17,7 @@ export default function FavoriteCard({
   address,
 }: IFavoriteHotel) {
   const { isFavorite, addFavoriteHotel, removeFavoriteHotel } =
-    useFavoriteHotels();
+    useFavoriteHotelContext();
 
   function handleToggleFavorite() {
     if (isFavorite(_id)) {

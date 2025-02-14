@@ -15,7 +15,7 @@ const FavoriteHotelsContext = createContext<
   FavoriteHotelsContextProps | undefined
 >(undefined);
 
-const FavoriteHotelsProvider: React.FC<{
+const FavoriteHotelsContextProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const [favoriteHotels, setFavoriteHotels] = useState<IFavoriteHotel[]>([]);
@@ -74,14 +74,14 @@ const FavoriteHotelsProvider: React.FC<{
   );
 };
 
-const useFavoriteHotels = (): FavoriteHotelsContextProps => {
+const useFavoriteHotelContext = (): FavoriteHotelsContextProps => {
   const context = useContext(FavoriteHotelsContext);
   if (!context) {
     throw new Error(
-      'useFavoriteHotels must be used within a FavoriteHotelsProvider'
+      'useFavoriteHotelsContext must be used within a FavoriteHotelsContextProvider'
     );
   }
   return context;
 };
 
-export { FavoriteHotelsProvider, useFavoriteHotels };
+export { FavoriteHotelsContextProvider, useFavoriteHotelContext };

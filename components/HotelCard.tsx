@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import {  router } from 'expo-router';
+import { router } from 'expo-router';
 
 import colors from '@/config/colors';
 import AppButton from './AppButton';
 import { IHotel } from '@/types/hotelTypes';
-import { useFavoriteHotels } from '@/hooks/useFavoriteHotels';
+import { useFavoriteHotelContext } from '@/contexts/FavoriteHotelsContext';
 import { useTransformImageUrl } from '@/hooks/useTransformImageUrl';
 
 const HotelCard: React.FC<IHotel> = ({
@@ -23,7 +23,7 @@ const HotelCard: React.FC<IHotel> = ({
   const imageUrl = useTransformImageUrl({ imageUrl: imageCover });
 
   const { addFavoriteHotel, removeFavoriteHotel, isFavorite } =
-    useFavoriteHotels();
+    useFavoriteHotelContext();
 
   function handleToggleFavorite() {
     if (isFavorite(_id)) {
