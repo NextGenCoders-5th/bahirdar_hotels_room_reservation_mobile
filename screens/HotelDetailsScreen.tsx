@@ -159,12 +159,12 @@ const HotelDetailsScreen: React.FC = () => {
             </View>
           </View>
 
-          {/* {location && location?.coordinates.length > 0 && (
+          {location && location?.coordinates.length > 0 && (
             <MapComponent
               hotelName={name!}
               hotelCoords={{ latitude: 23, longitude: 37.410125 }}
             />
-          )} */}
+          )}
 
           <View style={[styles.bottomMargin, { marginTop: 30 }]}>
             <AppText>Summary</AppText>
