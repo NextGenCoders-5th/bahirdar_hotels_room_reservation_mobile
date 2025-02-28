@@ -50,6 +50,15 @@ npx expo start
 ![Hotel Details 2](./assets/images/screenshots/hotel-details-2.jpg)  
 ![Hotel Details 3](./assets/images/screenshots/hotel-details-3.jpg)
 
+## Room Details
+
+![Room Details 1](./assets/images/screenshots/room-detail-1.jpg)  
+![Room Details 2](./assets/images/screenshots/room-detail-2.jpg)
+
+## Book Room Page
+
+![Book Room](./assets/images/screenshots/booking-page.jpg)
+
 ## Favorites Tab
 
 ![Favorites Tab](./assets/images/screenshots/favorites.jpg)
