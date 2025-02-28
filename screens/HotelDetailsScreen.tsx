@@ -162,7 +162,7 @@ const HotelDetailsScreen: React.FC = () => {
           {location && location?.coordinates.length > 0 && (
             <MapComponent
               hotelName={name!}
-              hotelCoords={{ latitude: 23, longitude: 37.410125 }}
+              hotelCoords={{ latitude, longitude }}
             />
           )}
 

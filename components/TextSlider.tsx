@@ -41,7 +41,7 @@ export default function TextSlider() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 150,
+    height: 120,
     marginVertical: 10,
     borderRadius: 10,
     paddingHorizontal: 10,
