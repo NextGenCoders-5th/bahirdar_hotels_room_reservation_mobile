@@ -16,9 +16,6 @@ import { useGetPopularHotelsQuery } from '@/redux/api/recommendationsApi';
 import HotelCard from '@/components/HotelCard';
 
 export default function HomeScreen() {
-  const { data, isLoading: userIsLoading } = useGetCurrentUserQuery();
-  const { firstName } = data?.data || {};
-
   const {
     data: popularHotels,
     isLoading: popularHotelsIsLoading,
@@ -64,9 +61,7 @@ export default function HomeScreen() {
         <LoginRemainder />
       ) : (
         <View style={styles.headerContainer}>
-          <Text style={styles.welcomeText}>
-            Welcome, {firstName || username}
-          </Text>
+          <Text style={styles.welcomeText}>Welcome, {username}</Text>
 
           <IconButton
             onPress={toggleMenu}
