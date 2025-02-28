@@ -1,50 +1,64 @@
-# Welcome to your Expo app 👋
+# Welcome to your hotel booking mobile app in Bahir Dar 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Get Started
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Install dependencies
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Start the app
 
-## Learn more
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Welcome Screen
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+![Welcome Screen](./assets/images/screenshots/welcome.jpg)
 
-## Join the community
+## Get Started Screen
 
-Join our community of developers creating universal apps.
+![Get Started Screen](./assets/images/screenshots/get-started.jpg)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Sign Up Screen
+
+![Sign Up Screen 1](./assets/images/screenshots/sign-up-1.jpg)  
+![Sign Up Screen 2](./assets/images/screenshots/sign-up-2.jpg)
+
+## Sign In Screen
+
+![Sign In Screen](./assets/images/screenshots/sign-in.jpg)
+
+## Forgot Password Screen
+
+![Forgot Password Screen](./assets/images/screenshots/forgot-password.jpg)
+
+## Home Tab
+
+![Home Tab 1](./assets/images/screenshots/home-1.jpg)  
+![Home Tab 2](./assets/images/screenshots/home-menus.jpg)
+
+## Hotels Tab
+
+![Hotels Tab](./assets/images/screenshots/hotels-tab.jpg)
+
+## Hotel Details
+
+![Hotel Details 1](./assets/images/screenshots/hotel-details-1.jpg)  
+![Hotel Details 2](./assets/images/screenshots/hotel-details-2.jpg)  
+![Hotel Details 3](./assets/images/screenshots/hotel-details-3.jpg)
+
+## Favorites Tab
+
+![Favorites Tab](./assets/images/screenshots/favorites.jpg)
+
+## Profile information
+
+![Profile details](./assets/images/screenshots/profile-details.jpg)
+
+## Bookings
+
+![Bookings 1](./assets/images/screenshots/bookings-1.jpg)
+![Bookings 2](./assets/images/screenshots/bookings-2.jpg)
